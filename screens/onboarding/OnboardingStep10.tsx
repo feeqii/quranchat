@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/theme';
 import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQuestionBlock';
 import { YesNoBlock } from '../../components/organisms/YesNoBlock';
@@ -8,7 +7,6 @@ import { PrimaryButton } from '../../components/atoms/PrimaryButton';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
 
 export const OnboardingStep10: React.FC = () => {
-  const navigation = useNavigation();
   const { setField, completeOnboarding } = useOnboardingStore();
   
   // Local state for tracking answers
@@ -31,9 +29,6 @@ export const OnboardingStep10: React.FC = () => {
       
       // Complete onboarding
       completeOnboarding();
-      
-      // Navigate to main app
-      navigation.navigate('MainApp' as never);
     }
   };
 
