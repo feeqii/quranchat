@@ -1,0 +1,166 @@
+---
+description: This ruleset is the single source of truth guiding the creation and development of all screens, components, states, navigation flows, and UI/UX logic under the "Today" tab of the Quran Chat app.  It ensures Cursor generates cohesive, modular, and precisely aligned experiences for the user's daily spiritual journey. Specifically, it covers:  Daily streak tracking for sustained engagement.  Interactive mood and context selections to deeply personalize user interactions.  AI-generated personalized content, including daily verses, devotionals, and reflective prayers.  Clear and engaging user flows, designed to maintain user interest and provide intuitive interactions.  Cursor must strictly reference this ruleset whenever generating code, screens, or logic related to the "Today" page, ensuring consistency, modularity, and clarity throughout the app experience.
+globs: 
+alwaysApply: false
+---
+Purpose
+This ruleset governs all elements associated with the daily spiritual journey experience under the Today tab.
+
+It covers streak tracking, mood check-ins, contextual reflections, and personalized content delivery. Cursor must refer to this ruleset when generating:
+
+Screens
+
+Components
+
+State management logic
+
+Navigation logic
+
+UI/UX styling and interactions
+
+🎯 Functional Scope & High-Level Goals
+Streak Tracking: Encourage daily use through visual tracking.
+
+Mood Tracking: Personalize the daily experience by capturing user mood.
+
+Context Awareness: Understand user's daily triggers for personalized reflections.
+
+Personalized AI Content: Dynamically generate verses, devotionals, and prayers.
+
+Engaging Interaction: Intuitive and smooth UI for a delightful experience.
+
+🧠 Screens Covered
+TodayHomeScreen
+Landing page with streak calendar and interactive journey cards.
+
+MoodCheckinScreen
+Captures user’s mood through visual slider interaction.
+
+ContextSelectionScreen
+Allows selecting multiple contextual triggers.
+
+TextInputScreen (Optional)
+Collects deeper insights or specific experiences through text input.
+
+ContentGenerationLoadingScreen
+Displays loading and transition animations while content is generated.
+GeneratedContentScreen
+Shows final personalized content (verse, prayer, devotional).
+
+🧩 Component Architecture
+Atoms
+MoodSliderAtom: Interactive slider for mood intensity.
+
+MoodIconAtom: Visual emoji/icon reflecting selected mood.
+
+SelectOptionAtom: Single selectable icons for contexts (Work, Love, etc.).
+
+ProgressBarAtom: Shows percentage-based progress visually.
+
+Molecules
+MoodSelectorMolecule: Combines slider and mood icon for mood selection.
+
+MultiSelectOptionGridMolecule: Grid arrangement of multiple selectable options.
+
+Organisms
+DailyStreakCalendarOrganism: Shows a weekly calendar, highlights streaks, and today’s progress clearly.
+
+JournalPromptOrganism: Structured flow prompting user inputs (mood → context → detailed input).
+
+PersonalizedContentCardOrganism: Displays AI-generated content.
+
+🗂 Zustand State Management (useTodayStore.ts)
+Use Zustand for modular state handling:
+
+typescript
+Copy
+Edit
+interface TodayState {
+  // Mood tracking
+  moodLevel: number | null;
+  moodDescription: string | null;
+
+  // Context tracking
+  selectedContexts: string[];
+
+  // User text input (optional)
+  userInput: string | null;
+
+  // Daily streak tracking
+  streakDays: number[];  // Array containing days of streak completion
+
+  // State setters
+  setMood: (level: number, description: string) => void;
+  setContexts: (contexts: string[]) => void;
+  setUserInput: (input: string) => void;
+  setStreakDay: (day: number) => void;
+  
+  // Reset daily state
+  clearTodayData: () => void;
+}
+🔀 Navigation Logic
+Use dedicated navigator: TodayStackNavigator.tsx
+
+Explicit screen transitions: navigation.navigate("ScreenName")
+
+Defined screen flow:
+
+plaintext
+Copy
+Edit
+TodayHomeScreen
+   ↓
+MoodCheckinScreen
+   ↓
+ContextSelectionScreen
+   ↓
+TextInputScreen (optional)
+   ↓
+ContentGenerationLoadingScreen
+   ↓
+GeneratedContentScreen
+Consistent native stack transitions across screens.
+
+Ensure back navigation is logical and user-friendly.
+
+🎨 UI & Design Rules
+Stick exclusively to the existing theme.ts:
+
+Colors, spacing, typography, shadows.
+
+Consistent padding and margin spacing from the theme.
+
+Typography must use existing Typography atom: <Typography variant="...">
+
+All components must have modular, clear naming aligned with atomic design methodology (Atom → Molecule → Organism).
+
+🔄 Interactivity & Feedback
+Provide clear visual feedback for selections (highlight, scale, subtle animation).
+
+Loading screens must provide encouraging messages to retain user engagement.
+
+Proper error handling and visual indications for any issues or failed states.
+
+🚧 Constraints & Rules
+NO hardcoded values (use theme constants only).
+
+NO redundant or duplicate components (reuse and generalize components whenever possible).
+
+NO navigation complexity beyond the clearly defined flow.
+
+🎖️ Definition of Done
+Cursor must ensure the following conditions are met for any generated output under this ruleset:
+
+ Components match app design system perfectly.
+
+ State is managed cleanly and modularly via Zustand.
+
+ Navigation flows smoothly and predictably.
+
+ Interactions and feedback enhance user experience clearly.
+
+ Code quality and readability standards remain high throughout.
+
+Cursor must reference this ruleset strictly when generating any feature or component related to the "Today" page. Any deviation or exception must be explicitly approved.
+
+Let's use this to build an amazing and cohesive experience!

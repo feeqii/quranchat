@@ -1,0 +1,121 @@
+---
+description: Outlines the complete navigation architecture of Quran Chat using React Navigation. It defines two main flows — the onboarding stack and the main app stack — and shows how users are routed based on whether they've completed onboarding. This document ensures all navigation is clean, centralized, and logic-driven, avoiding hardcoded routes and UI-level decisions.  Use this to:  Configure navigation across onboarding and post-onboarding flows  Prevent inconsistent routing or back behavior  Help Claude structure screens with correct routing logic  Keep app transitions smooth and predictable
+globs: 
+alwaysApply: false
+---
+# Quran Chat – Navigation Structure
+
+This document defines the full navigation flow of the Quran Chat app using React Navigation (stack-based). It separates onboarding from the main app and ensures users are routed properly based on onboarding completion status.
+
+---
+
+## 📦 Navigation Library
+
+- **React Navigation Stack** (`@react-navigation/native-stack`)
+- Optional: wrap entire app in `NavigationContainer` with gesture + safe area support
+- Screens are registered in a central `AppNavigator.tsx`
+
+---
+
+## 📍 Navigation Flow (High Level)
+
+```
+App.tsx →
+  AppNavigator →
+    [if onboardingCompleted == false]
+      → OnboardingStack
+    [else]
+      → MainAppStack
+```
+
+---
+
+## 🪜 OnboardingStack
+
+Linear stack of 12 screens (see `screen_requirements.md` for details):
+
+```
+OnboardingWelcomeScreen
+→ OnboardingStep1
+→ OnboardingStep2
+→ OnboardingStep3
+→ OnboardingStep4
+→ OnboardingStep5
+→ OnboardingStep6
+→ OnboardingStep7
+→ OnboardingStep8
+→ OnboardingStep9
+→ OnboardingStep10
+→ OnboardingFinalScreen (optional if different)
+→ MainApp (redirect)
+```
+
+- Transitions should be **smooth fade or slide-right**
+- Back gesture is **enabled**, but back button should be hidden on some screens
+
+---
+
+## 🕌 MainAppStack (Post-Onboarding)
+
+Basic structure for now (to be expanded later):
+
+```
+HomeScreen (main chat interface)
+→ HistoryScreen
+→ SettingsScreen (optional)
+```
+
+---
+
+## 🔄 Skip Logic
+
+In `AppNavigator.tsx`:
+
+```ts
+const { onboardingCompleted } = useOnboardingStore();
+
+return (
+  <NavigationContainer>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {onboardingCompleted ? (
+        <Stack.Screen name="MainApp" component={MainAppStack} />
+      ) : (
+        <Stack.Screen name="Onboarding" component={OnboardingStack} />
+      )}
+    </Stack.Navigator>
+  </NavigationContainer>
+);
+```
+
+---
+
+## 💬 Navigation Helpers
+
+Use the `useNavigation()` hook or `navigation.navigate("ScreenName")` consistently.
+
+Screens should never hardcode routes — always use registered screen names from `AppNavigator`.
+
+---
+
+## 🧼 Naming Conventions
+
+- Screens are **PascalCase**, matching file names exactly
+- Route names should match component names to avoid bugs
+- Never define routes inline in screen files
+
+---
+
+## 🔐 Guarding Routes (Optional)
+
+If needed later:
+- Protect `MainAppStack` routes from being accessed before onboarding
+- Redirect via effect in `AppNavigator` or create an `OnboardingGate` component
+
+---
+
+## ✅ Rules
+
+- Never define navigation logic inside screens directly  
+- Always handle conditional routing in `AppNavigator.tsx`  
+- Always check Zustand's `onboardingCompleted` before routing to main app
+

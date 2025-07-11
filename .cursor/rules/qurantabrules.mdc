@@ -1,0 +1,119 @@
+---
+description: This  file serves as the single source of truth for developing, updating, or modifying the Quran browsing and reading experience within the "Quran" tab of the Quran Chat app.  It defines clear, explicit guidelines and constraints for:  Screen development (QuranHomeScreen, VerseReadingScreen, selection modals)  Component creation (atoms, molecules, organisms)  State management (via useQuranStore.ts)  Navigation logic (clear modal and screen navigation flow)  Styling and layout (spacing, colors, typography from theme.ts)  Cursor must always consult this ruleset first when generating or updating features related to the Quran tab. Deviations from these guidelines are strictly prohibited unless explicitly approved.
+globs: 
+alwaysApply: false
+---
+QURAN CHAT — QURAN TAB RULES
+📖 Purpose
+This ruleset governs everything related to the Quran reading and exploration experience within the Quran tab.
+
+It covers the Quran browsing screen, Surah selection interface, verse reading screen, translation selection, and any state, navigation, or UI logic directly connected to Quran browsing and reading. Cursor must refer to this file before generating any feature that touches the Quran tab.
+
+🧠 Functional Scope
+Screens Covered
+QuranHomeScreen (shows Surah list or recent Surah)
+
+SurahSelectionModal (modal for selecting Surah)
+
+VerseReadingScreen (individual Surah with verses)
+
+TranslationSelectionModal (translation picker)
+
+User Flow
+QuranHomeScreen shows:
+
+Current or last viewed Surah
+
+Option to open Surah selection modal
+
+Option to select translation
+
+Selecting Surah immediately navigates to VerseReadingScreen
+
+User can select and switch translations smoothly
+
+Smooth navigation and intuitive state management for Surah/translation selection
+
+🧱 Component Architecture
+Atoms
+IconButton – standard tappable icon wrapper
+
+VerseNumber – stylized circular verse number
+
+TranslationBadge – indicates active translation
+
+Molecules
+VerseCard – single verse block with Arabic and translation
+
+SurahListItem – Surah selection list item
+
+TranslationOption – selectable translation option row
+
+Organisms
+SurahList – scrollable list of Surahs with search functionality
+
+TranslationSelector – manages translation selection flow
+
+Layouts
+All screens use SafeAreaView, FlatList, or ScrollView
+
+Consistent spacing, typography, and colors from theme.ts
+
+All text via <Typography> atom (variant-based)
+🔀 Navigation Logic
+Screens registered exclusively in AppNavigator.tsx or dedicated QuranStackNavigator.tsx
+
+Surah selection via modal navigation:
+
+Modal opens with navigation.navigate("SurahSelectionModal")
+
+Immediately close modal upon Surah selection
+
+Navigation to verse reading via navigation.navigate("VerseReadingScreen")
+
+Translation selection via modal (TranslationSelectionModal):
+
+Sets global translation state in useQuranStore
+
+🧃 State Management
+Global Quran state handled by:
+
+useQuranStore.ts
+
+selectedSurah: number | null
+
+selectedTranslation: string
+
+setSurah(surahNumber: number)
+
+setTranslation(translationKey: string)
+
+clearSurah()
+
+Local states (e.g., loading, search queries) handled via useState hooks within screens.
+
+All Quran API requests handled via /lib/api/quranAPI.ts.
+
+🎯 Design Rules
+Never use raw hex values — always theme.colors
+
+No hardcoded spacing or font sizes — always use theme.spacing and <Typography>
+
+Strict adherence to atomic component structure (Atoms → Molecules → Organisms)
+
+Reuse existing components where applicable; extend thoughtfully if necessary
+
+🧭 Summary
+This ruleset is the single source of truth for all screens and features under the "Quran" tab. Cursor must strictly follow these rules when generating:
+
+Screens
+
+Components
+
+State slices
+
+Navigation updates
+
+Layout or style logic
+
+Violations or workarounds are not allowed unless explicitly approved.

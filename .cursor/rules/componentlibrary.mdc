@@ -1,0 +1,127 @@
+---
+description: Outlines all reusable UI components used in the onboarding flow, organized into atoms, molecules, and organisms. Specifies props, usage rules, and folder structure. This system ensures visual consistency, modularity, and ease of maintenance as the app scales.  Use this to:  Build onboarding screens cleanly and quickly  Prevent duplicate components or inline styling  Keep UI logic and layout reusable and composable
+globs: 
+alwaysApply: false
+---
+# Quran Chat – Onboarding Component Library
+
+This component library defines all reusable UI components for the **onboarding flow**. All screens should use these shared components — never rebuild UI inline. Components follow the atoms → molecules → organisms hierarchy.
+
+---
+
+## ⚛️ Atoms
+
+> **Smallest reusable UI units**
+
+### 1. `PrimaryButton`
+- Props: `label: string`, `onPress: () => void`, `disabled?: boolean`
+- Full-width, rounded, green background (`theme.colors.primary`)
+- Used for all “Continue”, “Next”, and “Ask” actions
+
+### 2. `SecondaryButton`
+- Props: `label: string`, `onPress: () => void`
+- Transparent background, bordered outline
+- Used for “Skip”, “Back”, or secondary options
+
+### 3. `ProgressBar`
+- Props: `progress: number` (0–100)
+- Thin bar showing progress across onboarding
+- Optional: animate between steps
+
+### 4. `SectionTitle`
+- Props: `title: string`, `subtitle?: string`
+- For top-of-screen headings
+- Always consistent font size and spacing
+
+### 5. `Icon`
+- Wrapper for vector icons (using Expo’s icon packs or lucide-react-native)
+- Used sparingly: checkmarks, hearts, share icons
+
+---
+
+## ⚛ Molecules
+
+> **Grouped elements or interactive blocks**
+
+### 6. `OptionCard`
+- Props: `label: string`, `selected: boolean`, `onPress: () => void`
+- Touchable card with selected state styling
+- Used for age group, Islamic background, support types, etc.
+
+### 7. `AnswerCard`
+- Props: `question: string`, `answer: string`
+- Stylized example chat card used in onboarding preview
+- May include optional `onShare()` action
+
+### 8. `TestimonialCard`
+- Props: `name: string`, `text: string`, `avatar?: string`, `rating?: number`
+- Star rating + testimonial copy in soft card
+- Used in final steps of onboarding for social proof
+
+---
+
+## 🧩 Organisms
+
+> **Complex UI sections combining atoms + molecules**
+
+### 9. `OnboardingQuestionBlock`
+- Props: `title: string`, `subtitle?: string`, `children: ReactNode`
+- Used on every onboarding step
+- Automatically includes spacing, padding, progress bar if needed
+
+### 10. `YesNoBlock`
+- Props: `question: string`, `onYes: () => void`, `onNo: () => void`
+- Used for steps with Yes/No logic (e.g. "Do you want reminders?")
+- May conditionally skip steps
+
+### 11. `WidgetSetupBlock`
+- Props: none (static)
+- Renders visual instruction on how to add widget to Home Screen
+- Used near the end of onboarding
+
+---
+
+## 📦 Future (Post-Onboarding)
+
+> For later use, not required for onboarding:
+
+- `ChatBubble`
+- `PromptInput`
+- `SearchHeader`
+- `BookmarksGrid`
+- `DailyQuoteCard`
+
+---
+
+## 🛠️ Style Rules
+
+- All components must use `theme.ts` colors and fonts
+- Components must be responsive to device size (use `Dimensions` or `SafeAreaView`)
+- Avoid hardcoded styles — use `StyleSheet` or Tailwind (`nativewind`)
+
+---
+
+## 📁 Folder Structure
+
+```
+/components
+  /atoms
+    - PrimaryButton.tsx
+    - SecondaryButton.tsx
+    - ProgressBar.tsx
+    - SectionTitle.tsx
+  /molecules
+    - OptionCard.tsx
+    - TestimonialCard.tsx
+    - AnswerCard.tsx
+  /organisms
+    - OnboardingQuestionBlock.tsx
+    - YesNoBlock.tsx
+    - WidgetSetupBlock.tsx
+```
+
+---
+
+**Every onboarding screen must be composed using these components.**  
+If a screen introduces new UI logic, extract it as a new molecule or organism.
+

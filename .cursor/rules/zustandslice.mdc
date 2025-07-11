@@ -1,0 +1,100 @@
+---
+description: Defines the global onboarding state for Quran Chat using Zustand. It outlines all the fields collected during the onboarding flow (e.g., age, background, preferences), and describes how state is persisted via AsyncStorage under the key @onboardingData. This document provides the full Zustand slice structure, type definitions, and usage examples to ensure consistent state handling across all onboarding screens.  Use this to:  Guide screen development in connecting to global state  Set and persist onboarding answers in a clean, centralized way  Help determine when onboarding is completed and what to skip  Serve as a type-safe contract between UI and logic
+globs: 
+alwaysApply: false
+---
+# Quran Chat – Zustand State for Onboarding
+
+This file defines all global state used during the **onboarding flow** of the app. State is managed using **Zustand** and persisted via **AsyncStorage** under a single key: `@onboardingData`.
+
+The slice is called `useOnboardingStore`.
+
+---
+
+## 🧠 State Keys
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `wantsDailyReminder` | boolean | Whether the user wants a daily widget reminder |
+| `supportType` | string | Chosen user intent (e.g., study Quran, overcome struggle) |
+| `heardFrom` | string | Where the user heard about Quran Chat |
+| `ageGroup` | string | Chosen age group option |
+| `islamicBackground` | string | Sunni, Shia, Sufi, etc |
+| `isLikelyToFinish` | boolean | If user identifies as someone who finishes what they start |
+| `wantsInstantAccess` | boolean | If user wants instant AI access to Quranic inspiration |
+| `onboardingCompleted` | boolean | Triggers skip logic — user has completed onboarding |
+
+---
+
+## ⚙️ Zustand Slice Template
+
+```ts
+// store/useOnboardingStore.ts
+
+import { create } from 'zustand';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persist } from 'zustand/middleware';
+
+type OnboardingState = {
+  wantsDailyReminder: boolean | null;
+  supportType: string | null;
+  heardFrom: string | null;
+  ageGroup: string | null;
+  islamicBackground: string | null;
+  isLikelyToFinish: boolean | null;
+  wantsInstantAccess: boolean | null;
+  onboardingCompleted: boolean;
+  setField: (key: keyof Omit<OnboardingState, 'setField' | 'completeOnboarding'>, value: any) => void;
+  completeOnboarding: () => void;
+};
+
+export const useOnboardingStore = create<OnboardingState>()(
+  persist(
+    (set) => ({
+      wantsDailyReminder: null,
+      supportType: null,
+      heardFrom: null,
+      ageGroup: null,
+      islamicBackground: null,
+      isLikelyToFinish: null,
+      wantsInstantAccess: null,
+      onboardingCompleted: false,
+      setField: (key, value) => set({ [key]: value }),
+      completeOnboarding: () => set({ onboardingCompleted: true }),
+    }),
+    {
+      name: '@onboardingData',
+      storage: AsyncStorage,
+    }
+  )
+);
+```
+
+---
+
+## ✅ Usage Example
+
+To set the user’s age group on a screen:
+
+```ts
+const { setField } = useOnboardingStore();
+setField('ageGroup', '25–34');
+```
+
+To check if onboarding is done (e.g., in `AppNavigator.tsx`):
+
+```ts
+const { onboardingCompleted } = useOnboardingStore();
+if (onboardingCompleted) {
+  // navigate to main app
+}
+```
+
+---
+
+## 🔐 Notes
+
+- Always initialize each field as `null` so you can check for completion.
+- This slice is used only during onboarding — later features should get their own store.
+- Avoid mixing onboarding state with post-onboarding app data.
+

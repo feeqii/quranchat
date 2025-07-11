@@ -1,0 +1,206 @@
+---
+description: This document defines the full onboarding journey screen-by-screen. For each screen, it outlines the purpose, which components to use, what state needs to be updated via Zustand, and how navigation flows. It ensures clarity and consistency across all onboarding logic and UI, making it easy to implement and maintain.  Use this to:  Guide Cursor and Claude in screen generation  Prevent logic duplication and flow inconsistencies  Clearly communicate state transitions and navigation logic  Maintain a source of truth for onboarding UX decisions
+globs: 
+alwaysApply: false
+---
+# Quran Chat – Onboarding Screen Requirements
+
+This file defines each onboarding screen in order. It includes the screen's purpose, UI components used, what data is collected and saved to Zustand, and the next screen in the flow.
+
+All screens must use shared components from the design system (see `component_library.md`). No inline styling or logic duplication.
+
+---
+
+## 1. `OnboardingWelcomeScreen.tsx`
+
+**Purpose:**  
+Introduce the app and encourage sign-in or guest use.
+
+**Components:**  
+- `SectionTitle`  
+- `PrimaryButton` ("Continue without account")  
+- `SecondaryButton` ("Sign up or Log in")  
+- Star review section (hardcoded 4.9 ⭐, 10M+ downloads)
+
+**State:**  
+None saved here
+
+**Next Screen:** `OnboardingStep1`
+
+---
+
+## 2. `OnboardingStep1.tsx`
+
+**Purpose:**  
+Introduce spiritual widget concept, assess desire for daily guidance
+
+**Components:**  
+- `OnboardingQuestionBlock`  
+- `YesNoBlock`  
+- `ProgressBar` (10%)
+
+**State:**  
+- `wantsDailyReminder: boolean`
+
+**Next Screen:** `OnboardingStep2`
+
+---
+
+## 3. `OnboardingStep2.tsx`
+
+**Purpose:**  
+Ask how user wants Quran Chat to help them
+
+**Components:**  
+- `OnboardingQuestionBlock`  
+- Two `OptionCard`s  
+- `PrimaryButton` ("Continue")  
+- `ProgressBar` (20%)
+
+**State:**  
+- `supportType: string`
+
+**Next Screen:** `OnboardingStep3`
+
+---
+
+## 4. `OnboardingStep3.tsx`
+
+**Purpose:**  
+Show visual that faith can become daily habit with widget
+
+**Components:**  
+- `OnboardingQuestionBlock`  
+- Static image/chart (placeholder)  
+- `ProgressBar` (30%)
+
+**State:**  
+None
+
+**Next Screen:** `OnboardingStep4`
+
+---
+
+## 5. `OnboardingStep4.tsx`
+
+**Purpose:**  
+Ask how user heard about the app
+
+**Components:**  
+- `OnboardingQuestionBlock`  
+- Multiple `OptionCard`s  
+- `PrimaryButton`  
+- `ProgressBar` (40%)
+
+**State:**  
+- `heardFrom: string`
+
+**Next Screen:** `OnboardingStep5`
+
+---
+
+## 6. `OnboardingStep5.tsx`
+
+**Purpose:**  
+Capture age group
+
+**Components:**  
+- `OnboardingQuestionBlock`  
+- `OptionCard` (6 total)  
+- `ProgressBar` (50%)
+
+**State:**  
+- `ageGroup: string`
+
+**Next Screen:** `OnboardingStep6`
+
+---
+
+## 7. `OnboardingStep6.tsx`
+
+**Purpose:**  
+Instruct user how to add widget
+
+**Components:**  
+- `WidgetSetupBlock` (organism)  
+- `ProgressBar` (60%)
+
+**State:**  
+None
+
+**Next Screen:** `OnboardingStep7`
+
+---
+
+## 8. `OnboardingStep7.tsx`
+
+**Purpose:**  
+Ask for Islamic background
+
+**Components:**  
+- `OnboardingQuestionBlock`  
+- `OptionCard` (Sunni, Shia, Sufi, Non-denominational, Prefer not to say)  
+- `ProgressBar` (70%)
+
+**State:**  
+- `islamicBackground: string`
+
+**Next Screen:** `OnboardingStep8`
+
+---
+
+## 9. `OnboardingStep8.tsx`
+
+**Purpose:**  
+Preview what an AI assistant response looks like
+
+**Components:**  
+- `AnswerCard`  
+- Optional `Share` icon  
+- `ProgressBar` (80%)
+
+**State:**  
+None
+
+**Next Screen:** `OnboardingStep9`
+
+---
+
+## 10. `OnboardingStep9.tsx`
+
+**Purpose:**  
+Social proof from user testimonials
+
+**Components:**  
+- Multiple `TestimonialCard`s  
+- `ProgressBar` (90%)
+
+**State:**  
+None
+
+**Next Screen:** `OnboardingStep10`
+
+---
+
+## 11. `OnboardingStep10.tsx`
+
+**Purpose:**  
+Final spiritual alignment questions (yes/no)
+
+**Components:**  
+- Three `YesNoBlock`s  
+  - “Do you finish what you start?”
+  - “Do you want a daily reminder?”
+  - “Do you want instant access to Quranic insights?”
+- `PrimaryButton` ("Complete onboarding")  
+- `ProgressBar` (100%)
+
+**State:**  
+- `isLikelyToFinish: boolean`  
+- `wantsInstantAccess: boolean`  
+- (confirm `wantsDailyReminder` again if needed)
+
+**Final Action:**  
+- Set `onboardingCompleted: true`  
+- Navigate to `MainApp`
+

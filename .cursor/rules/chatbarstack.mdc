@@ -1,0 +1,105 @@
+---
+description: # DESCRIPTION  This rule file governs all post-onboarding functionality within the **Chat tab** of the Quran Chat app.  It consolidates logic, layout, component, state, and navigation standards for:  - `ChatHomeScreen` (main Chat hub) - `TopicChatScreen` (conversation interface) - `VerseStoryScreen` (immersive verse viewer) - Any future extensions like `BookmarksScreen`, `ChatHistoryScreen`  Cursor must reference this rule file before generating or modifying **any feature connected to the Chat experience**. It enforces atomic design patterns, state via Zustand, navigation conventions, Claude 3.7 usage, and theming via `theme.ts`.  This file supersedes `chatlogic.mdc`, `chatcomponentlibrary.mdc`, and `chatnavigation.mdc` by merging all into a single unified rule system for this domain.  Failure to comply may break cohesion across Quran Chat’s core functionality.
+globs: 
+alwaysApply: false
+---
+# QURAN CHAT — CHAT TAB / BAR STACK RULES
+
+## ✨ Purpose
+This ruleset governs **everything related to the main Chat experience** after onboarding.
+
+It covers the home screen under the Chat tab, the topic-based chat flow, verse story interface, and any state, navigation, or UI logic directly connected to post-onboarding chat. Cursor must refer to this file before generating any feature that touches the Chat tab.
+
+---
+
+## 🧠 Functional Scope
+
+### Screens Covered
+- `ChatHomeScreen`
+- `TopicChatScreen`
+- `VerseStoryScreen`
+- (Future) `BookmarksScreen`, `ChatHistoryScreen`
+
+### User Flow
+- ChatHomeScreen shows:
+  - Top avatar
+  - Verse of the Day
+  - Horizontal sections like “Ask about…”
+- Tapping a card opens either a chat screen or verse story
+- Assistant responds via Claude 3.7
+- User can react, share, copy responses
+- Optional features like bookmarking and reminders are layered on top
+
+---
+
+## 🧱 Component Architecture
+
+### Atoms
+- `IconButton` – standard tappable icon wrapper
+- `ChatBubble` – 1 message block, user/assistant styling
+- `ReactionRow` – thumbs up/down, copy, share, regenerate
+
+### Molecules
+- `PromptInput` – composer input at bottom
+- `VerseOfTheDayCard` – featured verse card
+- `CategoryCard` – topic preview card with title + user count
+- `UserAvatarWithBadge` – avatar + “New” pill
+
+### Organisms
+- `CategoryGroupSection` – title + scrollable CategoryCard row
+- `ChatHeader` – top bar for `TopicChatScreen`
+
+### Layouts
+- All screens must use `SafeAreaView` and `ScrollView` or `FlatList`
+- Use spacing and colors only from `theme.ts`
+- All text via `Typography` atom (variant-based)
+
+---
+
+## 🔀 Navigation Logic
+
+- All screens registered in `AppNavigator.tsx` or `ChatStackNavigator.tsx`
+- Navigation must be via `navigation.navigate("ScreenName")`
+- Before entering `TopicChatScreen`, set `currentTopic` in `useChatStore.ts`
+- Use default native transitions unless otherwise specified
+- `VerseStoryScreen` can fade in over dim background
+
+---
+
+## 🧃 State Management
+
+Global state handled by:
+- `useChatStore.ts`
+  - `currentTopic: string | null`
+  - `setTopic(topic: string)`
+  - `clearTopic()`
+
+Local screen state (like streaming or input text) can be handled via `useState`.
+
+Claude 3.7 prompt logic and response formatting go in `/lib/api/askQuran.ts`.
+
+---
+
+## 🎯 Design Rules
+
+- Never use raw hex values — always theme colors
+- No hardcoded spacing — always `theme.spacing`
+- All text uses `<Typography variant="...">`
+- Use proper component breakdown (atom → molecule → organism)
+- Reuse existing components wherever possible
+
+---
+
+## 🧭 Summary
+
+This rule file acts as the **single source of truth** for all screens and features under the “Chat” tab.  
+Cursor must follow these rules when generating:
+
+- Screens
+- Components
+- State slices
+- Navigation updates
+- Layout or style logic
+
+Violations or workarounds are not allowed unless explicitly approved.
+

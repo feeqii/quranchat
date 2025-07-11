@@ -1,0 +1,159 @@
+---
+description: Defines the visual identity, tone, and emotional feel of the Quran Chat app. Includes the color palette, typography, voice, and UX philosophy tailored for a peaceful, respectful, and minimal user experience. This file ensures all UI, copy, and interaction design stays consistent with the brand’s spiritual and aesthetic values.  Use this to:  Guide UI styling decisions  Align designers, devs, and AI agents on tone  Ensure all screens and components feel cohesive and intentional
+globs: 
+alwaysApply: false
+---
+# Quran Chat – Branding & Visual Guidelines
+
+Quran Chat is a spiritually respectful AI companion that helps Muslims reflect on the Quran daily. The entire app must feel peaceful, minimalist, emotionally grounded, and trustworthy. The experience should evoke calmness, contemplation, and a sense of divine presence — never clutter, gamification, or hype.
+
+---
+
+## 🎨 Color System
+
+All colors are referenced semantically for flexibility and scaling.
+
+```ts
+colors: {
+  primary: '#3C8C7E',         // Soft deep green
+  primarySoft: '#D9EDE7',     // Light green background
+  accent: '#C9A76D',          // Optional gold highlight
+  background: '#F8FAF9',
+  surface: '#FFFFFF',
+
+  textPrimary: '#1F2A2E',
+  textSecondary: '#4A5B60',
+  textMuted: '#889396',
+
+  success: '#4CAF50',
+  warning: '#FBC02D',
+  danger: '#D32F2F',
+}
+```
+
+---
+
+## 🖋 Typography
+
+Use generous line height, clean spacing, and font sizes that support calm readability. Use no more than **two fonts** throughout the app.
+
+```ts
+fonts: {
+  heading: 'Poppins-Bold',
+  body: 'Poppins-Regular',
+}
+
+fontSizes: {
+  h1: 28,
+  h2: 22,
+  h3: 18,
+  body: 16,
+  small: 14,
+}
+```
+
+Typography tone:
+- Clear, clean, and welcoming
+- Never techy, gamified, or sarcastic
+- Every word must feel intentional and gentle
+
+---
+
+## 📐 Spacing & Layout Tokens
+
+Use standardized spacing and radius throughout the app:
+
+```ts
+spacing: {
+  xs: 4,
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+}
+
+radii: {
+  sm: 6,
+  md: 12,
+  lg: 20,
+  full: 9999,
+}
+```
+
+**Buttons** and **cards** should use `radii.lg` by default.
+
+---
+
+## 🕊 Motion & Feedback
+
+Motion should be barely noticeable — used only to reinforce clarity, not to entertain.
+
+```ts
+animations: {
+  transition: 'ease-out',
+  duration: 300ms,
+  default: fade + slide (Y offset 20),
+}
+
+haptics: {
+  tap: light,
+  success: medium,
+}
+```
+
+Avoid:
+- Bounce, scale-up, or elastic transitions
+- Vibrant "pop" interactions
+- Lottie animations unless spiritual + slow
+
+---
+
+## 🧘 Tone & Copy
+
+Spoken tone should feel like a wise, gentle companion — not an app or assistant.
+
+### Examples of Acceptable Voice:
+- ✅ "Let’s reflect on this Ayah together"
+- ✅ "What’s on your mind today?"
+- ✅ "This verse may bring you peace"
+
+### Avoid:
+- ❌ "Ask me anything!"
+- ❌ "Ready to unlock your potential?"
+- ❌ Over-casual or tech/startup lingo
+
+---
+
+## 🧩 Iconography & Illustrations
+
+- Use **minimal** Islamic geometric shapes — no realism
+- Icon sets: Lucide, Feather, or custom outlined SVGs
+- Illustration style: flat, pastel, abstract — not cartoonish
+- No faces or people unless symbolic silhouettes
+- Acceptable icons: `book`, `star`, `heart`, `moon`, `light`, `quote`
+
+---
+
+## 🧑🏽 Audience Profile
+
+| Trait | Value |
+|-------|-------|
+| Age | 16–35 |
+| Religion | Primarily Muslim |
+| Device | iOS (Gen Z / Millennials) |
+| Goals | Strengthen spirituality, learn Quran, build habits |
+| Style Preference | Clean, intentional, aesthetic apps (Calm, Headspace, Stoic) |
+
+---
+
+## 🧭 General UX Principles
+
+- Use plenty of white space
+- Only one core action per screen
+- Avoid showing too many options at once
+- Every touchpoint should feel like a pause, not a transaction
+- Assume the user is mentally tired and seeking peace
+
+---
+
+**This brand guide must be followed rigorously. It defines the soul of the product, not just the style.**

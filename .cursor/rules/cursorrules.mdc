@@ -1,0 +1,123 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# .cursorrules – Quran Chat
+
+You are building **Quran Chat**, a mobile app built with React Native + Expo. The app is a spiritual AI assistant modeled after Bible Chat, designed for a peaceful, respectful Muslim audience. Follow these rules with strict precision.
+
+---
+
+## 1. FILE TYPES
+
+- All **UI components and screens** must use `.tsx`
+- All **Zustand slices, config, helpers, theme** must use `.ts`
+- Never use `.js` or `.jsx`
+- File names must use **PascalCase** (e.g. `OnboardingStepOne.tsx`)
+- Zustand keys and local variables use **camelCase**
+
+---
+
+## 2. FILE STRUCTURE
+
+Respect this folder structure:
+
+```
+/components
+  /atoms          → Low-level UI (Button, Text, ProgressBar)
+  /molecules      → Grouped elements (OptionCard, TestimonialCard)
+  /organisms      → High-level blocks (OnboardingQuestionBlock)
+
+/screens
+  /onboarding     → All onboarding screens
+
+/store            → Zustand slices
+/lib              → Helpers, API logic
+/constants        → theme.ts, static option arrays
+/navigation       → AppNavigator.tsx
+```
+
+Do not create new folders or files outside this structure unless explicitly instructed.
+
+---
+
+## 3. STYLING
+
+- Use [theme.ts](mdc:constants/theme.ts) for **all** color, font, and spacing values
+- No hardcoded hex, font names, or spacing
+- Use `StyleSheet.create()` or `nativewind` (if applicable)
+- All components must be responsive to screen size
+
+---
+
+## 4. COMPONENT RULES
+
+- Follow rules stated in [componentlibrary.mdc](mdc:.cursor/rules/componentlibrary.mdc)
+- All screens must use components from `@componentlibrary.mdc`
+- Never create one-off buttons, cards, or layouts inline
+- Atoms → Molecules → Organisms → Screens hierarchy must be followed
+- Shared logic blocks (like question flows or testimonials) must be reusable organisms
+
+---
+
+## 5. STATE MANAGEMENT
+_ Follow Rules Stated in [zustandslice.mdc](mdc:.cursor/rules/zustandslice.mdc)
+- Use Zustand only — no Context or Redux
+- Slice name: `useOnboardingStore.ts`
+- Persist state via AsyncStorage with key `@onboardingData`
+- All state keys must match those in `zustandslice.mdc`
+- Never store onboarding logic in local component state
+
+---
+
+## 6. NAVIGATION
+
+- Follow rules stated in [navigation.mdc](mdc:.cursor/rules/navigation.mdc)
+- Use React Navigation (stack-based)
+- Route user to `OnboardingStack` if `onboardingCompleted === false`
+- Route to `MainAppStack` if complete
+- Never define routes inline in screens — register all in `AppNavigator.tsx`
+
+---
+
+## 7. PROMPT FORMAT
+
+When generating code in Cursor, **always** start prompts like this:
+
+→ `Build a React Native screen called OnboardingStep3.tsx that...`
+
+Include:
+- File path (`/screens/onboarding/`)
+- What components to use (from library)
+- State connections (via Zustand)
+- Navigation logic (next/prev screen)
+
+---
+
+## 8. BRAND + TONE
+
+- Always follow visual and interaction style from `branding.mdc`
+- Keep all screens clean, spiritual, respectful
+- No flashy colors, techy icons, or overly casual tone
+- Reflect the peaceful vibe of Quran Chat
+
+---
+
+## 9. SCREEN BEHAVIOR
+
+- Every onboarding screen must:
+  - Use `ProgressBar` component
+  - Save relevant state to Zustand
+  - Navigate forward on “Continue”
+- Screens with conditional logic (e.g. Yes/No) must handle branching cleanly
+- Final screen must set `onboardingCompleted: true` and redirect
+
+---
+
+## 10. GENERAL RULES
+
+- Never mix UI and logic in the same file
+- Never write duplicate styles — reuse atoms and utilities
+- Keep components modular and composable
+- Always write clean, DRY, scalable code

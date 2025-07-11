@@ -1,0 +1,81 @@
+---
+description: Cursor will apply these rules specifically when developing or modifying components related to your Profile screen, ensuring it adheres strictly to your app’s clean design language, state management strategy, and interaction guidelines.
+globs: 
+alwaysApply: false
+---
+# ProfileScreen.cursorrules
+rules:
+  # Component Structure and Naming
+  structure:
+    root: src/components/profile
+    hierarchy:
+      - atoms
+      - molecules
+      - ProfileScreen
+    naming:
+      components: PascalCase
+      props: camelCase
+
+  # Design Consistency
+  design:
+    colors:
+      primary: "#3C8C7E"       # Emerald Green
+      background: "#F8FAF9"    # Soft Gray
+      accent: "#D9EDE7"        # Mint
+      cardBackground: "#FFFFFF"
+      textPrimary: "#1E3A34"
+      textSecondary: "#6B9080"
+    typography:
+      fontFamily: "Inter-Regular"
+      fontSize: 16
+      headingSize: 22
+      subheadingSize: 18
+      fontWeight:
+        normal: 400
+        medium: 500
+        bold: 600
+    spacing:
+      padding: 16
+      marginVertical: 12
+      componentGap: 16
+    card:
+      borderRadius: 12
+      shadow:
+        elevation: 3
+        opacity: 0.05
+
+  # Iconography and Assets
+  icons:
+    library: "lucide-react-native"
+    defaultSize: 20
+    color: primary
+
+  # Interaction Design
+  interactions:
+    feedback:
+      pressEffect: "opacity(0.7)"
+      transitionDuration: "150ms"
+    editableFields:
+      underlineColor: accent
+      activeUnderlineColor: primary
+
+  # UX Principles
+  ux:
+    scrollBehavior: "smooth"
+    inputBehavior:
+      fieldsClearable: true
+      autoSaveOnBlur: true
+  # State Management
+  state:
+    managementLibrary: "Zustand"
+    persistenceLayer: "AsyncStorage"
+    slices:
+      - userProfileSlice
+      - subscriptionSlice
+      - appSettingsSlice
+
+  # Navigation
+  navigation:
+    method: "React Navigation"
+    headerVisible: false
+    transition: "fade"
