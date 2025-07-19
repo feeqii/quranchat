@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
+import { t } from '../../localization';
 import { SelectableContextChip } from '../atoms/SelectableContextChip';
 import { theme } from '../../constants/theme';
 
 interface ContextOption {
   id: string;
-  label: string;
   icon: string;
 }
 
@@ -15,18 +15,18 @@ interface ContextSelectionGridProps {
 }
 
 const CONTEXT_OPTIONS: ContextOption[] = [
-  { id: 'work', label: 'Work', icon: '💼' },
-  { id: 'school', label: 'School', icon: '📚' },
-  { id: 'career', label: 'Career', icon: '📈' },
-  { id: 'exercise', label: 'Exercise', icon: '🏃‍♂️' },
-  { id: 'family', label: 'Family', icon: '👨‍👩‍👧‍👦' },
-  { id: 'love', label: 'Love', icon: '❤️' },
-  { id: 'health', label: 'Health', icon: '🏥' },
-  { id: 'hobbies', label: 'Hobbies', icon: '🎨' },
-  { id: 'friends', label: 'Friends', icon: '👥' },
-  { id: 'socialmedia', label: 'Social Media', icon: '💬' },
-  { id: 'food', label: 'Food', icon: '🍽️' },
-  { id: 'weather', label: 'Weather', icon: '🌤️' },
+  { id: 'work', icon: '💼' },
+  { id: 'school', icon: '📚' },
+  { id: 'career', icon: '📈' },
+  { id: 'exercise', icon: '🏃‍♂️' },
+  { id: 'family', icon: '👨‍👩‍👧‍👦' },
+  { id: 'love', icon: '❤️' },
+  { id: 'health', icon: '🏥' },
+  { id: 'hobbies', icon: '🎨' },
+  { id: 'friends', icon: '👥' },
+  { id: 'socialmedia', icon: '💬' },
+  { id: 'food', icon: '🍽️' },
+  { id: 'weather', icon: '🌤️' },
 ];
 
 export const ContextSelectionGrid: React.FC<ContextSelectionGridProps> = ({
@@ -57,7 +57,7 @@ export const ContextSelectionGrid: React.FC<ContextSelectionGridProps> = ({
         ]}
       >
         <SelectableContextChip
-          label={context.label}
+          label={t(`contextOptions.${context.id}`)}
           icon={context.icon}
           isSelected={isSelected}
           onPress={() => onContextToggle(context.id)}

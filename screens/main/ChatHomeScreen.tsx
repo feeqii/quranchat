@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/theme';
 import { useChatStore } from '../../store/useChatStore';
 import { categoryImages, getRandomUserCount } from '../../constants/categoryImages';
+import { t } from '../../localization';
 
 // Components
 import { Typography } from '../../components/atoms/Typography';
@@ -34,48 +35,48 @@ export const ChatHomeScreen: React.FC = () => {
 
   // Expanded category data with comprehensive spiritual topics
   const askAboutCategories = [
-    createCategory("Creation"),
-    createCategory("Relationships"),
-    createCategory("Purpose"),
-    createCategory("Patience")
+    createCategory(t('categories.creation')),
+    createCategory(t('categories.relationships')),
+    createCategory(t('categories.purpose')),
+    createCategory(t('categories.patience'))
   ];
 
   const spiritualGuidanceCategories = [
-    createCategory("Prayer & Worship"),
-    createCategory("Forgiveness"),
-    createCategory("Gratitude")
+    createCategory(t('categories.prayerWorship')),
+    createCategory(t('categories.forgiveness')),
+    createCategory(t('categories.gratitude'))
   ];
 
   const lifeChallengesCategories = [
-    createCategory("Anxiety"),
-    createCategory("Stress"),
-    createCategory("Loss"),
-    createCategory("Loneliness"),
-    createCategory("Grief")
+    createCategory(t('categories.anxiety')),
+    createCategory(t('categories.stress')),
+    createCategory(t('categories.loss')),
+    createCategory(t('categories.loneliness')),
+    createCategory(t('categories.grief'))
   ];
 
   const personalGrowthCategories = [
-    createCategory("Self-love"),
-    createCategory("Wisdom"),
-    createCategory("Growth"),
-    createCategory("Purpose")
+    createCategory(t('categories.selfLove')),
+    createCategory(t('categories.wisdom')),
+    createCategory(t('categories.growth')),
+    createCategory(t('categories.purpose'))
   ];
 
   const relationshipsCategories = [
-    createCategory("Family"),
-    createCategory("Friendship"),
-    createCategory("Marriage"),
-    createCategory("Community"),
-    createCategory("Compassion")
+    createCategory(t('categories.family')),
+    createCategory(t('categories.friendship')),
+    createCategory(t('categories.marriage')),
+    createCategory(t('categories.community')),
+    createCategory(t('categories.compassion'))
   ];
 
   const worshipFaithCategories = [
-    createCategory("Prayer"),
-    createCategory("Du'a"),
-    createCategory("Tawakkul"),
-    createCategory("Taqwa"),
-    createCategory("Iman"),
-    createCategory("Ihsan")
+    createCategory(t('categories.prayer')),
+    createCategory(t('categories.dua')),
+    createCategory(t('categories.tawakkul')),
+    createCategory(t('categories.taqwa')),
+    createCategory(t('categories.iman')),
+    createCategory(t('categories.ihsan'))
   ];
 
   // handleVersePress is now handled by the VerseOfTheDayCard component
@@ -93,7 +94,7 @@ export const ChatHomeScreen: React.FC = () => {
           color={theme.colors.textPrimary}
           style={styles.headerTitle}
         >
-          Chat
+          {t('chat')}
         </Typography>
         <IconButton
           icon={<Icon.History size={22} color={theme.colors.textMuted} />}
@@ -118,37 +119,37 @@ export const ChatHomeScreen: React.FC = () => {
 
         {/* Ask About Categories */}
         <CategoryGroupSection
-          title="Ask about..."
+          title={t('askAbout')}
           categories={askAboutCategories}
         />
 
         {/* Spiritual Guidance */}
         <CategoryGroupSection
-          title="Spiritual Guidance"
+          title={t('spiritualGuidance')}
           categories={spiritualGuidanceCategories}
         />
 
         {/* Life Challenges */}
         <CategoryGridSection
-          title="Life Challenges"
+          title={t('lifeChallenges')}
           categories={lifeChallengesCategories}
         />
 
         {/* Personal Growth */}
         <CategoryGridSection
-          title="Personal Growth"
+          title={t('personalGrowth')}
           categories={personalGrowthCategories}
         />
 
         {/* Relationships */}
         <CategoryGridSection
-          title="Relationships"
+          title={t('relationships')}
           categories={relationshipsCategories}
         />
 
         {/* Worship & Faith */}
         <CategoryGridSection
-          title="Worship & Faith"
+          title={t('worshipFaith')}
           categories={worshipFaithCategories}
         />
 
@@ -182,7 +183,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   historyButton: {
-    marginLeft: theme.spacing.sm,
+    marginStart: theme.spacing.sm,
     padding: theme.spacing.sm,
     borderRadius: theme.radii.md,
     backgroundColor: theme.colors.primarySoft,

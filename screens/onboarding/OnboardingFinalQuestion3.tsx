@@ -5,6 +5,7 @@ import { WidgetProgressLayout } from '../../components/organisms/WidgetProgressL
 import { Typography } from '../../components/atoms/Typography';
 import { YesNoBlock } from '../../components/organisms/YesNoBlock';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
+import { t } from '../../localization';
 
 export const OnboardingFinalQuestion3: React.FC = () => {
   const { setField, completeOnboarding } = useOnboardingStore();
@@ -27,11 +28,11 @@ export const OnboardingFinalQuestion3: React.FC = () => {
     >
       <View style={styles.content}>
         <Typography variant="h3" style={styles.preQuestion}>
-          To move forward, please specify
+          {t('toMoveForwardPleaseSpecify')}
         </Typography>
         
         <YesNoBlock
-          question="Would you like to have instant access to daily inspiration and your progress?"
+          question={t('wouldYouLikeToHaveInstantAccessToDailyInspirationAndYourProgress')}
           onYes={handleYes}
           onNo={handleNo}
         />

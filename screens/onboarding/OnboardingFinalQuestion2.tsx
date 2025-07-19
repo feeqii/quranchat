@@ -6,6 +6,7 @@ import { WidgetProgressLayout } from '../../components/organisms/WidgetProgressL
 import { Typography } from '../../components/atoms/Typography';
 import { YesNoBlock } from '../../components/organisms/YesNoBlock';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
+import { t } from '../../localization';
 
 export const OnboardingFinalQuestion2: React.FC = () => {
   const navigation = useNavigation();
@@ -29,11 +30,11 @@ export const OnboardingFinalQuestion2: React.FC = () => {
     >
       <View style={styles.content}>
         <Typography variant="h3" style={styles.preQuestion}>
-          To move forward, please specify
+          {t('toMoveForwardPleaseSpecify')}
         </Typography>
         
         <YesNoBlock
-          question="Would you like a daily reminder of your faith journey on your Home Screen?"
+          question={t('wouldYouLikeADailyReminderOfYourFaithJourneyOnYourHomeScreen')}
           onYes={handleYes}
           onNo={handleNo}
         />

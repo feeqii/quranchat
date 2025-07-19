@@ -1,8 +1,9 @@
-import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
-import { theme } from '../../constants/theme';
+import React from "react";
+import { View, StyleSheet, Dimensions } from "react-native";
+import { theme } from "../../constants/theme";
+import { position, flexDirection } from "../../utils/rtl";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 export const WidgetIllustration: React.FC = () => {
   return (
@@ -10,7 +11,7 @@ export const WidgetIllustration: React.FC = () => {
       <View style={styles.phone}>
         {/* Phone screen content */}
         <View style={styles.statusBar} />
-        
+
         {/* App icons grid */}
         <View style={styles.appsGrid}>
           {/* Row 1 */}
@@ -20,7 +21,7 @@ export const WidgetIllustration: React.FC = () => {
             <View style={styles.appIcon} />
             <View style={styles.appIcon} />
           </View>
-          
+
           {/* Row 2 */}
           <View style={styles.appRow}>
             <View style={styles.appIcon} />
@@ -28,7 +29,7 @@ export const WidgetIllustration: React.FC = () => {
             <View style={styles.appIcon} />
             <View style={styles.appIcon} />
           </View>
-          
+
           {/* Row 3 */}
           <View style={styles.appRow}>
             <View style={styles.appIcon} />
@@ -37,12 +38,12 @@ export const WidgetIllustration: React.FC = () => {
             <View style={styles.appIcon} />
           </View>
         </View>
-        
+
         {/* Touch indicator */}
         <View style={styles.touchIndicator}>
           <View style={styles.finger} />
         </View>
-        
+
         {/* Bottom indicator */}
         <View style={styles.homeIndicator} />
       </View>
@@ -52,8 +53,8 @@ export const WidgetIllustration: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: theme.spacing.xl,
   },
   phone: {
@@ -69,17 +70,17 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.textPrimary,
     borderRadius: theme.radii.sm,
     marginBottom: theme.spacing.lg,
-    width: '40%',
-    alignSelf: 'center',
+    width: "40%",
+    alignSelf: "center",
   },
   appsGrid: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     paddingTop: theme.spacing.lg,
   },
   appRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: flexDirection(),
+    justifyContent: "space-between",
     marginBottom: theme.spacing.lg,
   },
   appIcon: {
@@ -90,11 +91,11 @@ const styles = StyleSheet.create({
     ...theme.shadows.sm,
   },
   touchIndicator: {
-    position: 'absolute',
-    bottom: theme.spacing['2xl'],
-    right: theme.spacing.xl,
-    alignItems: 'center',
-    justifyContent: 'center',
+    position: "absolute",
+    bottom: theme.spacing["2xl"],
+    ...position(undefined, theme.spacing.xl),
+    alignItems: "center",
+    justifyContent: "center",
   },
   finger: {
     width: 24,
@@ -105,10 +106,10 @@ const styles = StyleSheet.create({
   },
   homeIndicator: {
     height: 4,
-    width: '35%',
+    width: "35%",
     backgroundColor: theme.colors.textPrimary,
     borderRadius: theme.radii.sm,
-    alignSelf: 'center',
+    alignSelf: "center",
     marginTop: theme.spacing.md,
   },
 }); 

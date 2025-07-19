@@ -91,6 +91,6 @@ const styles = StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: theme.colors.primarySoft,
-    marginLeft: theme.spacing.md + 32 + theme.spacing.md, // Align with text content
+    marginStart: theme.spacing.md + 32 + theme.spacing.md, // Align with text content
   },
 }); 

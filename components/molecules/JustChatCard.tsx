@@ -6,6 +6,7 @@ import { theme } from '../../constants/theme';
 import { Typography } from '../atoms/Typography';
 import { Icon } from '../atoms/Icon';
 import { useChatStore } from '../../store/useChatStore';
+import { t } from '../../localization';
 
 interface JustChatCardProps {
   style?: ViewStyle;
@@ -56,7 +57,7 @@ export const JustChatCard: React.FC<JustChatCardProps> = ({ style }) => {
             color="#2C3E50"
             style={styles.title}
           >
-            Just Chat
+            {t('justChat')}
           </Typography>
           
           <Typography 
@@ -64,7 +65,7 @@ export const JustChatCard: React.FC<JustChatCardProps> = ({ style }) => {
             color="#6B7C93"
             style={styles.subtitle}
           >
-            Ask anything about Islam, spirituality, or life guidance
+            {t('askAnythingAboutIslamSpiritualityOrLifeGuidance')}
           </Typography>
         </LinearGradient>
       </TouchableOpacity>

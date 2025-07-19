@@ -3,6 +3,7 @@ import { View, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Alert, An
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
+import { t } from '../../localization';
 import { Typography } from '../../components/atoms/Typography';
 import { Spacer } from '../../components/atoms/Spacer';
 import { SecondaryButton } from '../../components/atoms/SecondaryButton';
@@ -52,13 +53,13 @@ User's thoughts: "${userReflection}"`;
       clearMessages();
       addMessage({ 
         role: 'user', 
-        content: `I'd like to discuss this reflection further: ${generatedReflection}` 
+        content: t('idLikeToDiscussThisReflectionFurther', { reflection: generatedReflection })
       });
 
       navigation.navigate('TopicChatScreen' as never);
     } catch (error) {
       console.error('Error navigating to chat:', error);
-      Alert.alert('Error', 'Unable to start chat discussion.');
+      Alert.alert(t('error'), t('unableToStartChatDiscussion'));
     }
   };
 
@@ -96,11 +97,11 @@ User's thoughts: "${userReflection}"`;
       }),
     ]).start();
 
-    Alert.alert('Audio Feature', 'Audio playback feature coming soon!');
+    Alert.alert(t('audioFeature'), t('audioPlaybackFeatureComingSoon'));
   };
 
   const handleShare = () => {
-    Alert.alert('Share', 'Sharing feature coming soon!');
+    Alert.alert(t('share'), t('sharingFeatureComingSoon'));
   };
 
   return (
@@ -120,7 +121,7 @@ User's thoughts: "${userReflection}"`;
           color={theme.colors.textPrimary}
           style={styles.headerTitle}
         >
-          Your Reflection
+          {t('yourReflection')}
         </Typography>
         
         <View style={styles.headerSpacer} />
@@ -169,7 +170,7 @@ User's thoughts: "${userReflection}"`;
                 color={theme.colors.textMuted}
                 style={styles.verseLabel}
               >
-                REFLECTING ON
+                {t('reflectingOn')}
               </Typography>
               
               <Typography
@@ -206,7 +207,7 @@ User's thoughts: "${userReflection}"`;
               color={theme.colors.textMuted}
               style={styles.contextLabel}
             >
-              YOUR JOURNEY TODAY
+              {t('yourJourneyToday')}
             </Typography>
             
             <Typography
@@ -214,7 +215,7 @@ User's thoughts: "${userReflection}"`;
               color="#6B7280"
               style={styles.contextText}
             >
-              Mood: {moodDescription} • Focusing on: {selectedContexts.join(', ')}
+              {t('mood')} {moodDescription} {t('focusingOn')} {selectedContexts.join(', ')}
             </Typography>
           </LinearGradient>
         </View>
@@ -242,7 +243,7 @@ User's thoughts: "${userReflection}"`;
                 color={theme.colors.textMuted}
                 style={styles.actionButtonText}
               >
-                Listen
+                {t('listen')}
               </Typography>
             </TouchableOpacity>
           </Animated.View>
@@ -263,7 +264,7 @@ User's thoughts: "${userReflection}"`;
               color={theme.colors.textMuted}
               style={styles.actionButtonText}
             >
-              Ask
+              {t('ask')}
             </Typography>
           </TouchableOpacity>
 
@@ -283,7 +284,7 @@ User's thoughts: "${userReflection}"`;
               color={theme.colors.textMuted}
               style={styles.actionButtonText}
             >
-              Share
+              {t('share')}
             </Typography>
           </TouchableOpacity>
         </View>
@@ -305,7 +306,7 @@ User's thoughts: "${userReflection}"`;
                 color="#059669"
                 style={styles.completeButtonText}
               >
-                Complete Journey
+                {t('completeJourney')}
               </Typography>
             </LinearGradient>
           </TouchableOpacity>
@@ -330,7 +331,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     padding: theme.spacing.xs,
-    marginRight: theme.spacing.sm,
+    marginEnd: theme.spacing.sm,
   },
   headerTitle: {
     flex: 1,

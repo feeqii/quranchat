@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.surface,
   },
   actionIcon: {
-    marginRight: 16,
+    marginEnd: 16,
   },
   actionLabel: {
     fontSize: 16,

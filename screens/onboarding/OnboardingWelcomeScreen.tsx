@@ -12,6 +12,7 @@ import { theme } from '../../constants/theme';
 import { SectionTitle } from '../../components/atoms/SectionTitle';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
 import { SecondaryButton } from '../../components/atoms/SecondaryButton';
+import { t } from '../../localization';
 
 export const OnboardingWelcomeScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -33,15 +34,15 @@ export const OnboardingWelcomeScreen: React.FC = () => {
         {/* Logo Section */}
         <View style={styles.logoContainer}>
           <View style={styles.logoPlaceholder}>
-            <Text style={styles.logoText}>Quran Chat</Text>
+            <Text style={styles.logoText}>{t('appName')}</Text>
           </View>
         </View>
 
         {/* Title Section */}
         <View style={styles.titleContainer}>
           <SectionTitle
-            title="Your Faith, Always Visible"
-            subtitle="Keep your faith at hand by adding our widget to your Home Screen"
+            title={t('welcomeTitle')}
+            subtitle={t('welcomeSubtitle')}
           />
         </View>
 
@@ -50,7 +51,7 @@ export const OnboardingWelcomeScreen: React.FC = () => {
           <View style={styles.socialProofBadge}>
             <Text style={styles.starIcon}>⭐</Text>
             <Text style={styles.socialProofText}>
-              4.9 Average Rating | Over 10 Million Downloads
+              {t('socialProofText')}
             </Text>
           </View>
         </View>
@@ -61,12 +62,12 @@ export const OnboardingWelcomeScreen: React.FC = () => {
         {/* Action Buttons */}
         <View style={styles.buttonContainer}>
           <PrimaryButton
-            label="Continue without an account"
+            label={t('continueWithoutAccount')}
             onPress={handleContinueAsGuest}
             style={styles.primaryButton}
           />
           <SecondaryButton
-            label="Sign up or Log in"
+            label={t('signUpOrLogin')}
             onPress={handleSignUpOrLogin}
             style={styles.secondaryButton}
           />
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
   },
   starIcon: {
     fontSize: theme.fontSizes.body,
-    marginRight: theme.spacing.sm,
+    marginEnd: theme.spacing.sm,
   },
   socialProofText: {
     fontSize: theme.fontSizes.small,

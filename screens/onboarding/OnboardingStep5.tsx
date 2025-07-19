@@ -6,20 +6,21 @@ import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQu
 import { OptionGroup } from '../../components/molecules/OptionGroup';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
-
-const ageGroupOptions = [
-  '13–17',
-  '18–24',
-  '25–34',
-  '35–44',
-  '45–54',
-  '55+'
-];
+import { t } from '../../localization';
 
 export const OnboardingStep5: React.FC = () => {
   const navigation = useNavigation();
   const { setField } = useOnboardingStore();
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  const ageGroupOptions = [
+    t('ageGroup13to17'),
+    t('ageGroup18to24'),
+    t('ageGroup25to34'),
+    t('ageGroup35to44'),
+    t('ageGroup45to54'),
+    t('ageGroup55plus')
+  ];
 
   const handleContinue = () => {
     if (selectedOption) {
@@ -31,8 +32,8 @@ export const OnboardingStep5: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <OnboardingQuestionBlock
-        title="What's your age group?"
-        subtitle="This helps us tailor your experience."
+        title={t('whatsYourAgeGroup')}
+        subtitle={t('thisHelpsUsTailorYourExperience')}
         progress={50}
       >
         <View style={styles.content}>
@@ -46,7 +47,7 @@ export const OnboardingStep5: React.FC = () => {
           
           <View style={styles.buttonContainer}>
             <PrimaryButton
-              label="Continue"
+              label={t('continue')}
               onPress={handleContinue}
               disabled={!selectedOption}
             />

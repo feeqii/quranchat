@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: theme.radii.pill,
-    marginRight: theme.spacing.md,
+    marginEnd: theme.spacing.md,
   },
   nameContainer: {
     flex: 1,
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   star: {
     fontSize: theme.fontSizes.body,
-    marginRight: 2,
+    marginEnd: 2,
   },
   starFilled: {
     color: theme.colors.accent,

@@ -11,6 +11,7 @@ import {
   Share,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { t } from '../../localization';
 import { theme } from '../../constants/theme';
 import { useChatStore } from '../../store/useChatStore';
 import { useHistoryStore } from '../../store/useHistoryStore';
@@ -125,7 +126,7 @@ export const TopicChatScreen: React.FC = () => {
           console.error('Error getting auto-response:', error);
           const fallbackMessage: ChatMessage = {
             role: 'assistant',
-            content: "I apologize, but I'm having difficulty responding at this moment. May Allah (SWT) guide you to the answers you seek. 'And whoever relies upon Allah - then He is sufficient for him.' (Qur'an 65:3)",
+            content: t('iApologizeButImHavingDifficultyRespondingAtThisMoment'),
           };
           addMessage(fallbackMessage);
         } finally {
@@ -167,7 +168,7 @@ export const TopicChatScreen: React.FC = () => {
       // Add a graceful fallback message
       const fallbackMessage: ChatMessage = {
         role: 'assistant',
-        content: "I apologize, but I'm having difficulty responding at this moment. May Allah (SWT) guide you to the answers you seek. 'And whoever relies upon Allah - then He is sufficient for him.' (Qur'an 65:3)",
+        content: t('iApologizeButImHavingDifficultyRespondingAtThisMoment'),
       };
       addMessage(fallbackMessage);
     } finally {
@@ -208,7 +209,7 @@ export const TopicChatScreen: React.FC = () => {
 
   const handleCopyMessage = (content: string) => {
     // Future: Implement clipboard functionality
-    Alert.alert('Copy', 'This feature will be available soon, insha\'Allah.');
+    Alert.alert(t('copy'), t('thisFeatureWillBeAvailableSoonInshaallah'));
   };
 
   const handleShareMessage = async (content: string) => {
@@ -220,21 +221,21 @@ export const TopicChatScreen: React.FC = () => {
           const sessionContent = formatChatSession(session.topic, session.messages);
           await Share.share({
             message: sessionContent,
-            title: `Quran Chat - ${session.topic}`,
+            title: `${t('quranChatSpiritualGuidance')} - ${session.topic}`,
           });
         } else {
-          Alert.alert('Error', 'Unable to find this conversation.');
+          Alert.alert(t('error'), t('unableToFindThisConversation'));
         }
       } else {
         // In regular mode, share just the message
         await Share.share({
-          message: `🕌 Quran Chat\n\n${content}`,
-          title: 'Quran Chat - Spiritual Guidance',
+          message: `🕌 ${t('quranChatSpiritualGuidance')}\n\n${content}`,
+          title: t('quranChatSpiritualGuidance'),
         });
       }
     } catch (error) {
       console.error('Error sharing:', error);
-      Alert.alert('Error', 'Unable to share this content.');
+      Alert.alert(t('error'), t('unableToShareThisContent'));
     }
   };
 
@@ -297,7 +298,7 @@ export const TopicChatScreen: React.FC = () => {
       />
       <View style={styles.headerContent}>
         <Typography variant="h2" color={theme.colors.textPrimary}>
-          {currentTopic || 'Chat'}
+          {currentTopic || t('chat')}
         </Typography>
       </View>
     </View>
@@ -310,7 +311,7 @@ export const TopicChatScreen: React.FC = () => {
         color={theme.colors.textMuted}
         style={styles.emptyStateText}
       >
-        Peace be upon you. How may I assist you in your spiritual journey today?
+        {t('peaceBeUponYouHowMayIAssistYouInYourSpiritualJourneyToday')}
       </Typography>
     </View>
   );
@@ -380,12 +381,12 @@ const styles = StyleSheet.create({
     borderBottomColor: theme.colors.primarySoft,
   },
   backButton: {
-    marginRight: theme.spacing.sm,
+    marginEnd: theme.spacing.sm,
   },
   headerContent: {
     flex: 1,
     alignItems: 'center',
-    marginRight: theme.spacing.lg, // Offset for the back button
+    marginEnd: theme.spacing.lg, // Offset for the back button
   },
   messagesList: {
     flexGrow: 1,

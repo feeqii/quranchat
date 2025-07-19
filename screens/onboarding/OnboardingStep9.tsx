@@ -5,27 +5,28 @@ import { theme } from '../../constants/theme';
 import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQuestionBlock';
 import { TestimonialCard } from '../../components/molecules/TestimonialCard';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
+import { t } from '../../localization';
+
+export const OnboardingStep9: React.FC = () => {
+  const navigation = useNavigation();
 
 const testimonials = [
   {
     name: "Fatima",
-    text: "This keeps me grounded in daily Quranic reflection. The widget on my home screen is a beautiful reminder of Allah's presence throughout my day.",
+      text: t('thisKeepsMeGroundedInDailyQuranicReflection'),
     rating: 5,
   },
   {
     name: "Omar",
-    text: "The widget reminds me to pause, reflect, and reconnect with my faith. It's like having a gentle spiritual companion in my pocket.",
+      text: t('theWidgetRemindsMeToPauseReflectAndReconnect'),
     rating: 5,
   },
   {
     name: "Layla",
-    text: "Simple, elegant, and deeply helpful. I feel more spiritually consistent and connected to the Quran than ever before.",
+      text: t('simpleElegantAndDeeplyHelpful'),
     rating: 5,
   },
 ];
-
-export const OnboardingStep9: React.FC = () => {
-  const navigation = useNavigation();
 
   const handleContinue = () => {
     navigation.navigate('OnboardingFinalQuestion1' as never);
@@ -34,8 +35,8 @@ export const OnboardingStep9: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <OnboardingQuestionBlock
-        title="What others are saying"
-        subtitle="Real reflections from real users"
+        title={t('whatOthersAreSaying')}
+        subtitle={t('realReflectionsFromRealUsers')}
         progress={90}
       >
         <View style={styles.content}>
@@ -56,7 +57,7 @@ export const OnboardingStep9: React.FC = () => {
           
           <View style={styles.buttonContainer}>
             <PrimaryButton
-              label="Continue"
+              label={t('continue')}
               onPress={handleContinue}
             />
           </View>

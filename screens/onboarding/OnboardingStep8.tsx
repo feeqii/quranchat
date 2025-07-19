@@ -5,6 +5,7 @@ import { theme } from '../../constants/theme';
 import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQuestionBlock';
 import { AnswerCard } from '../../components/molecules/AnswerCard';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
+import { t } from '../../localization';
 
 export const OnboardingStep8: React.FC = () => {
   const navigation = useNavigation();
@@ -16,25 +17,21 @@ export const OnboardingStep8: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <OnboardingQuestionBlock
-        title="Deepen your relationship with Allah"
-        subtitle="Here's how Quran Chat might support you"
+        title={t('deepenYourRelationshipWithAllah')}
+        subtitle={t('heresHowQuranChatMightSupportYou')}
         progress={80}
       >
         <View style={styles.content}>
           <View style={styles.cardContainer}>
             <AnswerCard
-              question="How can I strengthen my faith?"
-              answer={`Strengthening your faith begins with regular remembrance of Allah and reflection on His words.
-
-"Indeed, in the remembrance of Allah do hearts find rest." — Surah Ar-Ra'd (13:28)
-
-Start small: recite an Ayah daily, reflect on its meaning, and apply it in your actions. Build consistency. Faith is not a feeling — it's a relationship nurtured through practice, patience, and presence.`}
+              question={t('howCanIStrengthenMyFaith')}
+              answer={t('faithStrengtheningAnswer')}
             />
           </View>
           
           <View style={styles.buttonContainer}>
             <PrimaryButton
-              label="Continue"
+              label={t('continue')}
               onPress={handleContinue}
             />
           </View>

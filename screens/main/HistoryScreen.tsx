@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -6,14 +6,15 @@ import {
   FlatList,
   TouchableOpacity,
   ListRenderItem,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { theme } from '../../constants/theme';
-import { useHistoryStore } from '../../store/useHistoryStore';
-import { useChatStore } from '../../store/useChatStore';
-import { Typography } from '../../components/atoms/Typography';
-import { Spacer } from '../../components/atoms/Spacer';
-import { HistoryCard } from '../../components/molecules/HistoryCard';
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { theme } from "../../constants/theme";
+import { useHistoryStore } from "../../store/useHistoryStore";
+import { useChatStore } from "../../store/useChatStore";
+import { Typography } from "../../components/atoms/Typography";
+import { Spacer } from "../../components/atoms/Spacer";
+import { HistoryCard } from "../../components/molecules/HistoryCard";
+import { t } from "../../localization";
 
 interface ChatSession {
   id: string;
@@ -30,17 +31,14 @@ type FilterType = "all" | "favorites";
 
 export const HistoryScreen: React.FC = () => {
   const navigation = useNavigation();
-  const {
-    sessions,
-    toggleFavorite,
-  } = useHistoryStore();
+  const { sessions, toggleFavorite } = useHistoryStore();
   const { setTopic, loadMessages } = useChatStore();
 
   const [filter, setFilter] = useState<FilterType>("all");
 
   // Filter sessions based on selected tab
-  const filteredSessions = sessions.filter(session =>
-    filter === "all" ? true : session.isFavorite
+  const filteredSessions = sessions.filter((session) =>
+    filter === "all" ? true : session.isFavorite,
   );
 
   const handleSessionPress = (session: ChatSession) => {
@@ -62,40 +60,40 @@ export const HistoryScreen: React.FC = () => {
     const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 
     if (diffInDays === 0) {
-      return date.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
+      return date.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
       });
     } else if (diffInDays === 1) {
-      return 'Yesterday';
+      return t("yesterday");
     } else if (diffInDays < 7) {
-      return `${diffInDays} days ago`;
+      return t("daysAgo", { count: diffInDays });
     } else {
-      return date.toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
       });
     }
   };
 
-  const getPreviewText = (messages: ChatSession['messages']) => {
+  const getPreviewText = (messages: ChatSession["messages"]) => {
     const lastAssistantMessage = messages
       .slice()
       .reverse()
-      .find(msg => msg.role === 'assistant');
-    
+      .find((msg) => msg.role === "assistant");
+
     if (lastAssistantMessage) {
       return lastAssistantMessage.content.length > 80
-        ? lastAssistantMessage.content.substring(0, 80) + '...'
+        ? lastAssistantMessage.content.substring(0, 80) + "..."
         : lastAssistantMessage.content;
     }
-    
-    return 'No assistant response';
+
+    return t("noAssistantResponse");
   };
 
   const renderTabButton = (tabFilter: FilterType, label: string) => {
     const isActive = filter === tabFilter;
-    
+
     return (
       <TouchableOpacity
         style={[styles.tabButton, isActive && styles.tabButtonActive]}
@@ -113,7 +111,9 @@ export const HistoryScreen: React.FC = () => {
     );
   };
 
-  const renderHistoryCard: ListRenderItem<ChatSession> = ({ item: session }) => {
+  const renderHistoryCard: ListRenderItem<ChatSession> = ({
+    item: session,
+  }) => {
     return (
       <HistoryCard
         session={session}
@@ -132,7 +132,9 @@ export const HistoryScreen: React.FC = () => {
         align="center"
         style={styles.emptyStateText}
       >
-        No {filter === "favorites" ? "favorites" : "conversations"} yet.
+        {t("noConversationsYet", {
+          filter: filter === "favorites" ? t("favorites") : t("all"),
+        })}
       </Typography>
       <Spacer size="sm" />
       <Typography
@@ -141,10 +143,9 @@ export const HistoryScreen: React.FC = () => {
         align="center"
         style={styles.emptyStateSubtext}
       >
-        {filter === "favorites" 
-          ? "Star conversations to see them here."
-          : "Start a conversation to build your spiritual archive."
-        }
+        {filter === "favorites"
+          ? t("starConversationsToSeeThemHere")
+          : t("startAConversationToBuildYourSpiritualArchive")}
       </Typography>
       <Spacer size="xl" />
     </View>
@@ -157,15 +158,15 @@ export const HistoryScreen: React.FC = () => {
         color={theme.colors.textPrimary}
         style={styles.headerTitle}
       >
-        Chat History
+        {t("chatHistory")}
       </Typography>
-      
+
       <Spacer size="md" />
 
       {/* Tab Toggle */}
       <View style={styles.tabContainer}>
-        {renderTabButton("all", "All")}
-        {renderTabButton("favorites", "Favorites")}
+        {renderTabButton("all", t("all"))}
+        {renderTabButton("favorites", t("favorites"))}
       </View>
 
       <Spacer size="lg" />
@@ -180,7 +181,7 @@ export const HistoryScreen: React.FC = () => {
         keyExtractor={(item) => item.id}
         contentContainerStyle={[
           styles.listContent,
-          filteredSessions.length === 0 && styles.listContentEmpty
+          filteredSessions.length === 0 && styles.listContentEmpty,
         ]}
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderEmptyState}
@@ -201,16 +202,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.spacing.md,
   },
   listContentEmpty: {
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   headerContainer: {
     paddingTop: theme.spacing.md,
   },
   headerTitle: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   tabContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     backgroundColor: theme.colors.primarySoft,
     borderRadius: theme.radii.lg,
     padding: theme.spacing.xs,
@@ -220,7 +221,7 @@ const styles = StyleSheet.create({
     paddingVertical: theme.spacing.sm,
     paddingHorizontal: theme.spacing.md,
     borderRadius: theme.radii.md,
-    alignItems: 'center',
+    alignItems: "center",
   },
   tabButtonActive: {
     backgroundColor: theme.colors.surface,
@@ -234,20 +235,20 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSizes.body,
   },
   tabTextActive: {
-    fontWeight: '600',
+    fontWeight: "600",
   },
   emptyStateContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: theme.spacing.xl,
   },
   emptyStateText: {
     fontSize: theme.fontSizes.h3,
-    textAlign: 'center',
+    textAlign: "center",
   },
   emptyStateSubtext: {
-    textAlign: 'center',
+    textAlign: "center",
     opacity: 0.8,
   },
-}); 
+});

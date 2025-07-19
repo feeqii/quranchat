@@ -5,6 +5,7 @@ import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQu
 import { YesNoBlock } from '../../components/organisms/YesNoBlock';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
+import { t } from '../../localization';
 
 export const OnboardingStep10: React.FC = () => {
   const { setField, completeOnboarding } = useOnboardingStore();
@@ -35,8 +36,8 @@ export const OnboardingStep10: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <OnboardingQuestionBlock
-        title="Just a few final questions"
-        subtitle="Help us personalize your experience further"
+        title={t('justAFewFinalQuestions')}
+        subtitle={t('helpUsPersonalizeYourExperienceFurther')}
         progress={100}
       >
         <View style={styles.content}>
@@ -45,21 +46,21 @@ export const OnboardingStep10: React.FC = () => {
             showsVerticalScrollIndicator={false}
           >
             <YesNoBlock
-              question="Do you finish what you start?"
+              question={t('doYouFinishWhatYouStart')}
               onYes={() => setIsLikelyToFinish(true)}
               onNo={() => setIsLikelyToFinish(false)}
               style={styles.questionBlock}
             />
             
             <YesNoBlock
-              question="Would you like a daily reminder?"
+              question={t('wouldYouLikeADailyReminder')}
               onYes={() => setWantsDailyReminder(true)}
               onNo={() => setWantsDailyReminder(false)}
               style={styles.questionBlock}
             />
             
             <YesNoBlock
-              question="Do you want instant access to Quranic insights?"
+              question={t('doYouWantInstantAccessToQuranicInsights')}
               onYes={() => setWantsInstantAccess(true)}
               onNo={() => setWantsInstantAccess(false)}
               style={styles.questionBlock}
@@ -68,7 +69,7 @@ export const OnboardingStep10: React.FC = () => {
           
           <View style={styles.buttonContainer}>
             <PrimaryButton
-              label="Finish"
+              label={t('finish')}
               onPress={handleFinish}
               disabled={!allQuestionsAnswered}
             />

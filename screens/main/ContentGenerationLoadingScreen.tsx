@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { t } from '../../localization';
 import { Typography } from '../../components/atoms/Typography';
 import { Spacer } from '../../components/atoms/Spacer';
 import { AnimatedLoader } from '../../components/atoms/AnimatedLoader';
@@ -84,11 +85,11 @@ export const ContentGenerationLoadingScreen: React.FC = () => {
   }, [navigation, setIsGeneratingContent, moodDescription, selectedContexts, userReflection, setGeneratedReflection, setSelectedVerse]);
   
   const affirmations = [
-    "Reflecting on your insights...",
-    "Seeking guidance from the Quran...",
-    "Tailoring today's message for you...",
-    "Finding verses that speak to your heart...",
-    "Preparing your personalized reflection..."
+    t('reflectingOnYourInsights'),
+    t('seekingGuidanceFromTheQuran'),
+    t('tailoringTodaysMessageForYou'),
+    t('findingVersesThatSpeakToYourHeart'),
+    t('preparingYourPersonalizedReflection')
   ];
   
   return (
@@ -101,7 +102,7 @@ export const ContentGenerationLoadingScreen: React.FC = () => {
             color={theme.colors.textPrimary}
             style={styles.title}
           >
-            Crafting Your Reflection...
+            {t('craftingYourReflection')}
           </Typography>
           
           <Spacer size="md" />
@@ -111,7 +112,7 @@ export const ContentGenerationLoadingScreen: React.FC = () => {
             color={theme.colors.textSecondary}
             style={styles.subtitle}
           >
-            Please wait while we generate your personalized spiritual guidance.
+            {t('pleaseWaitWhileWeGenerateYourPersonalizedSpiritualGuidance')}
           </Typography>
         </View>
         
@@ -135,7 +136,7 @@ export const ContentGenerationLoadingScreen: React.FC = () => {
             color={theme.colors.textMuted}
             style={styles.encouragementText}
           >
-            "And it is He who created the heavens and earth in truth. And the day He says, 'Be,' and it is, His word is the truth." (Quran 6:73)
+            {t('quranVerse673')}
           </Typography>
           
           <Spacer size="lg" />
@@ -145,7 +146,7 @@ export const ContentGenerationLoadingScreen: React.FC = () => {
             color={theme.colors.textMuted}
             style={styles.footerText}
           >
-            Taking a moment to find the perfect guidance for your journey...
+            {t('takingAMomentToFindThePerfectGuidanceForYourJourney')}
           </Typography>
         </View>
       </View>

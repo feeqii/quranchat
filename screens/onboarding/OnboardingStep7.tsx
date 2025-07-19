@@ -6,19 +6,20 @@ import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQu
 import { OptionGroup } from '../../components/molecules/OptionGroup';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
-
-const islamicBackgroundOptions = [
-  'Sunni',
-  'Shia',
-  'Sufi',
-  'Non-denominational',
-  'Prefer not to say'
-];
+import { t } from '../../localization';
 
 export const OnboardingStep7: React.FC = () => {
   const navigation = useNavigation();
   const { setField } = useOnboardingStore();
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  const islamicBackgroundOptions = [
+    t('sunni'),
+    t('shia'),
+    t('sufi'),
+    t('nonDenominational'),
+    t('preferNotToSay')
+  ];
 
   const handleContinue = () => {
     if (selectedOption) {
@@ -30,8 +31,8 @@ export const OnboardingStep7: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <OnboardingQuestionBlock
-        title="What's your Islamic background?"
-        subtitle="We'll tailor responses respectfully"
+        title={t('whatsYourIslamicBackground')}
+        subtitle={t('wellTailorResponsesRespectfully')}
         progress={70}
       >
         <View style={styles.content}>
@@ -45,7 +46,7 @@ export const OnboardingStep7: React.FC = () => {
           
           <View style={styles.buttonContainer}>
             <PrimaryButton
-              label="Continue"
+              label={t('continue')}
               onPress={handleContinue}
               disabled={!selectedOption}
             />

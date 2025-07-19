@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primarySoft,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: theme.spacing.md,
+    marginEnd: theme.spacing.md,
   },
   numberContainerSelected: {
     backgroundColor: theme.colors.surface,

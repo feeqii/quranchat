@@ -1,8 +1,9 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Typography } from '../atoms/Typography';
-import { Icon } from '../atoms/Icon';
-import { theme } from '../../constants/theme';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { Typography } from "../atoms/Typography";
+import { Icon } from "../atoms/Icon";
+import { theme } from "../../constants/theme";
+import { alignItems } from "../../utils/rtl";
 
 interface VersePreviewProps {
   text: string;
@@ -13,11 +14,10 @@ interface VersePreviewProps {
 export const VersePreview: React.FC<VersePreviewProps> = ({
   text,
   reference,
-  maxLength = 50
+  maxLength = 50,
 }) => {
-  const truncatedText = text.length > maxLength 
-    ? `${text.substring(0, maxLength)}...` 
-    : text;
+  const truncatedText =
+    text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
 
   return (
     <View style={styles.container}>
@@ -25,16 +25,10 @@ export const VersePreview: React.FC<VersePreviewProps> = ({
         <Icon.Quran size={16} color="#4A6560" />
       </View>
       <View style={styles.textContainer}>
-        <Typography
-          variant="caption"
-          style={styles.verseText}
-        >
+        <Typography variant="caption" style={styles.verseText}>
           "{truncatedText}"
         </Typography>
-        <Typography
-          variant="caption"
-          style={styles.referenceText}
-        >
+        <Typography variant="caption" style={styles.referenceText}>
           — {reference}
         </Typography>
       </View>
@@ -44,8 +38,8 @@ export const VersePreview: React.FC<VersePreviewProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    alignItems: alignItems(true),
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radii.md,
     padding: theme.spacing.sm,
@@ -53,7 +47,7 @@ const styles = StyleSheet.create({
     borderLeftColor: theme.colors.primary,
   },
   iconContainer: {
-    marginRight: theme.spacing.sm,
+    marginEnd: theme.spacing.sm,
     marginTop: 2,
   },
   textContainer: {
@@ -62,8 +56,8 @@ const styles = StyleSheet.create({
   verseText: {
     fontSize: 14,
     lineHeight: 18,
-    fontStyle: 'italic',
-    color: '#4A6560',
+    fontStyle: "italic",
+    color: "#4A6560",
   },
   referenceText: {
     fontSize: 12,
@@ -71,4 +65,4 @@ const styles = StyleSheet.create({
     color: theme.colors.textMuted,
     marginTop: 2,
   },
-}); 
+});

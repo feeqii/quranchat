@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { t } from '../../localization';
 import { MoodEmojiAtom } from '../atoms/MoodEmojiAtom';
 import { SliderAtom } from '../atoms/SliderAtom';
 import { Typography } from '../atoms/Typography';
@@ -10,12 +11,14 @@ interface MoodSelectorMoleculeProps {
   moodLevel: number;
   onMoodChange: (level: number) => void;
   onMoodComplete?: (level: number) => void;
+  currentMood?: string;
 }
 
 export const MoodSelectorMolecule: React.FC<MoodSelectorMoleculeProps> = ({
   moodLevel,
   onMoodChange,
   onMoodComplete,
+  currentMood,
 }) => {
   return (
     <View style={styles.container}>
@@ -25,6 +28,18 @@ export const MoodSelectorMolecule: React.FC<MoodSelectorMoleculeProps> = ({
           moodLevel={moodLevel} 
           size={120}
         />
+        {currentMood && (
+          <>
+            <Spacer size="md" />
+            <Typography
+              variant="h2"
+              color={theme.colors.primary}
+              style={styles.moodText}
+            >
+              {currentMood}
+            </Typography>
+          </>
+        )}
       </View>
       
       <Spacer size="xl" />
@@ -37,14 +52,14 @@ export const MoodSelectorMolecule: React.FC<MoodSelectorMoleculeProps> = ({
             color={theme.colors.textMuted}
             style={styles.sliderLabel}
           >
-            Struggling
+            {t('moods.verySad')}
           </Typography>
           <Typography
             variant="caption"
             color={theme.colors.textMuted}
             style={styles.sliderLabel}
           >
-            Blessed
+            {t('moods.blessed')}
           </Typography>
         </View>
         
@@ -70,7 +85,7 @@ export const MoodSelectorMolecule: React.FC<MoodSelectorMoleculeProps> = ({
             color={theme.colors.textMuted}
             style={styles.levelText}
           >
-            Level {moodLevel} of 10
+            {t('level')} {moodLevel} {t('of')} 10
           </Typography>
         </View>
       </View>
@@ -87,6 +102,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 160,
+  },
+  moodText: {
+    textAlign: 'center',
+    fontSize: 24,
   },
   sliderSection: {
     width: '100%',

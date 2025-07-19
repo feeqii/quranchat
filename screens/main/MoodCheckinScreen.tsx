@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { t } from '../../localization';
 import { Typography } from '../../components/atoms/Typography';
 import { Spacer } from '../../components/atoms/Spacer';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
@@ -13,35 +14,42 @@ import { TodayStackParamList } from '../../navigation/TodayStackNavigator';
 
 type MoodCheckinScreenNavigationProp = NativeStackNavigationProp<TodayStackParamList, 'MoodCheckinScreen'>;
 
+// Mood descriptions function - moved outside component to avoid recreation
+const getMoodDescription = (level: number): string => {
+  if (level <= 2) return t('moods.verySad');
+  if (level <= 3) return t('moods.sad');
+  if (level <= 4) return t('moods.neutral');
+  if (level <= 5) return t('moods.calm');
+  if (level <= 6) return t('moods.happy');
+  if (level <= 7) return t('moods.joyful');
+  if (level <= 8) return t('moods.excited');
+  if (level <= 9) return t('moods.grateful');
+  return t('moods.blessed');
+};
+
 export const MoodCheckinScreen: React.FC = () => {
   const navigation = useNavigation<MoodCheckinScreenNavigationProp>();
   const { moodLevel, moodDescription, setMood } = useTodayStore();
   
   // Local state for real-time slider updates
   const [currentMoodLevel, setCurrentMoodLevel] = useState(moodLevel || 5);
-  
-  // Mood descriptions based on level
-  const getMoodDescription = (level: number): string => {
-    if (level <= 2) return 'Very Sad';
-    if (level <= 3) return 'Sad';
-    if (level <= 4) return 'Neutral';
-    if (level <= 5) return 'Calm';
-    if (level <= 6) return 'Happy';
-    if (level <= 7) return 'Joyful';
-    if (level <= 8) return 'Excited';
-    if (level <= 9) return 'Grateful';
-    return 'Blessed';
-  };
+  const [currentMoodDescription, setCurrentMoodDescription] = useState(
+    moodDescription || getMoodDescription(moodLevel || 5)
+  );
   
   // Initialize with existing mood level if available
   useEffect(() => {
     if (moodLevel) {
       setCurrentMoodLevel(moodLevel);
     }
-  }, [moodLevel]);
+    if (moodDescription) {
+      setCurrentMoodDescription(moodDescription);
+    }
+  }, [moodLevel, moodDescription]);
   
   const handleMoodChange = (level: number) => {
     setCurrentMoodLevel(level);
+    setCurrentMoodDescription(getMoodDescription(level));
   };
   
   const handleMoodComplete = (level: number) => {
@@ -82,7 +90,7 @@ export const MoodCheckinScreen: React.FC = () => {
           color={theme.colors.textPrimary}
           style={styles.headerTitle}
         >
-          How are you feeling today?
+          {t('howAreYouFeelingToday')}
         </Typography>
         
         <View style={styles.headerSpacer} />
@@ -97,7 +105,7 @@ export const MoodCheckinScreen: React.FC = () => {
           color={theme.colors.textSecondary}
           style={styles.subtitle}
         >
-          Take a moment to reflect on your current state of heart and mind.
+          {t('dailyGuidanceSubtitle')}
         </Typography>
         
         <Spacer size="2xl" />
@@ -108,6 +116,7 @@ export const MoodCheckinScreen: React.FC = () => {
             moodLevel={currentMoodLevel}
             onMoodChange={handleMoodChange}
             onMoodComplete={handleMoodComplete}
+            currentMood={currentMoodDescription}
           />
         </View>
         
@@ -119,7 +128,7 @@ export const MoodCheckinScreen: React.FC = () => {
           color={theme.colors.textMuted}
           style={styles.reflectionText}
         >
-          Your feelings are valid. Allah (SWT) understands your heart in every moment.
+          {t('yourFeelingsAreValid')}
         </Typography>
         
         <Spacer size="xl" />
@@ -128,7 +137,7 @@ export const MoodCheckinScreen: React.FC = () => {
       {/* Next Button */}
       <View style={styles.footer}>
         <PrimaryButton
-          label="Next"
+          label={t('next')}
           onPress={handleNext}
           disabled={!canProceed}
         />
@@ -152,7 +161,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     padding: theme.spacing.xs,
-    marginRight: theme.spacing.sm,
+    marginEnd: theme.spacing.sm,
   },
   headerTitle: {
     flex: 1,

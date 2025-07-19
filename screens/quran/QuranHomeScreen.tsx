@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -6,30 +6,34 @@ import {
   ActivityIndicator,
   Alert,
   Share,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import { SurahHeader } from '../../components/molecules/SurahHeader';
-import { VerseList } from '../../components/organisms/VerseList';
-import { VerseActionBar } from '../../components/molecules/VerseActionBar';
-import { Typography } from '../../components/atoms/Typography';
-import { Spacer } from '../../components/atoms/Spacer';
-import { theme } from '../../constants/theme';
-import { useQuranStore, HighlightColor } from '../../store/useQuranStore';
-import { useChatStore } from '../../store/useChatStore';
-import { surahList } from '../../constants/surahList';
-import { translations } from '../../lib/api/quranApi';
+import { SurahHeader } from "../../components/molecules/SurahHeader";
+import { VerseList } from "../../components/organisms/VerseList";
+import { VerseActionBar } from "../../components/molecules/VerseActionBar";
+import { Typography } from "../../components/atoms/Typography";
+import { Spacer } from "../../components/atoms/Spacer";
+import { theme } from "../../constants/theme";
+import { useQuranStore, HighlightColor } from "../../store/useQuranStore";
+import { useChatStore } from "../../store/useChatStore";
+import { surahList } from "../../constants/surahList";
+import { translations } from "../../lib/api/quranApi";
+import { t } from "../../localization";
 
-type QuranHomeScreenNavigationProp = NativeStackNavigationProp<any, 'QuranHomeScreen'>;
+type QuranHomeScreenNavigationProp = NativeStackNavigationProp<
+  any,
+  "QuranHomeScreen"
+>;
 
 export const QuranHomeScreen: React.FC = () => {
   const navigation = useNavigation<QuranHomeScreenNavigationProp>();
-  const { 
-    currentSurah, 
-    currentTranslation, 
-    verses, 
-    isLoading, 
+  const {
+    currentSurah,
+    currentTranslation,
+    verses,
+    isLoading,
     fetchVerses,
     highlights,
     selectedVerse,
@@ -41,17 +45,18 @@ export const QuranHomeScreen: React.FC = () => {
   } = useQuranStore();
   const { setTopicWithVerses, clearMessages, addMessage } = useChatStore();
 
-
-
   // Get current surah info
-  const currentSurahInfo = surahList.find(s => s.number === currentSurah) || surahList[0];
-  const translationName = translations[currentTranslation as keyof typeof translations] || 'Sahih International';
+  const currentSurahInfo =
+    surahList.find((s) => s.number === currentSurah) || surahList[0];
+  const translationName =
+    translations[currentTranslation as keyof typeof translations] ||
+    t("sahihInternational");
 
   // Fetch verses when surah or translation changes
   useEffect(() => {
     if (currentSurah) {
       fetchVerses().catch((error) => {
-        Alert.alert('Error', 'Failed to load verses. Please try again.');
+        Alert.alert(t("error"), t("failedToLoadVersesPleaseTryAgain"));
       });
     }
   }, [currentSurah, currentTranslation]);
@@ -62,16 +67,16 @@ export const QuranHomeScreen: React.FC = () => {
   }, [currentSurah]);
 
   const handleSurahPress = () => {
-    navigation.navigate('SurahSelectionModal');
+    navigation.navigate("SurahSelectionModal");
   };
 
   const handleTranslationPress = () => {
-    navigation.navigate('TranslationSelectionModal');
+    navigation.navigate("TranslationSelectionModal");
   };
 
   const handleVersePress = (verseNumber: number) => {
     if (!currentSurah) return;
-    
+
     // If same verse is selected, deselect it
     if (selectedVerse && selectedVerse.verseNumber === verseNumber) {
       clearSelection();
@@ -85,7 +90,7 @@ export const QuranHomeScreen: React.FC = () => {
     if (selectedVerse && currentSurah) {
       const verseKey = getVerseKey(currentSurah, selectedVerse.verseNumber);
       const currentHighlight = highlights[verseKey];
-      
+
       // If verse is already highlighted with the same color, remove highlight
       if (currentHighlight && currentHighlight.color === color) {
         removeHighlight(currentSurah, selectedVerse.verseNumber);
@@ -93,39 +98,42 @@ export const QuranHomeScreen: React.FC = () => {
         // Otherwise, highlight with the selected color
         highlightVerse(currentSurah, selectedVerse.verseNumber, color);
       }
-      
+
       clearSelection();
     }
   };
-
-
 
   const handleAsk = () => {
     if (!selectedVerse || !currentSurah) return;
 
     try {
-      const selectedVerseData = verses.find(v => v.numberInSurah === selectedVerse.verseNumber);
+      const selectedVerseData = verses.find(
+        (v) => v.numberInSurah === selectedVerse.verseNumber,
+      );
       if (!selectedVerseData) return;
 
       // Create a formatted question with the selected verse
       const verseText = `${currentSurahInfo.name} ${currentSurah}:${selectedVerse.verseNumber} - "${selectedVerseData.text}"`;
-      const prefill = `Can you help me understand this verse?\n\n${verseText}`;
+      const prefill = `${t("canYouHelpMeUnderstandThisVerse")}\n\n${verseText}`;
 
       // Set topic with verse context
-      setTopicWithVerses(`${currentSurahInfo.name} - Verse ${selectedVerse.verseNumber}`, [selectedVerseData]);
+      setTopicWithVerses(
+        `${currentSurahInfo.name} - Verse ${selectedVerse.verseNumber}`,
+        [selectedVerseData],
+      );
 
       // Clear any prior messages
       clearMessages();
 
       // Seed the chat with user's first message
-      addMessage({ role: 'user', content: prefill });
+      addMessage({ role: "user", content: prefill });
 
       // Clear selections and navigate to chat
       clearSelection();
-      navigation.navigate('TopicChatScreen' as never);
+      navigation.navigate("TopicChatScreen" as never);
     } catch (error) {
-      console.error('Error setting up verse chat:', error);
-      Alert.alert('Error', 'Failed to set up chat. Please try again.');
+      console.error("Error setting up verse chat:", error);
+      Alert.alert(t("error"), t("failedToSetUpChatPleaseTryAgain"));
     }
   };
 
@@ -133,29 +141,35 @@ export const QuranHomeScreen: React.FC = () => {
     if (!selectedVerse || !currentSurah) return;
 
     try {
-      const selectedVerseData = verses.find(v => v.numberInSurah === selectedVerse.verseNumber);
+      const selectedVerseData = verses.find(
+        (v) => v.numberInSurah === selectedVerse.verseNumber,
+      );
       if (!selectedVerseData) return;
 
-      const shareText = `🕌 ${currentSurahInfo.name} ${currentSurah}:${selectedVerse.verseNumber}\n\n"${selectedVerseData.text}"\n\n— Quran Chat`;
-      
+      const shareText = t("quranChatVerseShare", {
+        surahName: currentSurahInfo.name,
+        surahNumber: currentSurah,
+        verseNumber: selectedVerse.verseNumber,
+        verseText: selectedVerseData.text,
+      });
+
       await Share.share({
         message: shareText,
         title: `${currentSurahInfo.name} ${currentSurah}:${selectedVerse.verseNumber}`,
       });
-      
+
       clearSelection();
     } catch (error) {
-      console.error('Error sharing verse:', error);
-      Alert.alert('Error', 'Failed to share verse. Please try again.');
+      console.error("Error sharing verse:", error);
+      Alert.alert(t("error"), t("failedToShareVersePleaseTryAgain"));
     }
   };
 
-
-
   // Get current highlight for selected verse
-  const currentHighlight = selectedVerse && currentSurah 
-    ? highlights[getVerseKey(currentSurah, selectedVerse.verseNumber)]
-    : null;
+  const currentHighlight =
+    selectedVerse && currentSurah
+      ? highlights[getVerseKey(currentSurah, selectedVerse.verseNumber)]
+      : null;
 
   if (isLoading) {
     return (
@@ -172,7 +186,7 @@ export const QuranHomeScreen: React.FC = () => {
           <ActivityIndicator size="large" color={theme.colors.primary} />
           <Spacer size="md" />
           <Typography variant="body" color={theme.colors.textSecondary}>
-            Loading {currentSurahInfo.name}...
+            {t("loadingWithSurah", { surahName: currentSurahInfo.name })}
           </Typography>
         </View>
       </SafeAreaView>
@@ -189,10 +203,12 @@ export const QuranHomeScreen: React.FC = () => {
         onSurahPress={handleSurahPress}
         onTranslationPress={handleTranslationPress}
       />
-      
+
       <VerseList
         verses={verses}
-        selectedVerses={selectedVerse ? new Set([selectedVerse.verseNumber]) : new Set()}
+        selectedVerses={
+          selectedVerse ? new Set([selectedVerse.verseNumber]) : new Set()
+        }
         highlights={highlights}
         surahNumber={currentSurah || 1}
         onVersePress={handleVersePress}
@@ -207,8 +223,6 @@ export const QuranHomeScreen: React.FC = () => {
         onAsk={handleAsk}
         onShare={handleShare}
       />
-
-
     </SafeAreaView>
   );
 };
@@ -220,8 +234,8 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: theme.spacing.lg,
   },
-}); 
+});

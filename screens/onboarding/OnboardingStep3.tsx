@@ -1,23 +1,25 @@
-import React from 'react';
-import { View, StyleSheet, SafeAreaView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { theme } from '../../constants/theme';
-import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQuestionBlock';
-import { PrimaryButton } from '../../components/atoms/PrimaryButton';
-import { Typography } from '../../components/atoms/Typography';
+import React from "react";
+import { View, StyleSheet, SafeAreaView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { theme } from "../../constants/theme";
+import { OnboardingQuestionBlock } from "../../components/organisms/OnboardingQuestionBlock";
+import { PrimaryButton } from "../../components/atoms/PrimaryButton";
+import { Typography } from "../../components/atoms/Typography";
+import { t } from "../../localization";
+import { position, flexDirection, textAlign } from "../../utils/rtl";
 
 export const OnboardingStep3: React.FC = () => {
   const navigation = useNavigation();
 
   const handleContinue = () => {
-    navigation.navigate('OnboardingStep4' as never);
+    navigation.navigate("OnboardingStep4" as never);
   };
 
   // Generate curve points for the faith growth chart
   const generateCurvePoints = () => {
-    const months = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
+    const months = ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"];
     const values = [20, 35, 30, 50, 60, 75, 85]; // Growth trajectory
-    
+
     return months.map((month, index) => ({
       month,
       value: values[index],
@@ -31,8 +33,8 @@ export const OnboardingStep3: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <OnboardingQuestionBlock
-        title="Faith becomes a daily habit with your widget"
-        subtitle="Visualize how consistency shapes your spiritual path"
+        title={t("faithBecomesADailyHabitWithYourWidget")}
+        subtitle={t("visualizeHowConsistencyShapesYourSpiritualPath")}
         progress={30}
       >
         <View style={styles.content}>
@@ -41,7 +43,7 @@ export const OnboardingStep3: React.FC = () => {
             <View style={styles.chartArea}>
               {/* Gradient background simulation */}
               <View style={styles.gradientBackground} />
-              
+
               {/* Chart curve simulation */}
               <View style={styles.curveContainer}>
                 {curvePoints.map((point, index) => (
@@ -57,12 +59,12 @@ export const OnboardingStep3: React.FC = () => {
                   />
                 ))}
               </View>
-              
+
               {/* Start and end markers */}
               <View style={[styles.marker, styles.startMarker]} />
               <View style={[styles.marker, styles.endMarker]} />
             </View>
-            
+
             {/* Month labels */}
             <View style={styles.monthLabels}>
               {curvePoints.map((point, index) => (
@@ -76,7 +78,7 @@ export const OnboardingStep3: React.FC = () => {
                 </Typography>
               ))}
             </View>
-            
+
             {/* Chart subtitle */}
             <Typography
               variant="small"
@@ -84,25 +86,20 @@ export const OnboardingStep3: React.FC = () => {
               align="center"
               style={styles.chartSubtitle}
             >
-              TIME DEVOTED TO SCRIPTURE AND STUDY
+              {t("timeDevotedToScriptureAndStudy")}
             </Typography>
           </View>
 
           {/* Inspirational Message */}
           <View style={styles.messageContainer}>
             <Typography variant="body" align="center" style={styles.message}>
-              As a <Typography variant="body" style={styles.premium}>Premium</Typography> user, you'll unlock
-              personalized features on your Faith Widget to deepen your connection with
-              God each day
+              {t("premiumUserWillUnlockPersonalizedFeatures")}
             </Typography>
           </View>
 
           {/* Continue Button */}
           <View style={styles.buttonContainer}>
-            <PrimaryButton
-              label="Continue"
-              onPress={handleContinue}
-            />
+            <PrimaryButton label={t("continue")} onPress={handleContinue} />
           </View>
         </View>
       </OnboardingQuestionBlock>
@@ -117,40 +114,40 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   chartContainer: {
     flex: 1,
     paddingVertical: theme.spacing.xl,
-    alignItems: 'center',
+    alignItems: "center",
   },
   chartArea: {
-    width: '100%',
+    width: "100%",
     height: 200,
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radii.lg,
     marginBottom: theme.spacing.lg,
-    position: 'relative',
-    overflow: 'hidden',
+    position: "relative",
+    overflow: "hidden",
   },
   gradientBackground: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
-    left: 0,
-    right: 0,
+    ...position(0),
+    ...position(undefined, 0),
     bottom: 0,
     backgroundColor: theme.colors.primarySoft,
     opacity: 0.3,
   },
   curveContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
-    left: 0,
-    right: 0,
+    ...position(0),
+    ...position(undefined, 0),
     bottom: 0,
   },
   curvePoint: {
-    position: 'absolute',
+    position: "absolute",
     width: 4,
     height: 4,
     backgroundColor: theme.colors.primary,
@@ -158,7 +155,7 @@ const styles = StyleSheet.create({
     transform: [{ translateX: -2 }, { translateY: 2 }],
   },
   marker: {
-    position: 'absolute',
+    position: "absolute",
     width: 12,
     height: 12,
     borderRadius: 6,
@@ -168,21 +165,21 @@ const styles = StyleSheet.create({
   startMarker: {
     backgroundColor: theme.colors.primary,
     left: '2%',
-    bottom: '20%',
+    bottom: "20%",
   },
   endMarker: {
     backgroundColor: theme.colors.textPrimary,
     right: '2%',
-    top: '15%',
+    top: "15%",
   },
   monthLabels: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '90%',
+    flexDirection: flexDirection(),
+    justifyContent: "space-between",
+    width: "90%",
     marginBottom: theme.spacing.md,
   },
   monthLabel: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   chartSubtitle: {
     letterSpacing: 1,
@@ -202,4 +199,4 @@ const styles = StyleSheet.create({
   buttonContainer: {
     paddingBottom: theme.spacing.lg,
   },
-}); 
+});

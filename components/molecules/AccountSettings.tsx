@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primarySoft,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: theme.spacing.md,
+    marginEnd: theme.spacing.md,
   },
   textContainer: {
     flex: 1,
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   syncBadge: {
-    marginLeft: theme.spacing.xs,
+    marginStart: theme.spacing.xs,
     backgroundColor: theme.colors.primarySoft,
     borderRadius: theme.radii.sm,
     padding: theme.spacing.xs,
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.danger,
   },
   logoutText: {
-    marginLeft: theme.spacing.sm,
+    marginStart: theme.spacing.sm,
     fontWeight: '500',
   },
 }); 

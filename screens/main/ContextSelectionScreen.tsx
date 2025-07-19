@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { t } from '../../localization';
 import { Typography } from '../../components/atoms/Typography';
 import { Spacer } from '../../components/atoms/Spacer';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
@@ -53,7 +54,7 @@ export const ContextSelectionScreen: React.FC = () => {
           color={theme.colors.textPrimary}
           style={styles.headerTitle}
         >
-          What makes you feel this way?
+          {t('selectContext')}
         </Typography>
         
         <View style={styles.headerSpacer} />
@@ -72,7 +73,7 @@ export const ContextSelectionScreen: React.FC = () => {
           color={theme.colors.textSecondary}
           style={styles.subtitle}
         >
-          Choose one or more
+          {t('chooseOneOrMore')}
         </Typography>
         
         <Spacer size="xl" />
@@ -93,7 +94,7 @@ export const ContextSelectionScreen: React.FC = () => {
               color={theme.colors.primary}
               style={styles.selectionText}
             >
-              {selectedContexts.length} selected
+              {t('itemsSelected', { count: selectedContexts.length })}
             </Typography>
           </View>
         )}
@@ -106,7 +107,7 @@ export const ContextSelectionScreen: React.FC = () => {
           color={theme.colors.textMuted}
           style={styles.encouragementText}
         >
-          Your experiences shape your spiritual journey. Allah (SWT) sees all and understands your heart.
+          {t('yourExperiencesShapeYourSpiritualJourney')}
         </Typography>
         
         <Spacer size="xl" />
@@ -115,7 +116,7 @@ export const ContextSelectionScreen: React.FC = () => {
       {/* Next Button */}
       <View style={styles.footer}>
         <PrimaryButton
-          label="Next"
+          label={t('next')}
           onPress={handleNext}
           disabled={!canProceed}
         />
@@ -128,7 +129,7 @@ export const ContextSelectionScreen: React.FC = () => {
               color={theme.colors.textMuted}
               style={styles.helperText}
             >
-              Please select at least one context to continue
+              {t('pleaseSelectAtLeastOneContextToContinue')}
             </Typography>
           </>
         )}
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     padding: theme.spacing.xs,
-    marginRight: theme.spacing.sm,
+    marginEnd: theme.spacing.sm,
   },
   headerTitle: {
     flex: 1,

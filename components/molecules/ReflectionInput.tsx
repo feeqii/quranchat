@@ -1,8 +1,9 @@
-import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Typography } from '../atoms/Typography';
-import { theme } from '../../constants/theme';
+import React from "react";
+import { View, TextInput, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { Typography } from "../atoms/Typography";
+import { theme } from "../../constants/theme";
+import { alignItems } from "../../utils/rtl";
 
 interface ReflectionInputProps {
   value: string;
@@ -21,22 +22,19 @@ export const ReflectionInput: React.FC<ReflectionInputProps> = ({
 }) => {
   const characterCount = value.length;
   const isNearLimit = characterCount > maxLength * 0.8; // Warning when 80% full
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.inputWrapper}>
         <LinearGradient
-          colors={['#E6F4F1', '#F5F1E8', '#FFFFFF']} // Same gradient as Verse of the Day
+          colors={["#E6F4F1", "#F5F1E8", "#FFFFFF"]} // Same gradient as Verse of the Day
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.gradientBorder}
         >
           <View style={styles.inputContainer}>
             <TextInput
-              style={[
-                styles.textInput,
-                disabled && styles.textInputDisabled,
-              ]}
+              style={[styles.textInput, disabled && styles.textInputDisabled]}
               value={value}
               onChangeText={onChangeText}
               placeholder={placeholder}
@@ -52,7 +50,7 @@ export const ReflectionInput: React.FC<ReflectionInputProps> = ({
           </View>
         </LinearGradient>
       </View>
-      
+
       <View style={styles.footer}>
         <Typography
           variant="small"
@@ -68,7 +66,7 @@ export const ReflectionInput: React.FC<ReflectionInputProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: "100%",
   },
   inputWrapper: {
     borderRadius: 20,
@@ -87,26 +85,26 @@ const styles = StyleSheet.create({
     padding: 24,
     fontSize: 16,
     fontFamily: theme.fonts.body,
-    color: '#2C3E50',
+    color: "#2C3E50",
     lineHeight: 24,
     minHeight: 140,
     maxHeight: 220,
-    fontWeight: '400',
+    fontWeight: "400",
     letterSpacing: 0.2,
   },
   textInputDisabled: {
-    backgroundColor: '#F9FAFB',
+    backgroundColor: "#F9FAFB",
     color: theme.colors.textMuted,
     opacity: 0.6,
   },
   footer: {
-    alignItems: 'flex-end',
+    alignItems: alignItems(false),
     paddingTop: 12,
     paddingHorizontal: 4,
   },
   characterCount: {
     fontSize: 12,
-    fontWeight: '500',
+    fontWeight: "500",
     opacity: 0.7,
   },
-}); 
+});

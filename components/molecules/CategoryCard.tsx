@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     width: 280,
     height: 220,
     borderRadius: theme.radii.md,
-    marginRight: theme.spacing.md,
+    marginEnd: theme.spacing.md,
     backgroundColor: theme.colors.surface,
     ...theme.shadows.md,
     overflow: 'hidden',

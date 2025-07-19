@@ -6,16 +6,17 @@ import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQu
 import { OptionCard } from '../../components/molecules/OptionCard';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
-
-const supportOptions = [
-  'Just study the Quran',
-  'Overcome life struggles and challenges'
-];
+import { t } from '../../localization';
 
 export const OnboardingStep2: React.FC = () => {
   const navigation = useNavigation();
   const { setField } = useOnboardingStore();
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  const supportOptions = [
+    t('justStudyTheQuran'),
+    t('overcomeLifeStrugglesAndChallenges')
+  ];
 
   const handleOptionSelect = (option: string) => {
     setSelectedOption(option);
@@ -31,8 +32,8 @@ export const OnboardingStep2: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <OnboardingQuestionBlock
-        title="How can Quran Chat support you?"
-        subtitle="Your experience will be tailored to your needs"
+        title={t('howCanQuranChatSupportYou')}
+        subtitle={t('yourExperienceWillBeTailoredToYourNeeds')}
         progress={20}
       >
         <View style={styles.content}>
@@ -50,7 +51,7 @@ export const OnboardingStep2: React.FC = () => {
           
           <View style={styles.buttonContainer}>
             <PrimaryButton
-              label="Continue"
+              label={t('continue')}
               onPress={handleContinue}
               disabled={!selectedOption}
             />

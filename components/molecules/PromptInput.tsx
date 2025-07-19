@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
     borderRadius: theme.radii.lg,
     borderWidth: 1,
     borderColor: theme.colors.primarySoft,
-    paddingLeft: theme.spacing.md,
-    paddingRight: theme.spacing.sm,
+    paddingStart: theme.spacing.md,
+    paddingEnd: theme.spacing.sm,
     minHeight: 48,
     maxHeight: 48,
   },
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.body,
     color: theme.colors.textPrimary,
     paddingVertical: theme.spacing.sm,
-    paddingRight: theme.spacing.sm,
+    paddingEnd: theme.spacing.sm,
     lineHeight: 20,
   },
   sendButton: {
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: theme.spacing.xs,
+    marginStart: theme.spacing.xs,
   },
   sendButtonDisabled: {
     opacity: 0.5,

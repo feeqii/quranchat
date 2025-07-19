@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   gridUserCount: {
     fontSize: 11,
-    marginLeft: 4,
+    marginStart: 4,
     opacity: 0.7,
   },
 }); 

@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    marginLeft: theme.spacing.sm,
+    marginStart: theme.spacing.sm,
     fontSize: 16,
     color: theme.colors.textPrimary,
     fontFamily: theme.fonts.body,

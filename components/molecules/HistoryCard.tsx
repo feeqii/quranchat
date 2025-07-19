@@ -1,11 +1,19 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity, ViewStyle, Share, Alert } from 'react-native';
-import * as Clipboard from 'expo-clipboard';
-import { theme } from '../../constants/theme';
-import { Typography } from '../atoms/Typography';
-import { Icon } from '../atoms/Icon';
-import { Spacer } from '../atoms/Spacer';
-import { formatChatSession } from '../../utils/formatChatSession';
+import React from "react";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+  Share,
+  Alert,
+} from "react-native";
+import * as Clipboard from "expo-clipboard";
+import { theme } from "../../constants/theme";
+import { Typography } from "../atoms/Typography";
+import { Icon } from "../atoms/Icon";
+import { Spacer } from "../atoms/Spacer";
+import { formatChatSession } from "../../utils/formatChatSession";
+import { alignItems } from "../../utils/rtl";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -40,18 +48,18 @@ export const HistoryCard: React.FC<HistoryCardProps> = ({
     const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 
     if (diffInDays === 0) {
-      return date.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
+      return date.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
       });
     } else if (diffInDays === 1) {
-      return 'Yesterday';
+      return "Yesterday";
     } else if (diffInDays < 7) {
       return `${diffInDays} days ago`;
     } else {
-      return date.toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
       });
     }
   };
@@ -60,15 +68,15 @@ export const HistoryCard: React.FC<HistoryCardProps> = ({
     const lastAssistantMessage = messages
       .slice()
       .reverse()
-      .find(msg => msg.role === 'assistant');
-    
+      .find((msg) => msg.role === "assistant");
+
     if (lastAssistantMessage) {
       return lastAssistantMessage.content.length > 80
-        ? lastAssistantMessage.content.substring(0, 80) + '...'
+        ? lastAssistantMessage.content.substring(0, 80) + "..."
         : lastAssistantMessage.content;
     }
-    
-    return 'No assistant response';
+
+    return "No assistant response";
   };
 
   const handleShare = async () => {
@@ -79,8 +87,8 @@ export const HistoryCard: React.FC<HistoryCardProps> = ({
         title: `Quran Chat - ${session.topic}`,
       });
     } catch (error) {
-      console.error('Error sharing session:', error);
-      Alert.alert('Error', 'Unable to share this conversation.');
+      console.error("Error sharing session:", error);
+      Alert.alert("Error", "Unable to share this conversation.");
     }
   };
 
@@ -88,10 +96,10 @@ export const HistoryCard: React.FC<HistoryCardProps> = ({
     try {
       const content = formatChatSession(session.topic, session.messages);
       await Clipboard.setStringAsync(content);
-      Alert.alert('Copied', 'Conversation copied to clipboard.');
+      Alert.alert("Copied", "Conversation copied to clipboard.");
     } catch (error) {
-      console.error('Error copying session:', error);
-      Alert.alert('Error', 'Unable to copy this conversation.');
+      console.error("Error copying session:", error);
+      Alert.alert("Error", "Unable to copy this conversation.");
     }
   };
 
@@ -166,7 +174,8 @@ export const HistoryCard: React.FC<HistoryCardProps> = ({
         color={theme.colors.textMuted}
         style={styles.stats}
       >
-        {session.messages.length} message{session.messages.length !== 1 ? 's' : ''}
+        {session.messages.length} message
+        {session.messages.length !== 1 ? "s" : ""}
       </Typography>
     </TouchableOpacity>
   );
@@ -182,31 +191,31 @@ const styles = StyleSheet.create({
     ...theme.shadows.sm,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: alignItems(true),
   },
   topic: {
     flex: 1,
-    marginRight: theme.spacing.sm,
+    marginEnd: theme.spacing.sm,
   },
   actions: {
-    alignItems: 'flex-end',
+    alignItems: alignItems(false),
   },
   date: {
     marginBottom: theme.spacing.xs,
   },
   actionButtons: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   actionButton: {
-    marginLeft: theme.spacing.sm,
+    marginStart: theme.spacing.sm,
   },
   preview: {
     lineHeight: 18,
   },
   stats: {
-    fontWeight: '500',
+    fontWeight: "500",
   },
-}); 
+});

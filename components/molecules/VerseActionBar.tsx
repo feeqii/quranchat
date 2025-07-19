@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
   colorPicker: {
     flexDirection: 'row',
-    marginLeft: 8,
+    marginStart: 8,
     gap: 6,
   },
   colorDot: {

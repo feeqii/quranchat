@@ -1,28 +1,33 @@
-import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView } from 'react-native';
-import { theme } from '../../constants/theme';
-import { useProfileStore } from '../../store/useProfileStore';
-import { useOnboardingStore } from '../../store/useOnboardingStore';
-import { useTodayStore } from '../../store/useTodayStore';
+import React, { useEffect, useContext } from "react";
+import { SafeAreaView, StyleSheet, ScrollView } from "react-native";
+import { theme } from "../../constants/theme";
+import { useProfileStore } from "../../store/useProfileStore";
+import { useOnboardingStore } from "../../store/useOnboardingStore";
+import { useTodayStore } from "../../store/useTodayStore";
+import { LocalizationContext } from "../../localization/LocalizationContext";
 
 // Components
-import { ProfileHeader } from '../../components/molecules/ProfileHeader';
-import { WidgetsSection } from '../../components/molecules/WidgetsSection';
-import { PersonalDetails } from '../../components/molecules/PersonalDetails';
-import { SubscriptionDetails } from '../../components/molecules/SubscriptionDetails';
-import { AboutSection } from '../../components/molecules/AboutSection';
-import { AccountSettings } from '../../components/molecules/AccountSettings';
-import { Spacer } from '../../components/atoms/Spacer';
+import { ProfileHeader } from "../../components/molecules/ProfileHeader";
+import LanguageSelector from "../../components/molecules/LanguageSelector";
+import { WidgetsSection } from "../../components/molecules/WidgetsSection";
+import { PersonalDetails } from "../../components/molecules/PersonalDetails";
+import { SubscriptionDetails } from "../../components/molecules/SubscriptionDetails";
+import { AboutSection } from "../../components/molecules/AboutSection";
+import { AccountSettings } from "../../components/molecules/AccountSettings";
+import { Spacer } from "../../components/atoms/Spacer";
+import { SectionTitle } from "../../components/atoms/SectionTitle";
 
 export const ProfileScreen: React.FC = () => {
-  const { updateStreakData, syncOnboardingData, isOnboardingDataSynced } = useProfileStore();
+  const { updateStreakData, syncOnboardingData, isOnboardingDataSynced } =
+    useProfileStore();
   const { streakDays } = useTodayStore();
-  const { 
-    ageGroup, 
-    islamicBackground, 
-    wantsDailyReminder, 
+  const { t } = useContext(LocalizationContext);
+  const {
+    ageGroup,
+    islamicBackground,
+    wantsDailyReminder,
     supportType,
-    onboardingCompleted 
+    onboardingCompleted,
   } = useOnboardingStore();
 
   // Sync onboarding data to profile on first load
@@ -35,7 +40,15 @@ export const ProfileScreen: React.FC = () => {
         supportType,
       });
     }
-  }, [onboardingCompleted, isOnboardingDataSynced, syncOnboardingData, ageGroup, islamicBackground, wantsDailyReminder, supportType]);
+  }, [
+    onboardingCompleted,
+    isOnboardingDataSynced,
+    syncOnboardingData,
+    ageGroup,
+    islamicBackground,
+    wantsDailyReminder,
+    supportType,
+  ]);
 
   // Update streak data from Today store
   useEffect(() => {
@@ -47,13 +60,17 @@ export const ProfileScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView 
+      <ScrollView
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.contentContainer}
       >
         {/* Profile Header with avatar, username, and streak cards */}
         <ProfileHeader />
+
+        {/* Language Settings Section */}
+        <SectionTitle title={t("settings.language")} />
+        <LanguageSelector />
 
         {/* Widgets Discovery Section */}
         <WidgetsSection />
@@ -88,4 +105,4 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingBottom: theme.spacing.xl,
   },
-}); 
+});

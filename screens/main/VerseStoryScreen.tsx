@@ -12,8 +12,10 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute, NavigationProp } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { t } from '../../localization';
 import { theme } from '../../constants/theme';
 import { useChatStore } from '../../store/useChatStore';
+import { position, flexDirection } from '../../utils/rtl';
 
 // Components
 import { Typography } from '../../components/atoms/Typography';
@@ -44,7 +46,7 @@ export const VerseStoryScreen: React.FC = () => {
 
   // Get data from route params or use defaults
   const params = route.params as VerseStoryScreenProps;
-  const verseText = params?.verseText || "Say: 'O you servants of Mine who have transgressed against your own selves! Despair not of God's mercy: behold, God forgives all sins - for, verily, He alone is much-forgiving, a dispenser of grace!'";
+  const verseText = params?.verseText || t('sayOYouServantsOfMineWhoHaveTransgressedAgainstYourOwnSelves');
   const arabicText = params?.arabicText || "قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ۚ إِنَّ اللَّهَ يَغْفِرُ الذُّنُوبَ جَمِيعًا ۚ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ";
   const surahRef = params?.surahRef || "Surah Az-Zumar 39:53";
   const verseId = params?.verseId || "39:53";
@@ -63,7 +65,7 @@ export const VerseStoryScreen: React.FC = () => {
         setReflection(generatedReflection);
       } catch (error) {
         console.error('Error loading verse data:', error);
-        setReflection('Reflect on this verse and how it applies to your life today.');
+        setReflection(t('reflectOnThisVerseAndHowItAppliesToYourLifeToday'));
       } finally {
         setIsLoadingReflection(false);
       }
@@ -77,11 +79,11 @@ export const VerseStoryScreen: React.FC = () => {
   };
 
   const handleListen = () => {
-    Alert.alert("Coming soon", "Audio playback will be added in a future update.");
+    Alert.alert(t('comingSoon'), t('audioPlaybackWillBeAddedInAFutureUpdate'));
   };
 
   const handleAsk = () => {
-    const prefill = `Can you help me understand this verse?\n\n"${verseText}"`;
+    const prefill = `${t('canYouHelpMeUnderstandThisVerse')}\n\n"${verseText}"`;
 
     // 1. Set new topic (surahName)
     setTopic(surahName);
@@ -127,12 +129,12 @@ export const VerseStoryScreen: React.FC = () => {
       setIsBookmarked(newBookmarkStatus);
       
       // Show feedback
-      const message = newBookmarkStatus ? 'Verse bookmarked!' : 'Bookmark removed';
-      Alert.alert('Success', message);
+      const message = newBookmarkStatus ? t('verseBookmarked') : t('bookmarkRemoved');
+      Alert.alert(t('success'), message);
       
     } catch (error) {
       console.error('Error toggling bookmark:', error);
-      Alert.alert('Error', 'Unable to update bookmark. Please try again.');
+      Alert.alert(t('error'), t('unableToUpdateBookmarkPleaseTryAgain'));
     } finally {
       setBookmarkLoading(false);
     }
@@ -143,7 +145,7 @@ export const VerseStoryScreen: React.FC = () => {
       // Clean up verse text - remove trailing quotes and extra formatting
       const cleanVerseText = verseText.replace(/^["']|["']$/g, '').trim();
       
-      const formattedContent = `🕌 Quran Chat – Verse of the Day 📖
+      const formattedContent = `🕌 ${t('quranChatSpiritualGuidance')} 📖
 
 "${cleanVerseText}"
 
@@ -151,11 +153,11 @@ export const VerseStoryScreen: React.FC = () => {
 
       await Share.share({
         message: formattedContent,
-        title: `Verse from ${surahRef}`,
+        title: t('verseFrom', { surahRef }),
       });
     } catch (error) {
       console.error('Error sharing verse:', error);
-      Alert.alert('Error', 'Unable to share this verse.');
+      Alert.alert(t('error'), t('unableToShareThisVerse'));
     }
   };
 
@@ -170,7 +172,6 @@ export const VerseStoryScreen: React.FC = () => {
       style={styles.container}
     >
       <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
-      
       <SafeAreaView style={styles.safeArea}>
         {/* Top Progress Bar */}
         <View style={styles.topSection}>
@@ -182,7 +183,7 @@ export const VerseStoryScreen: React.FC = () => {
             style={styles.progressText}
             align="center"
           >
-            📖 YOUR VERSE • 1 MIN
+            {t('yourVerse1Min')}
           </Typography>
           
           {/* Close Button */}
@@ -267,7 +268,7 @@ export const VerseStoryScreen: React.FC = () => {
                     style={styles.loadingText}
                     align="center"
                   >
-                    Generating reflection...
+                    {t('generatingReflection')}
                   </Typography>
                 </View>
               ) : (
@@ -292,21 +293,21 @@ export const VerseStoryScreen: React.FC = () => {
           <TouchableOpacity onPress={handleListen} style={styles.actionButton}>
             <Icon.BookOpen size={24} color="#6B7C93" />
             <Typography variant="caption" color="#6B7C93" style={styles.actionLabel}>
-              Listen
+              {t('listen')}
             </Typography>
           </TouchableOpacity>
           
           <TouchableOpacity onPress={handleAsk} style={styles.actionButton}>
             <Icon.MessageCircle size={24} color="#6B7C93" />
             <Typography variant="caption" color="#6B7C93" style={styles.actionLabel}>
-              Ask
+              {t('ask')}
             </Typography>
           </TouchableOpacity>
           
           <TouchableOpacity onPress={handleShare} style={styles.actionButton}>
             <Icon.Share size={24} color="#6B7C93" />
             <Typography variant="caption" color="#6B7C93" style={styles.actionLabel}>
-              Share
+              {t('share')}
             </Typography>
           </TouchableOpacity>
         </View>
@@ -345,7 +346,7 @@ const styles = StyleSheet.create({
   closeButton: {
     position: 'absolute',
     top: theme.spacing.lg,
-    right: theme.spacing.xl,
+    ...position(undefined, theme.spacing.xl),
     padding: theme.spacing.sm,
     borderRadius: theme.radii.md,
     backgroundColor: 'rgba(255,255,255,0.3)',
@@ -385,7 +386,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   referenceContainer: {
-    flexDirection: 'row',
+    flexDirection: flexDirection(),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -396,7 +397,7 @@ const styles = StyleSheet.create({
     color: '#6B7C93',
   },
   bookmarkButton: {
-    marginLeft: theme.spacing.sm,
+    marginStart: theme.spacing.sm,
     padding: theme.spacing.xs,
     borderRadius: theme.radii.sm,
     backgroundColor: 'rgba(255,255,255,0.4)',
@@ -426,7 +427,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   bottomToolbar: {
-    flexDirection: 'row',
+    flexDirection: flexDirection(),
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingHorizontal: 32,
@@ -435,8 +436,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     position: 'absolute',
     bottom: 0,
-    left: 0,
-    right: 0,
+    ...position(0),
+    ...position(undefined, 0),
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     shadowColor: '#000',

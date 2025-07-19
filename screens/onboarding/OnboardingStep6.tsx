@@ -6,6 +6,7 @@ import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQu
 import { WidgetIllustration } from '../../components/molecules/WidgetIllustration';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
 import { Typography } from '../../components/atoms/Typography';
+import { t } from '../../localization';
 
 export const OnboardingStep6: React.FC = () => {
   const navigation = useNavigation();
@@ -17,14 +18,14 @@ export const OnboardingStep6: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <OnboardingQuestionBlock
-        title="Make Your Home Screen a Place of Faith"
+        title={t('makeYourHomeScreenAPlaceOfFaith')}
         subtitle=""
         progress={60}
       >
         <View style={styles.content}>
           <View style={styles.instructionContainer}>
             <Typography variant="body" style={styles.instructionText}>
-              From the Home Screen of your phone, touch and hold an empty area until the apps jiggle
+              {t('homeScreenInstructions')}
             </Typography>
           </View>
           
@@ -34,7 +35,7 @@ export const OnboardingStep6: React.FC = () => {
           
           <View style={styles.buttonContainer}>
             <PrimaryButton
-              label="Continue"
+              label={t('continue')}
               onPress={handleContinue}
             />
           </View>

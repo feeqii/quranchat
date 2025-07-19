@@ -3,6 +3,7 @@ import { View, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, KeyboardA
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
+import { t } from '../../localization';
 import { Typography } from '../../components/atoms/Typography';
 import { Spacer } from '../../components/atoms/Spacer';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
@@ -55,7 +56,7 @@ export const ReflectionInputScreen: React.FC = () => {
             color={theme.colors.textPrimary}
             style={styles.headerTitle}
           >
-            Tell us a bit more
+            {t('tellUsMore')}
           </Typography>
           
           <View style={styles.headerSpacer} />
@@ -83,7 +84,7 @@ export const ReflectionInputScreen: React.FC = () => {
                 color="#6B7280"
                 style={styles.subtitle}
               >
-                Share what's on your mind today. Your thoughts will help us create a personalized reflection just for you.
+                {t('shareYourThoughts')}
               </Typography>
             </LinearGradient>
           </View>
@@ -94,7 +95,7 @@ export const ReflectionInputScreen: React.FC = () => {
           <ReflectionInput
             value={userReflection}
             onChangeText={handleReflectionChange}
-            placeholder="Share what's on your heart today... How are you feeling? What challenges are you facing? What are you grateful for?"
+            placeholder={t('shareYourHeartPrompt')}
             maxLength={500}
           />
           
@@ -113,7 +114,7 @@ export const ReflectionInputScreen: React.FC = () => {
                 color="#6B7280"
                 style={styles.helperText}
               >
-                ✨ The more you share, the more personalized your reflection will be
+                {t('theMoreYouShare')}
               </Typography>
             </LinearGradient>
           </View>
@@ -129,14 +130,14 @@ export const ReflectionInputScreen: React.FC = () => {
               color={theme.colors.textMuted}
               style={styles.footerHelperText}
             >
-              Please write at least 10 characters to continue
+              {t('pleaseWriteAtLeast')}
             </Typography>
           )}
           
           <Spacer size={canProceed ? "lg" : "sm"} />
           
           <PrimaryButton
-            label="Generate My Reflection"
+            label={t('generateMyReflection')}
             onPress={handleNext}
             disabled={!canProceed}
           />
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     padding: theme.spacing.xs,
-    marginRight: theme.spacing.sm,
+    marginEnd: theme.spacing.sm,
   },
   headerTitle: {
     flex: 1,

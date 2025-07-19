@@ -1,9 +1,10 @@
 import React from 'react';
 import { Text, StyleProp, TextStyle } from 'react-native';
 import { theme } from '../../constants/theme';
+import { isRTL, textAlign, textAlignReverse } from '../../utils/rtl';
 
 type TypographyVariant = keyof typeof theme.typography;
-type TextAlign = 'left' | 'center' | 'right';
+type LogicalTextAlign = 'start' | 'end' | 'center' | 'left' | 'right';
 
 interface TypographyProps {
   variant: TypographyVariant;
@@ -11,7 +12,8 @@ interface TypographyProps {
   style?: StyleProp<TextStyle>;
   numberOfLines?: number;
   color?: string;
-  align?: TextAlign;
+  align?: LogicalTextAlign;
+  rtlAware?: boolean; // Enable automatic RTL text alignment
 }
 
 export const Typography: React.FC<TypographyProps> = ({
@@ -20,8 +22,31 @@ export const Typography: React.FC<TypographyProps> = ({
   style,
   numberOfLines,
   color = theme.colors.textPrimary,
-  align = 'left',
+  align = 'start',
+  rtlAware = true,
 }) => {
+  
+  const getTextAlignment = (alignment: LogicalTextAlign): 'left' | 'center' | 'right' => {
+    if (!rtlAware) {
+      // If RTL awareness is disabled, use literal alignment
+      return alignment === 'start' ? 'left' : alignment === 'end' ? 'right' : alignment as 'left' | 'center' | 'right';
+    }
+
+    switch (alignment) {
+      case 'start':
+        return textAlign(); // Returns 'right' for RTL, 'left' for LTR
+      case 'end':
+        return textAlignReverse(); // Returns 'left' for RTL, 'right' for LTR
+      case 'center':
+        return 'center';
+      case 'left':
+      case 'right':
+        return alignment; // Use literal alignment
+      default:
+        return textAlign(); // Default to logical start
+    }
+  };
+
   const getVariantStyles = (variant: TypographyVariant): TextStyle => {
     const variantStyles = theme.typography[variant];
     
@@ -29,7 +54,7 @@ export const Typography: React.FC<TypographyProps> = ({
     if (typeof variantStyles === 'string') {
       return {
         color,
-        textAlign: align,
+        textAlign: getTextAlignment(align),
         fontFamily: variantStyles,
       };
     }
@@ -37,7 +62,7 @@ export const Typography: React.FC<TypographyProps> = ({
     const baseStyles = {
       ...variantStyles,
       color,
-      textAlign: align,
+      textAlign: getTextAlignment(align),
     };
 
     switch (variant) {

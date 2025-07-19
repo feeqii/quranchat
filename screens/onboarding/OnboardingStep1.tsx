@@ -5,6 +5,7 @@ import { theme } from '../../constants/theme';
 import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQuestionBlock';
 import { YesNoBlock } from '../../components/organisms/YesNoBlock';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
+import { t } from '../../localization';
 
 export const OnboardingStep1: React.FC = () => {
   const navigation = useNavigation();
@@ -23,12 +24,12 @@ export const OnboardingStep1: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <OnboardingQuestionBlock
-        title="Seeking daily guidance rooted in Quranic wisdom?"
-        subtitle="We'll personalize your experience accordingly"
+        title={t('dailyGuidanceTitle')}
+        subtitle={t('dailyGuidanceSubtitle')}
         progress={10}
       >
         <YesNoBlock
-          question="Would you like daily guidance?"
+          question={t('dailyGuidanceQuestion')}
           onYes={handleYes}
           onNo={handleNo}
         />

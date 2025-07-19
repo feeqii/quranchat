@@ -1,8 +1,9 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Typography } from '../atoms/Typography';
-import { theme } from '../../constants/theme';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { Typography } from "../atoms/Typography";
+import { theme } from "../../constants/theme";
+import { alignItems } from "../../utils/rtl";
 
 interface ReflectionPreviewProps {
   text: string;
@@ -11,16 +12,15 @@ interface ReflectionPreviewProps {
 
 export const ReflectionPreview: React.FC<ReflectionPreviewProps> = ({
   text,
-  maxLength = 60
+  maxLength = 60,
 }) => {
-  const truncatedText = text.length > maxLength 
-    ? `${text.substring(0, maxLength)}...` 
-    : text;
+  const truncatedText =
+    text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
 
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['#FEF7FF', '#F8FAFF', '#FFFFFF']} // Soft purple gradient
+        colors={["#FEF7FF", "#F8FAFF", "#FFFFFF"]} // Soft purple gradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradientContainer}
@@ -47,16 +47,16 @@ export const ReflectionPreview: React.FC<ReflectionPreviewProps> = ({
 const styles = StyleSheet.create({
   container: {
     borderRadius: 16,
-    overflow: 'hidden',
+    overflow: "hidden",
     ...theme.shadows.sm,
   },
   gradientContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    alignItems: alignItems(true),
     padding: 20,
   },
   iconContainer: {
-    marginRight: 16,
+    marginEnd: 16,
     marginTop: 2,
   },
   emoji: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   reflectionText: {
     fontSize: 15,
     lineHeight: 22,
-    fontWeight: '400',
+    fontWeight: "400",
     letterSpacing: 0.1,
   },
 }); 

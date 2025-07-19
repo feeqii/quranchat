@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
-import { theme } from '../../constants/theme';
-import { Typography } from '../atoms/Typography';
-import { Icon } from '../atoms/Icon';
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
+import { theme } from "../../constants/theme";
+import { Typography } from "../atoms/Typography";
+import { Icon } from "../atoms/Icon";
+import { textAlign } from "../../utils/rtl";
 
 interface ChatBubbleProps {
   role: "user" | "assistant";
@@ -29,12 +30,12 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({
 }) => {
   const isUser = role === "user";
   const isAssistant = role === "assistant";
-  const [dots, setDots] = useState('...');
+  const [dots, setDots] = useState("...");
 
   useEffect(() => {
     if (isTyping) {
       const interval = setInterval(() => {
-        setDots(prev => prev.length >= 3 ? '.' : prev + '.');
+        setDots((prev) => (prev.length >= 3 ? "." : prev + "."));
       }, 500);
       return () => clearInterval(interval);
     }
@@ -43,15 +44,19 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({
   return (
     <View style={[styles.container, style]}>
       {/* Chat Bubble */}
-      <View style={[
-        styles.bubbleContainer,
-        isUser ? styles.userContainer : styles.assistantContainer
-      ]}>
-        <View style={[
-          styles.bubble,
-          isUser ? styles.userBubble : styles.assistantBubble,
-          isTyping && styles.typingBubble
-        ]}>
+      <View
+        style={[
+          styles.bubbleContainer,
+          isUser ? styles.userContainer : styles.assistantContainer,
+        ]}
+      >
+        <View
+          style={[
+            styles.bubble,
+            isUser ? styles.userBubble : styles.assistantBubble,
+            isTyping && styles.typingBubble,
+          ]}
+        >
           <Typography
             variant="body"
             color={isUser ? theme.colors.surface : theme.colors.textPrimary}
@@ -95,16 +100,16 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.lg,
   },
   bubbleContainer: {
-    flexDirection: 'row',
-    maxWidth: '80%',
+    flexDirection: "row",
+    maxWidth: "80%",
   },
   userContainer: {
-    alignSelf: 'flex-end',
-    justifyContent: 'flex-end',
+    alignSelf: "flex-end",
+    justifyContent: "flex-end",
   },
   assistantContainer: {
-    alignSelf: 'flex-start',
-    justifyContent: 'flex-start',
+    alignSelf: "flex-start",
+    justifyContent: "flex-start",
   },
   bubble: {
     borderRadius: theme.radii.lg,
@@ -123,20 +128,20 @@ const styles = StyleSheet.create({
   },
   messageText: {
     lineHeight: theme.lineHeights.body,
-    textAlign: 'left',
+    textAlign: textAlign(),
   },
   actionsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
     marginTop: theme.spacing.md,
-    marginLeft: theme.spacing.md,
+    marginStart: theme.spacing.md,
     gap: theme.spacing.md,
   },
   actionButton: {
     padding: theme.spacing.sm,
     borderRadius: theme.radii.pill,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   typingBubble: {
     minWidth: 60,
@@ -147,7 +152,7 @@ const styles = StyleSheet.create({
   typingText: {
     fontSize: theme.fontSizes.title,
     lineHeight: theme.lineHeights.title,
-    textAlign: 'center',
+    textAlign: "center",
     opacity: 0.7,
   },
 }); 

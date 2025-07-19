@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   actionIcon: {
     width: 40,
     alignItems: 'center',
-    marginRight: theme.spacing.md,
+    marginEnd: theme.spacing.md,
   },
   cancelButton: {
     alignItems: 'center',

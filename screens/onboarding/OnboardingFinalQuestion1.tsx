@@ -6,6 +6,7 @@ import { WidgetProgressLayout } from '../../components/organisms/WidgetProgressL
 import { Typography } from '../../components/atoms/Typography';
 import { YesNoBlock } from '../../components/organisms/YesNoBlock';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
+import { t } from '../../localization';
 
 export const OnboardingFinalQuestion1: React.FC = () => {
   const navigation = useNavigation();
@@ -29,11 +30,11 @@ export const OnboardingFinalQuestion1: React.FC = () => {
     >
       <View style={styles.content}>
         <Typography variant="h3" style={styles.preQuestion}>
-          One last thing...
+          {t('oneLastThing')}
         </Typography>
         
         <YesNoBlock
-          question="Are you inclined to finish what you start?"
+          question={t('areYouInclinedToFinishWhatYouStart')}
           onYes={handleYes}
           onNo={handleNo}
         />

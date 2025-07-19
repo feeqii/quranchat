@@ -6,19 +6,20 @@ import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQu
 import { OptionGroup } from '../../components/molecules/OptionGroup';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
-
-const heardFromOptions = [
-  'Digital Advertising',
-  'Social Media (TikTok, Instagram, Facebook)',
-  'App Store',
-  'Friends or Family',
-  'Online Search (Google)'
-];
+import { t } from '../../localization';
 
 export const OnboardingStep4: React.FC = () => {
   const navigation = useNavigation();
   const { setField } = useOnboardingStore();
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  const heardFromOptions = [
+    t('digitalAdvertising'),
+    t('socialMediaTiktokInstagramFacebook'),
+    t('appStore'),
+    t('friendsOrFamily'),
+    t('onlineSearchGoogle')
+  ];
 
   const handleContinue = () => {
     if (selectedOption) {
@@ -30,8 +31,8 @@ export const OnboardingStep4: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <OnboardingQuestionBlock
-        title="How did you hear about Quran Chat?"
-        subtitle="We are blessed to have you on board and would love to know!"
+        title={t('howDidYouHearAboutQuranChat')}
+        subtitle={t('weAreBlessedToHaveYouOnBoardAndWouldLoveToKnow')}
         progress={40}
       >
         <View style={styles.content}>
@@ -45,7 +46,7 @@ export const OnboardingStep4: React.FC = () => {
           
           <View style={styles.buttonContainer}>
             <PrimaryButton
-              label="Continue"
+              label={t('continue')}
               onPress={handleContinue}
               disabled={!selectedOption}
             />
