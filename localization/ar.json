@@ -1,0 +1,386 @@
+{
+  "aboutSupport": "حول والدعم",
+  "accountManagementFeaturesComingSoon": "ميزات إدارة الحساب قادمة قريباً!",
+  "continueWithoutAccount": "المتابعة بدون حساب",
+  "dailyGuidanceTitle": "هل تبحث عن إرشاد يومي متجذر في الحكمة القرآنية؟",
+  "dailyGuidanceSubtitle": "سنخصص تجربتك وفقاً لذلك",
+  "dailyGuidanceQuestion": "هل تريد إرشاداً يومياً؟",
+  "signUpOrLogin": "إنشاء حساب أو تسجيل الدخول",
+  "socialProofText": "تقييم 4.9 | أكثر من 10 مليون تحميل",
+  "welcomeTitle": "إيمانك، دائماً مرئي",
+  "welcomeSubtitle": "احتفظ بإيمانك في متناول يدك عبر إضافة الأداة إلى شاشتك الرئيسية",
+  "accountSettings": "الحساب والإعدادات",
+  "addQuranChatToYourHomeScreenForDailyInspiration": "أضف محادثة القرآن إلى شاشتك الرئيسية للإلهام اليومي",
+  "addWidgetToHomeScreen": "إضافة أداة إلى الشاشة الرئيسية",
+  "aiGuidance": "التوجيه بالذكاء الاصطناعي",
+  "analyzingYourAnswers": "تحليل إجاباتك",
+  "apiRequestFailed": "فشل طلب واجهة البرمجة",
+  "appName": "محادثة القرآن",
+  "appStore": "متجر التطبيقات",
+  "arabicEditions": "الإصدارات العربية",
+  "areYouInclinedToFinishWhatYouStart": "هل تميل إلى إنهاء ما تبدأه؟",
+  "ask": "اسأل",
+  "askAbout": "اسأل عن...",
+  "askAboutTheseVerses": "اسأل عن هذه الآيات",
+  "askAboutThisVerse": "اسأل عن هذه الآية",
+  "askAnythingAboutIslamSpiritualityOrLifeGuidance": "اسأل أي شيء عن الإسلام أو الروحانية أو التوجيه في الحياة",
+  "audioFeature": "ميزة الصوت",
+  "audioPlaybackFeatureComingSoon": "ميزة تشغيل الصوت قادمة قريباً!",
+  "audioPlaybackWillBeAddedInAFutureUpdate": "سيتم إضافة تشغيل الصوت في تحديث مستقبلي.",
+  "autofilledFromSetup": "مملوء تلقائياً من الإعداد",
+  "basedOnFeelingReady": "بناءً على الشعور بـ {{mood}}، تأملك المخصص والتوجيه الروحي جاهزان.",
+  "beginTodaysJourney": "ابدأ رحلة اليوم",
+  "blessed": "مبارك",
+  "bookmarkRemoved": "تم إزالة الإشارة المرجعية",
+  "cancel": "إلغاء",
+  "chat": "محادثة",
+  "chatHistory": "تاريخ المحادثة",
+  "checkingForPreviousPurchases": "التحقق من المشتريات السابقة...",
+  "chooseOneOrMore": "اختر واحداً أو أكثر",
+  "closeTest": "← إغلاق الاختبار",
+  "comingSoon": "قادم قريباً",
+  "completeJourney": "أكمل الرحلة",
+  "completed": "مكتمل",
+  "contactSupport": "اتصل بالدعم",
+  "contentMissing": "المحتوى مفقود",
+  "contentMissingMessage": "يبدو أن تأملك الروحي مفقود. هل تريد إعادة توليده؟",
+  "continue": "متابعة",
+  "continueYourJourney": "تابع رحلتك",
+  "conversationCopiedToClipboard": "تم نسخ المحادثة إلى الحافظة.",
+  "copied": "تم النسخ",
+  "copy": "نسخ",
+  "craftingYourReflection": "صياغة تأملك...",
+  "creatingYourHomeScreenWidget": "إنشاء أداة الشاشة الرئيسية",
+  "currentStreak": "السلسلة الحالية",
+  "dateReflection": "تأمل {{date}} 🌙",
+  "deepenYourRelationshipWithAllah": "عمق علاقتك مع الله",
+  "digitalAdvertising": "الإعلان الرقمي",
+  "discoverWidgets": "اكتشف الأدوات",
+  "doYouFinishWhatYouStart": "هل تنهي ما تبدأه؟",
+  "doYouWantInstantAccessToQuranicInsights": "هل تريد وصولاً فورياً لرؤى قرآنية؟",
+  "englishTranslations": "الترجمات الإنجليزية",
+  "enterYourName": "أدخل اسمك",
+  "enterYourPromotionalCodeHereFeatureComingSoon": "أدخل الرمز الترويجي هنا (الميزة قادمة قريباً)",
+  "error": "خطأ",
+  "errorGeneratingContent": "خطأ في توليد المحتوى:",
+  "errorLoadingVerseData": "خطأ في تحميل بيانات الآية:",
+  "failedToLoadVersesPleaseTryAgain": "فشل في تحميل الآيات. يرجى المحاولة مرة أخرى.",
+  "failedToSetUpChatPleaseTryAgain": "فشل في إعداد المحادثة. يرجى المحاولة مرة أخرى.",
+  "failedToShareVersePleaseTryAgain": "فشل في مشاركة الآية. يرجى المحاولة مرة أخرى.",
+  "faithBecomesADailyHabitWithYourWidget": "يصبح الإيمان عادة يومية مع أداتك",
+  "findingVersesThatSpeakToYourHeart": "العثور على آيات تتحدث إلى قلبك...",
+  "finish": "انتهاء",
+  "focusingOn": "• التركيز على:",
+  "freeMember": "عضو مجاني",
+  "friendsOrFamily": "الأصدقاء أو العائلة",
+  "generateMyReflection": "اولد تأملي",
+  "generatingReflection": "توليد التأمل...",
+  "getDailyQuranicInspirationRightOnYourHomeScreen": "احصل على إلهام قرآني يومي مباشرة على شاشتك الرئيسية:",
+  "helpSpreadThePeaceAndWisdomOfQuranChatWithYourFriends": "ساعد في نشر السلام والحكمة من محادثة القرآن مع أصدقائك!",
+  "helpUsImprove": "ساعدنا في التحسين",
+  "helpUsPersonalizeYourExperienceFurther": "ساعدنا في تخصيص تجربتك أكثر",
+  "heresHowQuranChatMightSupportYou": "إليك كيف قد تدعمك محادثة القرآن",
+  "highlight": "تمييز",
+  "highlightColor": "لون التمييز",
+  "hilaliKhan": "هلالي وخان",
+  "howAreYouFeelingToday": "كيف تشعر اليوم؟",
+  "howCanIStrengthenMyFaith": "كيف يمكنني تقوية إيماني؟",
+  "faithStrengtheningAnswer": "تقوية إيمانك تبدأ بذكر الله المنتظم والتأمل في كلماته.\n\n\"ألا بذكر الله تطمئن القلوب\" — سورة الرعد (13:28)\n\nابدأ بسيط: اتل آية يومياً، تأمل في معناها، وطبقها في أفعالك. بناء الاستمرارية. الإيمان ليس شعور — إنه علاقة تُرعى من خلال الممارسة والصبر والحضور.",
+  "howCanQuranChatSupportYou": "كيف يمكن لمحادثة القرآن أن تدعمك؟",
+  "howDidYouHearAboutQuranChat": "كيف سمعت عن محادثة القرآن؟",
+  "iApologizeButImHavingDifficultyRespondingAtThisMoment": "أعتذر، لكنني أواجه صعوبة في الرد في هذه اللحظة. عسى أن يهديك الله (سبحانه وتعالى) إلى الإجابات التي تسعى إليها.",
+  "indeedWithHardshipComesEase": "إن مع العسر يسراً.",
+  "invalidApiResponse": "استجابة واجهة برمجة غير صحيحة",
+  "invalidEmail": "بريد إلكتروني غير صحيح",
+  "invalidName": "اسم غير صحيح",
+  "itemsSelected": "تم اختيار {{count}}",
+  "justAFewFinalQuestions": "فقط بعض الأسئلة الأخيرة",
+  "justChat": "محادثة فقط",
+  "justStudyTheQuran": "دراسة القرآن فقط",
+  "level": "المستوى",
+  "of": "من",
+  "lifeAreas": "مجالات الحياة",
+  "lifeChallenges": "تحديات الحياة",
+  "listen": "استمع",
+  "loading": "تحميل",
+  "loginlogout": "تسجيل الدخول/الخروج",
+  "logout": "تسجيل الخروج",
+  "longestStreak": "أطول سلسلة",
+  "makeYourHomeScreenAPlaceOfFaith": "اجعل شاشتك الرئيسية مكاناً للإيمان",
+  "homeScreenInstructions": "من الشاشة الرئيسية لهاتفك، اضغط مع الاستمرار على منطقة فارغة حتى تهتز التطبيقات",
+  "manageReminders": "إدارة التذكيرات",
+  "mohsinKhan": "محسن خان",
+  "mood": "المزاج:",
+  "muhammadAsad": "محمد أسد",
+  "needHelpOurSupportTeamWillBeAvailableSoon": "تحتاج مساعدة؟ فريق الدعم سيكون متاحاً قريباً.",
+  "new": "جديد",
+  "next": "التالي",
+  "noReflectionRecorded": "لم يتم تسجيل تأمل في هذا التاريخ.",
+  "onboarding": "الإعداد الأولي",
+  "oneLastThing": "شيء أخير...",
+  "onlineSearchGoogle": "البحث عبر الإنترنت (جوجل)",
+  "overcomeLifeStrugglesAndChallenges": "تغلب على صراعات وتحديات الحياة",
+  "peaceBeUponYou": "السلام عليكم",
+  "peaceBeUponYouHowMayIAssistYouInYourSpiritualJourneyToday": "السلام عليكم. كيف يمكنني مساعدتك في رحلتك الروحية اليوم؟",
+  "personalDetails": "التفاصيل الشخصية",
+  "personalGrowth": "النمو الشخصي",
+  "personalizedReflectionReady": "تأملك المخصص والتوجيه الروحي جاهزان.",
+  "pleaseEnterAValidEmailAddress": "يرجى إدخال عنوان بريد إلكتروني صحيح",
+  "pleaseEnterAValidUsername": "يرجى إدخال اسم مستخدم صحيح",
+  "pleaseSelectAtLeastOneContextToContinue": "يرجى اختيار سياق واحد على الأقل للمتابعة",
+  "pleaseWaitWhileWeGenerateYourPersonalizedSpiritualGuidance": "يرجى الانتظار بينما نولد التوجيه الروحي المخصص لك.",
+  "pleaseWriteAtLeast10CharactersToContinue": "يرجى كتابة 10 أحرف على الأقل للمتابعة",
+  "preferNotToSay": "أفضل عدم القول",
+  "sunni": "سني",
+  "shia": "شيعي",
+  "sufi": "صوفي",
+  "nonDenominational": "غير طائفي",
+  "premium": "مميز",
+  "premiumFeaturesComingSoon": "الميزات المميزة قادمة قريباً!",
+  "premiumMember": "عضو مميز",
+  "premiumUpgrade": "ترقية مميزة",
+  "premiumUserWillUnlockPersonalizedFeatures": "كمستخدم مميز، ستفتح ميزات مخصصة في أداة الإيمان لتعميق اتصالك بالله كل يوم",
+  "preparingYourPersonalizedReflection": "إعداد تأملك المخصص...",
+  "privacyPolicy": "سياسة الخصوصية",
+  "privacyPolicyWillBeAvailableSoon": "سياسة الخصوصية ستكون متاحة قريباً.",
+  "profile": "الملف الشخصي",
+  "profileImageSelectionWillBeAvailableSoon": "اختيار صورة الملف الشخصي سيكون متاحاً قريباً",
+  "progressToday": "التقدم اليوم",
+  "progressThroughReflection": "لقد أنجزت {{progress}}% من تأمل اليوم. لننتهي من إنشاء محتواك الروحي المخصص.",
+  "qaribullahDarwish": "قاريب الله ودرويش",
+  "quranUthmani": "المصحف العثماني",
+  "quranSimple": "المصحف البسيط",
+  "quranSimpleEnhanced": "المصحف البسيط المحسن",
+  "quranTajweed": "مصحف التجويد",
+  "pickthall": "بيكثال",
+  "shakir": "شاكر",
+  "maududi": "المودودي",
+  "arberry": "أربري",
+  "daryabadi": "دريابادي",
+  "yesterday": "أمس",
+  "quran": "القرآن",
+  "quranChatSpiritualGuidance": "محادثة القرآن - التوجيه الروحي",
+  "quranVerse673": "\"وهو الذي خلق السماوات والأرض بالحق ويوم يقول كن فيكون قوله الحق\" (القرآن 6:73)",
+  "rateQuranChat": "قيم محادثة القرآن",
+  "realReflectionsFromRealUsers": "تأملات حقيقية من مستخدمين حقيقيين",
+  "redeemCode": "استرداد الرمز",
+  "reflectingOn": "التأمل في",
+  "reflectingOnYourGrowth": "التأمل في نموك",
+  "reflectingOnYourInsights": "التأمل في رؤاك...",
+  "reflection": "تأمل 🌙",
+  "regenerate": "إعادة التوليد",
+  "today": "اليوم",
+  "throughTodaysReflectionFinishCreating": "% من خلال تأمل اليوم. لننتهي من إنشاء محتواك الروحي المخصص.",
+  "basedOnFeelingPersonalizedReady": "بناءً على الشعور بـ {mood}، تأملك المخصص والتوجيه الروحي جاهزان.",
+  "relationships": "العلاقات",
+  "reminderSettingsWillBeAvailableSoon": "إعدادات التذكير ستكون متاحة قريباً.",
+  "removeHighlight": "إزالة التمييز",
+  "restorePurchases": "استعادة المشتريات",
+  "sahihInternational": "صحيح إنترناشيونال",
+  "sayOYouServantsOfMineWhoHaveTransgressedAgainstYourOwnSelves": "قل يا عبادي الذين أسرفوا على أنفسهم لا تقنطوا من رحمة الله إن الله يغفر الذنوب جميعاً إنه هو الغفور الرحيم",
+  "searchByNameOrNumber": "ابحث بالاسم أو الرقم...",
+  "seekingGuidanceFromTheQuran": "البحث عن الهداية من القرآن...",
+  "selectSurah": "اختر السورة",
+  "selectTranslation": "اختر الترجمة",
+  "settingUpYourFaithWidget": "إعداد أداة الإيمان",
+  "share": "مشاركة",
+  "shareQuranChat": "شارك محادثة القرآن",
+  "shareVerse": "شارك الآية",
+  "shareVerses": "شارك الآيات",
+  "shareWhatsOnYourHeartToday": "شارك ما في قلبك اليوم... كيف تشعر؟ ما التحديات التي تواجهها؟ لماذا أنت ممتن؟",
+  "shareWhatsOnYourMindToday": "شارك ما يدور في ذهنك اليوم. أفكارك ستساعدنا في إنشاء تأمل مخصص لك فقط.",
+  "sharingFeatureComingSoon": "ميزة المشاركة قادمة قريباً!",
+  "simpleElegantAndDeeplyHelpful": "بسيط وأنيق ومفيد للغاية. أشعر بمزيد من الثبات الروحي والتواصل مع القرآن أكثر من أي وقت مضى.",
+  "socialMedia": "وسائل التواصل الاجتماعي",
+  "socialMediaTiktokInstagramFacebook": "وسائل التواصل الاجتماعي (تيك توك، إنستجرام، فيسبوك)",
+  "somethingWentWrongInThisSection": "حدث خطأ في هذا القسم",
+  "spiritualGuidance": "التوجيه الروحي",
+  "starConversationsToSeeThemHere": "ضع نجمة على المحادثات لرؤيتها هنا.",
+  "start": "ابدأ",
+  "startAConversationToBuildYourSpiritualArchive": "ابدأ محادثة لبناء أرشيفك الروحي.",
+  "struggling": "أكافح",
+  "subscription": "الاشتراك",
+  "success": "نجح",
+  "tailoringTodaysMessageForYou": "تخصيص رسالة اليوم لك...",
+  "takeAMomentToReflectOnYourCurrentStateOfHeartAndMind": "خذ لحظة للتأمل في حالة قلبك وعقلك الحالية.",
+  "takeAMomentToReflectOnYourDayAndReceivePersonalizedSpiritualGuidance": "خذ لحظة للتأمل في يومك واحصل على توجيه روحي مخصص.",
+  "takeTimeToReflect": "خذ لحظة للتأمل في يومك واحصل على توجيه روحي مخصص.",
+  "takingAMomentToFindThePerfectGuidanceForYourJourney": "أخذ لحظة للعثور على التوجيه المثالي لرحلتك...",
+  "tapToAddName": "اضغط لإضافة الاسم",
+  "tellUsABitMore": "أخبرنا المزيد",
+  "tellUsMore": "أخبرنا المزيد",
+  "shareYourThoughts": "شارك أفكارك",
+  "shareYourHeartPrompt": "شارك ما في قلبك اليوم",
+  "theMoreYouShare": "كلما شاركت أكثر، كلما كان تأملك أكثر تخصيصاً",
+  "pleaseWriteAtLeast": "يرجى كتابة 10 أحرف على الأقل للمتابعة",
+  "termsOfUse": "شروط الاستخدام",
+  "termsOfUseWillBeAvailableSoon": "شروط الاستخدام ستكون متاحة قريباً.",
+  "thankYouForUsingQuranChatWedLoveYourFeedbackOnTheAppStore": "شكراً لاستخدام محادثة القرآن! نحب ملاحظاتك على متجر التطبيقات.",
+  "theMoreYouShareTheMorePersonalizedYourReflectionWillBe": "✨ كلما شاركت أكثر، كلما كان تأملك أكثر تخصيصاً",
+  "theWidgetRemindsMeToPauseReflectAndReconnect": "تذكرني الأداة بالتوقف والتأمل وإعادة التواصل مع إيماني. إنها مثل وجود رفيق روحي لطيف في جيبي.",
+  "thisFeatureWillBeAvailableSoonInshaallah": "هذه الميزة ستكون متاحة قريباً، إن شاء الله.",
+  "thisHelpsUsTailorYourExperience": "هذا يساعدنا في تخصيص تجربتك.",
+  "thisKeepsMeGroundedInDailyQuranicReflection": "هذا يبقيني متجذراً في التأمل القرآني اليومي. الأداة على شاشتي الرئيسية تذكير جميل بحضور الله طوال يومي.",
+  "thisMonth": "هذا الشهر",
+  "throughTodaysReflection": "% من خلال تأمل اليوم. لننتهي من إنشاء محتواك الروحي المخصص.",
+  "timeDevotedToScriptureAndStudy": "الوقت المخصص للكتاب المقدس والدراسة",
+  "toMoveForwardPleaseSpecify": "للمضي قدماً، يرجى التحديد",
+  "todaysJourney": "رحلة اليوم",
+  "todaysJourneyComplete": "رحلة اليوم مكتملة!",
+  "trySelectingDifferentDate": "جرب اختيار تاريخ مختلف أو العودة إلى رحلة اليوم.",
+  "typeYourThoughtsHere": "اكتب أفكارك هنا...",
+  "unableToCopyThisConversation": "غير قادر على نسخ هذه المحادثة.",
+  "unableToFindThisConversation": "غير قادر على العثور على هذه المحادثة.",
+  "unableToOpenVerseStory": "غير قادر على فتح قصة الآية.",
+  "unableToShareThisContent": "غير قادر على مشاركة هذا المحتوى.",
+  "unableToShareThisConversation": "غير قادر على مشاركة هذه المحادثة.",
+  "unableToShareThisVerse": "غير قادر على مشاركة هذه الآية.",
+  "unableToStartChatDiscussion": "غير قادر على بدء مناقشة المحادثة.",
+  "unableToUpdateBookmarkPleaseTryAgain": "غير قادر على تحديث الإشارة المرجعية. يرجى المحاولة مرة أخرى.",
+  "upgradeToUnlockAdvancedFeaturesAndUnlimitedAccess": "ترقية لفتح الميزات المتقدمة والوصول غير المحدود",
+  "verseBookmarked": "تم وضع إشارة مرجعية للآية!",
+  "verses": "آيات •",
+  "verySad": "حزين جداً",
+  "viewResults": "عرض النتائج",
+  "visualizeHowConsistencyShapesYourSpiritualPath": "تصور كيف يشكل الثبات مسارك الروحي",
+  "weAreBlessedToHaveYouOnBoardAndWouldLoveToKnow": "نحن مباركون لوجودك معنا ونحب أن نعرف!",
+  "weValueYourInputFeatureComingSoon": "نقدر مدخلاتك! الميزة قادمة قريباً.",
+  "wellTailorResponsesRespectfully": "سنخصص الردود باحترام",
+  "wevePrefilledSomeDetailsFromYourInitialSetup": "لقد ملأنا مسبقاً بعض التفاصيل من إعدادك الأولي. لا تتردد في التعديل أو إضافة المزيد من المعلومات.",
+  "whatMakesYouFeelThisWay": "ما الذي يجعلك تشعر بهذه الطريقة؟",
+  "whatOthersAreSaying": "ما يقوله الآخرون",
+  "whatsYourAgeGroup": "ما هي فئتك العمرية؟",
+  "ageGroup13to17": "13–17",
+  "ageGroup18to24": "18–24",
+  "ageGroup25to34": "25–34",
+  "ageGroup35to44": "35–44",
+  "ageGroup45to54": "45–54",
+  "ageGroup55plus": "55+",
+  "whatsYourIslamicBackground": "ما هي خلفيتك الإسلامية؟",
+  "widgetDiscoveryWillBeAvailableSoon": "اكتشاف الأدوات سيكون متاحاً قريباً",
+  "widgetPreview": "معاينة الأداة",
+  "worshipFaith": "العبادة والإيمان",
+  "wouldYouLikeADailyReminder": "هل تريد تذكيراً يومياً؟",
+  "wouldYouLikeADailyReminderOfYourFaithJourneyOnYourHomeScreen": "هل تريد تذكيراً يومياً برحلة إيمانك على شاشتك الرئيسية؟",
+  "wouldYouLikeToHaveInstantAccessToDailyInspirationAndYourProgress": "هل تريد وصولاً فورياً للإلهام اليومي وتقدمك؟",
+  "writeAnyQuestionHere": "اكتب أي سؤال هنا",
+  "yes": "نعم",
+  "yet": "بعد.",
+  "yourExperienceWillBeTailoredToYourNeeds": "ستكون تجربتك مخصصة لاحتياجاتك",
+  "yourExperiencesShapeYourSpiritualJourney": "تجاربك تشكل رحلتك الروحية. الله (سبحانه وتعالى) يرى كل شيء ويفهم قلبك.",
+  "yourFeelingsAreValidAllahSwtUnderstandsYourHeartInEveryMoment": "مشاعرك صحيحة. الله (سبحانه وتعالى) يفهم قلبك في كل لحظة.",
+  "yourFeelingsAreValid": "مشاعرك صحيحة. الله (سبحانه وتعالى) يرى قلبك ويفهم رحلتك.",
+  "selectContext": "ما الذي يشغل بالك اليوم؟",
+  "all": "الكل",
+  "favorites": "المفضلة",
+  "yourJourneyToday": "رحلتك اليوم",
+  "yourPersonalizedReflectionAndSpiritualGuidanceAreReady": "تأملك المخصص والتوجيه الروحي جاهزان.",
+  "yourReflection": "تأملك",
+  "yourSpiritualJourneyWidget": "أداة رحلتك الروحية",
+  "yourSpiritualReflectionAppearsToBeMissingWouldYouLikeToRegenerateIt": "يبدو أن تأملك الروحي مفقود. هل تريد إعادة توليده؟",
+  "yourVerse1Min": "📖 آيتك • دقيقة واحدة",
+  "youre": "أنت",
+  "yusufAli": "يوسف علي",
+
+  "categories": {
+    "creation": "الخلق",
+    "relationships": "العلاقات",
+    "purpose": "الهدف",
+    "patience": "الصبر",
+    "prayerWorship": "الصلاة والعبادة",
+    "forgiveness": "المغفرة",
+    "gratitude": "الامتنان",
+    "anxiety": "القلق",
+    "stress": "التوتر",
+    "loss": "الخسارة",
+    "loneliness": "الوحدة",
+    "grief": "الحزن",
+    "selfLove": "حب الذات",
+    "wisdom": "الحكمة",
+    "growth": "النمو",
+    "family": "العائلة",
+    "friendship": "الصداقة",
+    "marriage": "الزواج",
+    "community": "المجتمع",
+    "worship": "العبادة",
+    "faith": "الإيمان",
+    "guidance": "الهداية",
+    "peace": "السلام",
+    "hope": "الأمل",
+    "love": "الحب",
+    "prayer": "الصلاة",
+    "dua": "الدعاء",
+    "tawakkul": "التوكل",
+    "taqwa": "التقوى",
+    "iman": "الإيمان",
+    "ihsan": "الإحسان",
+    "compassion": "الرحمة"
+  },
+
+  "contextOptions": {
+    "morningPrayers": "صلاة الفجر",
+    "workStress": "ضغط العمل",
+    "familyTime": "وقت العائلة",
+    "studyTime": "وقت الدراسة",
+    "relationships": "العلاقات",
+    "personalGrowth": "النمو الشخصي",
+    "spiritualReflection": "التأمل الروحي",
+    "lifeChallenges": "تحديات الحياة",
+    "gratitudePractice": "ممارسة الامتنان",
+    "seekingGuidance": "البحث عن الهداية",
+    "peacefulMoments": "لحظات السلام",
+    "communityService": "خدمة المجتمع",
+    "faithJourney": "رحلة الإيمان",
+    "innerPeace": "السلام الداخلي",
+    "hopeAndHealing": "الأمل والشفاء",
+    "work": "عمل",
+    "school": "مدرسة",
+    "career": "حياة مهنية",
+    "exercise": "ممارسة الرياضة",
+    "family": "عائلة",
+    "love": "حب",
+    "health": "صحة",
+    "hobbies": "هوايات",
+    "friends": "اصحاب",
+    "socialmedia": "وسائل التواصل الاجتماعي",
+    "food": "طعام",
+    "weather": "طقس"
+  },
+
+  "moods": {
+    "verySad": "حزين جداً",
+    "sad": "حزين",
+    "neutral": "محايد",
+    "calm": "هادئ",
+    "happy": "سعيد",
+    "joyful": "مبتهج",
+    "excited": "متحمس",
+    "grateful": "ممتن",
+    "blessed": "مبارك"
+  },
+
+  "testFunctions": "🧪 اختبار الوظائف",
+  "switchLanguage": "🔄 تبديل اللغة",
+  "openTestModal": "🌍 فتح النافذة التجريبية",
+  "detectDeviceLanguage": "🌐 اكتشاف لغة الجهاز",
+  "applyRTL": "🔄 تطبيق RTL",
+  "currentLanguage": "اللغة الحالية: {{language}}",
+  "isRTL": "هل RTL: {{isRTL}}",
+  "translationTest": "اختبار الترجمة: {{text}}",
+  "verseFrom": "آية من {{surahRef}}",
+  "reflectOnThisVerseAndHowItAppliesToYourLifeToday": "تأمل في هذه الآية وكيف تنطبق على حياتك اليوم.",
+  "canYouHelpMeUnderstandThisVerse": "هل يمكنك مساعدتي في فهم هذه الآية؟",
+  "idLikeToDiscussThisReflectionFurther": "أود مناقشة هذا التأمل أكثر: {{reflection}}",
+  "loadingWithSurah": "تحميل {{surahName}}...",
+  "quranChatVerseShare": "🕌 {{surahName}} {{surahNumber}}:{{verseNumber}}\n\n\"{{verseText}}\"\n\n— محادثة القرآن",
+
+  "selectLanguage": "اختر اللغة",
+  "language": {
+    "en": "English",
+    "ar": "العربية"
+  },
+
+  "settings": {
+    "language": "اللغة"
+  }
+}
