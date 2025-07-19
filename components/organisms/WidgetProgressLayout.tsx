@@ -1,8 +1,10 @@
-import React from 'react';
-import { View, StyleSheet, SafeAreaView, Image } from 'react-native';
-import { theme } from '../../constants/theme';
-import { Typography } from '../atoms/Typography';
-import { ProgressBar } from '../atoms/ProgressBar';
+import React from "react";
+import { View, StyleSheet, SafeAreaView, Image } from "react-native";
+import { theme } from "../../constants/theme";
+import { Typography } from "../atoms/Typography";
+import { ProgressBar } from "../atoms/ProgressBar";
+import { t } from "../../localization";
+import { textAlign } from "../../utils/rtl";
 
 interface WidgetProgressLayoutProps {
   analyzingProgress: number;
@@ -25,13 +27,15 @@ export const WidgetProgressLayout: React.FC<WidgetProgressLayoutProps> = ({
           {/* App Logo - placeholder for now */}
           <View style={styles.logoContainer}>
             <View style={styles.logoPlaceholder}>
-              <Typography variant="h2" style={styles.logoText}>🕌</Typography>
+              <Typography variant="h2" style={styles.logoText}>
+                🕌
+              </Typography>
             </View>
           </View>
-          
+
           {/* Main Heading */}
           <Typography variant="h2" style={styles.mainHeading}>
-            Your Spiritual Journey Widget
+            {t("yourSpiritualJourneyWidget")}
           </Typography>
         </View>
 
@@ -40,32 +44,39 @@ export const WidgetProgressLayout: React.FC<WidgetProgressLayoutProps> = ({
           {/* Analyzing Progress */}
           <View style={styles.progressItem}>
             <Typography variant="body" style={styles.progressLabel}>
-              Analyzing your answers
+              {t("analyzingYourAnswers")}
             </Typography>
-            <ProgressBar progress={analyzingProgress} style={styles.progressBar} />
+            <ProgressBar
+              progress={analyzingProgress}
+              style={styles.progressBar}
+            />
           </View>
 
           {/* Creating Progress */}
           <View style={styles.progressItem}>
             <Typography variant="body" style={styles.progressLabel}>
-              Creating Your Home Screen Widget
+              {t("creatingYourHomeScreenWidget")}
             </Typography>
-            <ProgressBar progress={creatingProgress} style={styles.progressBar} />
+            <ProgressBar
+              progress={creatingProgress}
+              style={styles.progressBar}
+            />
           </View>
 
           {/* Setting Up Progress */}
           <View style={styles.progressItem}>
             <Typography variant="body" style={styles.progressLabel}>
-              Setting Up Your Faith Widget
+              {t("settingUpYourFaithWidget")}
             </Typography>
-            <ProgressBar progress={settingUpProgress} style={styles.progressBar} />
+            <ProgressBar
+              progress={settingUpProgress}
+              style={styles.progressBar}
+            />
           </View>
         </View>
 
         {/* Content Section */}
-        <View style={styles.contentSection}>
-          {children}
-        </View>
+        <View style={styles.contentSection}>{children}</View>
       </View>
     </SafeAreaView>
   );
@@ -82,7 +93,7 @@ const styles = StyleSheet.create({
     paddingVertical: theme.spacing.xl,
   },
   headerSection: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: theme.spacing.xl,
   },
   logoContainer: {
@@ -93,8 +104,8 @@ const styles = StyleSheet.create({
     height: 80,
     backgroundColor: theme.colors.primarySoft,
     borderRadius: theme.radii.full,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     shadowColor: theme.colors.textPrimary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -105,7 +116,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   mainHeading: {
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.colors.textPrimary,
     marginHorizontal: theme.spacing.md,
   },
@@ -118,13 +129,13 @@ const styles = StyleSheet.create({
   progressLabel: {
     color: theme.colors.textSecondary,
     marginBottom: theme.spacing.sm,
-    textAlign: 'left',
+    textAlign: textAlign(),
   },
   progressBar: {
     height: 8,
   },
   contentSection: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
-}); 
+});

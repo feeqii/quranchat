@@ -1,6 +1,13 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
-import { theme } from '../../constants/theme';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+} from "react-native";
+import { theme } from "../../constants/theme";
+import { alignItems } from "../../utils/rtl";
 
 interface AnswerCardProps {
   question: string;
@@ -23,7 +30,7 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
           <Text style={styles.question}>{question}</Text>
         </View>
       </View>
-      
+
       {/* AI answer bubble - aligned left */}
       <View style={styles.answerContainer}>
         <View style={styles.answerBubble}>
@@ -46,12 +53,12 @@ export const AnswerCard: React.FC<AnswerCardProps> = ({
 const styles = StyleSheet.create({
   container: {
     padding: theme.spacing.lg,
-    width: '100%',
+    width: "100%",
   },
   // Question bubble (user) - right aligned
   questionContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "flex-end",
     marginBottom: theme.spacing.lg,
   },
   questionBubble: {
@@ -59,7 +66,7 @@ const styles = StyleSheet.create({
     padding: theme.spacing.lg,
     borderRadius: theme.radii.lg,
     borderBottomRightRadius: theme.radii.sm,
-    maxWidth: '80%',
+    maxWidth: "80%",
     ...theme.shadows.sm,
   },
   question: {
@@ -70,15 +77,15 @@ const styles = StyleSheet.create({
   },
   // Answer bubble (AI) - left aligned
   answerContainer: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    flexDirection: "column",
+    alignItems: alignItems(true),
   },
   answerBubble: {
     backgroundColor: theme.colors.surface,
     padding: theme.spacing.lg,
     borderRadius: theme.radii.lg,
     borderBottomLeftRadius: theme.radii.sm,
-    maxWidth: '85%',
+    maxWidth: "85%",
     borderWidth: 1,
     borderColor: theme.colors.primarySoft,
     ...theme.shadows.sm,
@@ -91,7 +98,7 @@ const styles = StyleSheet.create({
   },
   shareButton: {
     marginTop: theme.spacing.md,
-    marginLeft: theme.spacing.lg,
+    marginStart: theme.spacing.lg,
   },
   shareText: {
     fontSize: theme.fontSizes.small,
@@ -99,4 +106,4 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     lineHeight: theme.lineHeights.small,
   },
-}); 
+});
