@@ -45,8 +45,8 @@ export const VerseOfTheDayCard: React.FC<VerseOfTheDayCardProps> = ({
     verseId: "94:6"
   };
 
-  // Array of popular verses for random selection
-  const popularVerses = [
+  // Expanded array of meaningful verses for date-based selection
+  const meaningfulVerses = [
     "94:6", // Indeed, with hardship comes ease
     "2:286", // Allah does not burden a soul beyond that it can bear
     "13:28", // Hearts find rest in the remembrance of Allah
@@ -55,19 +55,67 @@ export const VerseOfTheDayCard: React.FC<VerseOfTheDayCardProps> = ({
     "2:216", // But perhaps you hate a thing and it is good for you
     "39:53", // Say, "O My servants who have transgressed against themselves..."
     "25:70", // Except for those who repent, believe and do righteous work
+    // Adding 40+ more verses for much greater variety
+    "2:155", // And give good tidings to the patient
+    "14:7", // If you are grateful, I will certainly give you more
+    "3:185", // Every soul will taste death
+    "4:147", // What would Allah do with your punishment if you are grateful
+    "17:110", // Say: Call upon Allah or call upon the Most Merciful
+    "18:46", // Wealth and children are adornment of worldly life
+    "24:35", // Allah is the light of the heavens and the earth
+    "29:69", // Those who strive for Us - We will surely guide them
+    "31:6", // And of the people is he who buys the amusement of speech
+    "41:30", // Those who have said, "Our Lord is Allah" and then remained on a right course
+    "42:36", // So whatever thing you have been given - it is but [for] enjoyment of worldly life
+    "55:13", // So which of the favors of your Lord would you deny?
+    "67:2", // [He] who created death and life to test you as to which of you is best in deed
+    "2:148", // For each [religious following] is a direction toward which it faces
+    "2:186", // And when My servants ask you concerning Me - indeed I am near
+    "3:26", // Say, "O Allah, Owner of Sovereignty"
+    "3:160", // If Allah should aid you, no one can overcome you
+    "7:56", // And cause not corruption upon the earth after its reformation
+    "9:51", // Say, "Never will we be struck except by what Allah has decreed for us"
+    "10:62", // Unquestionably, [for] the allies of Allah there will be no fear concerning them
+    "11:88", // He said, "I only intend reform as much as I am able"
+    "16:97", // Whoever does righteousness, whether male or female, while he is a believer
+    "17:7", // If you do good, you do good for yourselves
+    "20:2", // We have not sent down to you the Qur'an that you be distressed
+    "23:118", // And say, "My Lord, forgive and have mercy"
+    "25:63", // And the servants of the Most Merciful are those who walk upon the earth easily
+    "28:77", // But seek, through that which Allah has given you, the home of the Hereafter
+    "30:21", // And of His signs is that He created for you from yourselves mates
+    "33:41", // O you who have believed, remember Allah with much remembrance
+    "35:32", // Then We caused to inherit the Book those We have chosen of Our servants
+    "40:60", // And your Lord says, "Call upon Me; I will respond to you"
+    "49:13", // O mankind, indeed We have created you from male and female
+    "51:56", // And I did not create the jinn and mankind except to worship Me
+    "62:10", // And when the prayer has been concluded, disperse within the land
+    "64:11", // No disaster strikes except by permission of Allah
+    "76:9", // [Saying], "We feed you only for the countenance of Allah"
+    "87:14", // He has certainly succeeded who purifies himself
+    "103:1", // By time, Indeed, mankind is in loss
+    "112:1", // Say, "He is Allah, [who is] One"
   ];
+
+  // Get verse based on current date for consistency throughout the day
+  const getVerseOfTheDay = () => {
+    const today = new Date();
+    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (24 * 60 * 60 * 1000));
+    // Use day of year to select verse, cycling through the entire array
+    return meaningfulVerses[dayOfYear % meaningfulVerses.length];
+  };
 
   const fetchVerseOfTheDay = async () => {
     try {
       setIsLoading(true);
       
-      // Select a random verse from popular verses
-      const randomVerse = popularVerses[Math.floor(Math.random() * popularVerses.length)];
+      // Get today's verse (consistent throughout the day)
+      const todaysVerse = getVerseOfTheDay();
       
       // Fetch both Arabic and English text from AlQuran.cloud API
       const [arabicResponse, englishResponse] = await Promise.all([
-        fetch(`https://api.alquran.cloud/v1/ayah/${randomVerse}/ar.alafasy`),
-        fetch(`https://api.alquran.cloud/v1/ayah/${randomVerse}/en.asad`)
+        fetch(`https://api.alquran.cloud/v1/ayah/${todaysVerse}/ar.alafasy`),
+        fetch(`https://api.alquran.cloud/v1/ayah/${todaysVerse}/en.asad`)
       ]);
       
       if (!arabicResponse.ok || !englishResponse.ok) {
