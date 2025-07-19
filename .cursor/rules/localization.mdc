@@ -1,0 +1,137 @@
+---
+description: >
+  Canonical localization rules for Quran Chat (React Native + Expo).
+  Ensures every UI string, date/number, and directional layout adapts cleanly
+  across languages (English & Arabic), with zero module-level side-effects
+  and seamless runtime switching.
+alwaysApply: true
+---
+
+# 🚀 Goal of Localization
+
+Enable easy, scalable translation of every UI string and format,  
+with automatic device-locale detection, runtime switching, and full RTL/LTR support.
+
+---
+
+## 📁 Directory & File Structure
+
+/localization
+├── en.json # English strings (flat or shallow nesting)
+├── ar.json # Arabic translations (identical keys to en.json)
+└── index.ts # i18n-js + expo-localization setup
+
+pgsql
+Copy
+Edit
+
+- **Nesting**: Only one level (e.g. `categories.gratitude`), avoid deep trees.  
+- **Key Naming**: camelCase, descriptive (“continueButton”), not code-location based.
+
+---
+
+## 🛠️ Implementation Guidelines
+
+### 1. Setup & Initialization (`localization/index.ts`)
+
+```ts
+import * as Localization from 'expo-localization';
+import i18n from 'i18n-js';
+import en from './en.json';
+import ar from './ar.json';
+
+i18n.fallbacks = true;    // fallback to English
+i18n.translations = { en, ar };
+
+export function initLocalization() {
+  const deviceLang = Localization.locale.split('-')[0];
+  i18n.locale = deviceLang === 'ar' ? 'ar' : 'en';
+}
+
+export function setLocale(lang: 'en'|'ar') {
+  i18n.locale = lang;
+}
+
+export function getLocale(): 'en'|'ar' {
+  return i18n.locale as 'en'|'ar';
+}
+
+export function t(key: string, opts?: Record<string, any>): string {
+  const result = i18n.t(key, opts);
+  if (result === key) {
+    console.warn(`Missing translation for key: "${key}"`);
+  }
+  return result;
+}
+No module-level API calls—all detection in initLocalization().
+
+Console warning for missing keys.
+
+2. Component Usage
+Always import at the top:
+
+ts
+Copy
+Edit
+import { t } from '@/localization';
+JSX Text:
+
+diff
+Copy
+Edit
+- <Typography variant="h1">Welcome to Quran Chat</Typography>
++ <Typography variant="h1">{t('welcomeTitle')}</Typography>
+JSX Props:
+
+diff
+Copy
+Edit
+- <PrimaryButton title="Continue" />
++ <PrimaryButton title={t('continueButton')} />
+Interpolation:
+
+jsonc
+Copy
+Edit
+// en.json
+{ "greetingUser": "Hello, {{name}}!" }
+ts
+Copy
+Edit
+t('greetingUser', { name: userName });
+3. RTL & Layout
+Use built-in support:
+
+ts
+Copy
+Edit
+import { I18nManager } from 'react-native';
+
+if (getLocale() === 'ar') {
+  I18nManager.forceRTL(true);
+} else {
+  I18nManager.forceRTL(false);
+}
+Optionally add helpers:
+
+ts
+Copy
+Edit
+export const isRTL = () => I18nManager.isRTL;
+export const textAlign = () => (isRTL() ? 'right' : 'left');
+export const rowDirection = () =>
+  isRTL() ? 'row-reverse' : 'row';
+4. Dates, Numbers & Formats
+ts
+Copy
+Edit
+new Intl.DateTimeFormat(getLocale(), { dateStyle: 'medium' }).format(date);
+new Intl.NumberFormat(getLocale()).format(number);
+Arabic numerals display automatically for 'ar'.
+
+🧪 Testing & QA
+Unit: t('key') returns correct values for both locales.
+
+Manual: Switch locales in-app or via device settings; walk through every screen.
+
+Edge Cases: Missing keys log warnings; interpolation errors flagged.

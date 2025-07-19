@@ -1,0 +1,107 @@
+---
+description: This ruleset establishes clear guidelines for creating consistent, meaningful git commits within the Quran Chat development workflow. It emphasizes atomic commits, descriptive messages, and a structured commit message format to ensure clarity and maintainability of the project’s version history. Following this ruleset will simplify collaboration, make debugging easier, and provide transparent documentation of changes throughout the development lifecycle.
+alwaysApply: false
+---
+# Cursor Ruleset for Git Commit Management (Quran Chat Project)
+
+## General Commit Principles
+- **Atomic Commits**: Each commit should represent one logical, self-contained change.
+- **Descriptive Messages**: Use clear, concise, and meaningful messages that directly describe what changed and why.
+- **Consistent Tense**: Write commit messages in the imperative mood (e.g., "Add new...", "Fix bug...", "Update UI...").
+- **Regular Commits**: Commit frequently to avoid overly large or complex commits.
+
+## Commit Message Structure
+Use the following standardized format:
+[Type]: Brief description (max 50 chars)
+
+Additional context or motivation (optional, if needed)
+
+Reference to related issues/tasks (if applicable)
+
+makefile
+Copy
+Edit
+
+**Example:**
+Feature: Add inline verse highlighting
+
+Implemented color picker for highlights
+
+Persisted highlights with AsyncStorage
+
+Resolves #27
+
+markdown
+Copy
+Edit
+
+## Allowed Commit Types:
+- `Feature`: Adds new functionality or significant new components.
+- `Fix`: Resolves a bug or issue.
+- `Refactor`: Improves structure or readability without altering behavior.
+- `Style`: Adjusts styling or UI elements without functional changes.
+- `Docs`: Updates project documentation or inline comments.
+- `Chore`: General maintenance tasks (e.g., dependencies, cleanups).
+- `Perf`: Improves performance or efficiency of existing features.
+- `Test`: Adds or updates tests or testing frameworks.
+
+## Guidelines:
+- Avoid vague commit messages like "Minor updates" or "Fix stuff".
+- Group closely related changes into one cohesive commit.
+- Always pull latest from the remote before committing to prevent merge conflicts.
+- Commit code formatting changes separately from logic changes.
+- Do not commit incomplete or broken code.
+- Link commits to specific issues or user stories when applicable.
+
+Following these rules ensures your commit history is clear, informative, and easy to navigate—making project maintenance and debugging significantly easier.# Cursor Ruleset for Git Commit Management (Quran Chat Project)
+
+## General Commit Principles
+- **Atomic Commits**: Each commit should represent one logical, self-contained change.
+- **Descriptive Messages**: Use clear, concise, and meaningful messages that directly describe what changed and why.
+- **Consistent Tense**: Write commit messages in the imperative mood (e.g., "Add new...", "Fix bug...", "Update UI...").
+- **Regular Commits**: Commit frequently to avoid overly large or complex commits.
+
+## Commit Message Structure
+Use the following standardized format:
+[Type]: Brief description (max 50 chars)
+
+Additional context or motivation (optional, if needed)
+
+Reference to related issues/tasks (if applicable)
+
+makefile
+Copy
+Edit
+
+**Example:**
+Feature: Add inline verse highlighting
+
+Implemented color picker for highlights
+
+Persisted highlights with AsyncStorage
+
+Resolves #27
+
+markdown
+Copy
+Edit
+
+## Allowed Commit Types:
+- `Feature`: Adds new functionality or significant new components.
+- `Fix`: Resolves a bug or issue.
+- `Refactor`: Improves structure or readability without altering behavior.
+- `Style`: Adjusts styling or UI elements without functional changes.
+- `Docs`: Updates project documentation or inline comments.
+- `Chore`: General maintenance tasks (e.g., dependencies, cleanups).
+- `Perf`: Improves performance or efficiency of existing features.
+- `Test`: Adds or updates tests or testing frameworks.
+
+## Guidelines:
+- Avoid vague commit messages like "Minor updates" or "Fix stuff".
+- Group closely related changes into one cohesive commit.
+- Always pull latest from the remote before committing to prevent merge conflicts.
+- Commit code formatting changes separately from logic changes.
+- Do not commit incomplete or broken code.
+- Link commits to specific issues or user stories when applicable.
+
+Following these rules ensures your commit history is clear, informative, and easy to navigate—making project maintenance and debugging significantly easier.

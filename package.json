@@ -22,9 +22,11 @@
     "expo-clipboard": "~7.1.5",
     "expo-font": "~13.3.2",
     "expo-linear-gradient": "~14.1.5",
+    "expo-localization": "~16.1.6",
     "expo-sharing": "~13.1.5",
     "expo-speech": "~13.1.7",
     "expo-status-bar": "~2.2.3",
+    "i18n-js": "^4.5.1",
     "lucide-react-native": "^0.525.0",
     "metro": "^0.82.0",
     "react": "19.0.0",
@@ -32,12 +34,16 @@
     "react-native-gesture-handler": "~2.24.0",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
-    "zustand": "^4.4.7",
-    "react-native-svg": "15.11.2"
+    "react-native-svg": "15.11.2",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@babel/parser": "^7.28.0",
+    "@babel/traverse": "^7.28.0",
     "@types/react": "~19.0.10",
+    "camelcase": "^8.0.0",
+    "glob": "^11.0.3",
     "typescript": "~5.8.3"
   },
   "private": true
