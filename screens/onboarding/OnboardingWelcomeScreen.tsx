@@ -1,77 +1,83 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   SafeAreaView,
-  Image,
   StatusBar,
+  useWindowDimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/theme';
 import { SectionTitle } from '../../components/atoms/SectionTitle';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
-import { SecondaryButton } from '../../components/atoms/SecondaryButton';
+import { SocialProofBadge } from '../../components/molecules/SocialProofBadge';
+import { HeroCard } from '../../components/organisms/HeroCard';
+import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { t } from '../../localization';
+
+// Import the background image
+const verseStoryBg = require('../../assets/images/verse-story-bg.jpg');
 
 export const OnboardingWelcomeScreen: React.FC = () => {
   const navigation = useNavigation();
+  const { logEvent } = useAnalyticsStore();
+  const { width: screenWidth } = useWindowDimensions();
+
+  useEffect(() => {
+    logEvent({ name: 'onboarding_start' });
+  }, [logEvent]);
 
   const handleContinueAsGuest = () => {
-    // Navigate to OnboardingStep1
+    logEvent({ name: 'onboarding_complete_step', step: 0 });
     navigation.navigate('OnboardingStep1' as never);
   };
 
-  const handleSignUpOrLogin = () => {
-    // Navigate to AuthScreen (placeholder for now)
-    navigation.navigate('AuthScreen' as never);
-  };
+  // Responsive logo size
+  const isSmallScreen = screenWidth < 360;
+  const logoSize = isSmallScreen ? 100 : 120;
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor={theme.colors.primarySoft} />
+      
       <View style={styles.container}>
-        {/* Logo Section */}
-        <View style={styles.logoContainer}>
-          <View style={styles.logoPlaceholder}>
-            <Text style={styles.logoText}>{t('appName')}</Text>
+        <HeroCard 
+          heightPercentage={0.6}
+          backgroundImage={verseStoryBg}
+          overlay={true}
+          overlayOpacity={0.4}
+        >
+          {/* Card Content */}
+          <View style={styles.cardContent}>
+            {/* App Logo */}
+            <View style={[
+              styles.logoContainer,
+              { width: logoSize, height: logoSize }
+            ]}>
+              <Text style={styles.logoText}>{t('appName')}</Text>
+            </View>
+
+            {/* Hero Title and Subtitle */}
+            <SectionTitle
+              title={t('welcomeTitle')}
+              subtitle={t('welcomeSubtitle')}
+              variant="hero"
+              align="center"
+              responsive={true}
+            />
+
+            {/* Social Proof Badge */}
+            <SocialProofBadge />
           </View>
-        </View>
 
-        {/* Title Section */}
-        <View style={styles.titleContainer}>
-          <SectionTitle
-            title={t('welcomeTitle')}
-            subtitle={t('welcomeSubtitle')}
-          />
-        </View>
-
-        {/* Social Proof Badge */}
-        <View style={styles.socialProofContainer}>
-          <View style={styles.socialProofBadge}>
-            <Text style={styles.starIcon}>⭐</Text>
-            <Text style={styles.socialProofText}>
-              {t('socialProofText')}
-            </Text>
-          </View>
-        </View>
-
-        {/* Spacer to push buttons to bottom */}
-        <View style={styles.spacer} />
-
-        {/* Action Buttons */}
-        <View style={styles.buttonContainer}>
+          {/* Continue Button */}
           <PrimaryButton
-            label={t('continueWithoutAccount')}
+            label={t('continue')}
             onPress={handleContinueAsGuest}
-            style={styles.primaryButton}
+            variant="hero"
           />
-          <SecondaryButton
-            label={t('signUpOrLogin')}
-            onPress={handleSignUpOrLogin}
-            style={styles.secondaryButton}
-          />
-        </View>
+        </HeroCard>
       </View>
     </SafeAreaView>
   );
@@ -84,75 +90,27 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.xl,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
   logoContainer: {
-    alignItems: 'center',
-    marginTop: theme.spacing.xl,
-    marginBottom: theme.spacing.xl,
-  },
-  logoPlaceholder: {
-    width: 120,
-    height: 120,
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radii.lg,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: theme.colors.textPrimary,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
+    marginBottom: theme.spacing.xl,
+    ...theme.shadows.sm,
   },
   logoText: {
     fontSize: theme.fontSizes.h3,
     fontFamily: theme.fonts.heading,
     color: theme.colors.primary,
     textAlign: 'center',
-  },
-  titleContainer: {
-    alignItems: 'center',
-    marginBottom: theme.spacing.xl,
-  },
-  socialProofContainer: {
-    alignItems: 'center',
-    marginBottom: theme.spacing.xl,
-  },
-  socialProofBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: theme.colors.surface,
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.md,
-    borderRadius: theme.radii.full,
-    shadowColor: theme.colors.textPrimary,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  starIcon: {
-    fontSize: theme.fontSizes.body,
-    marginEnd: theme.spacing.sm,
-  },
-  socialProofText: {
-    fontSize: theme.fontSizes.small,
-    fontFamily: theme.fonts.body,
-    color: theme.colors.textSecondary,
-    textAlign: 'center',
-  },
-  spacer: {
-    flex: 1,
-  },
-  buttonContainer: {
-    gap: theme.spacing.md,
-    paddingBottom: theme.spacing.lg,
-  },
-  primaryButton: {
-    marginBottom: 0,
-  },
-  secondaryButton: {
-    marginBottom: 0,
   },
 }); 
