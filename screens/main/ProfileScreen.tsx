@@ -8,7 +8,7 @@ import { LocalizationContext } from "../../localization/LocalizationContext";
 
 // Components
 import { ProfileHeader } from "../../components/molecules/ProfileHeader";
-import LanguageSelector from "../../components/molecules/LanguageSelector";
+
 import { WidgetsSection } from "../../components/molecules/WidgetsSection";
 import { PersonalDetails } from "../../components/molecules/PersonalDetails";
 import { SubscriptionDetails } from "../../components/molecules/SubscriptionDetails";
@@ -68,9 +68,7 @@ export const ProfileScreen: React.FC = () => {
         {/* Profile Header with avatar, username, and streak cards */}
         <ProfileHeader />
 
-        {/* Language Settings Section */}
-        <SectionTitle title={t("settings.language")} />
-        <LanguageSelector />
+
 
         {/* Widgets Discovery Section */}
         <WidgetsSection />

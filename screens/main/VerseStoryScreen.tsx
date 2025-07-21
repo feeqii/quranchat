@@ -15,6 +15,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { t } from '../../localization';
 import { theme } from '../../constants/theme';
 import { useChatStore } from '../../store/useChatStore';
+import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { position, flexDirection } from '../../utils/rtl';
 
 // Components
@@ -37,6 +38,7 @@ export const VerseStoryScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute();
   const { setTopic, clearMessages, addMessage } = useChatStore();
+  const { logEvent } = useAnalyticsStore();
   
   // State management
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -50,6 +52,17 @@ export const VerseStoryScreen: React.FC = () => {
   const arabicText = params?.arabicText || "قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ۚ إِنَّ اللَّهَ يَغْفِرُ الذُّنُوبَ جَمِيعًا ۚ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ";
   const surahRef = params?.surahRef || "Surah Az-Zumar 39:53";
   const verseId = params?.verseId || "39:53";
+
+  // Log verse story opened
+  useEffect(() => {
+    const [surahName, verseNumber] = surahRef.split(' ');
+    const verseNum = verseNumber ? parseInt(verseNumber.split(':')[1]) : 1;
+    logEvent({ 
+      name: 'verse_story_opened', 
+      surah: surahName || 'Az-Zumar', 
+      verse: verseNum 
+    });
+  }, [surahRef, logEvent]);
 
   // Load bookmark status and reflection on mount
   useEffect(() => {

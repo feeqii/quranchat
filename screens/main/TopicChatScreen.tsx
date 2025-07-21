@@ -15,6 +15,7 @@ import { t } from '../../localization';
 import { theme } from '../../constants/theme';
 import { useChatStore } from '../../store/useChatStore';
 import { useHistoryStore } from '../../store/useHistoryStore';
+import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { formatChatSession } from '../../utils/formatChatSession';
 
 import { askQuran } from '../../lib/api/askQuran';
@@ -33,6 +34,7 @@ export const TopicChatScreen: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const flatListRef = useRef<FlatList>(null);
+  const { logEvent } = useAnalyticsStore();
   
   const {
     currentTopic,
@@ -143,6 +145,9 @@ export const TopicChatScreen: React.FC = () => {
   const handleSend = async () => {
     const trimmedInput = inputText.trim();
     if (!trimmedInput || isSending || !currentTopic) return;
+
+    // Log chat message sent
+    logEvent({ name: 'chat_message_sent', messageLength: trimmedInput.length });
 
     // Add user message immediately
     const userMessage: ChatMessage = {

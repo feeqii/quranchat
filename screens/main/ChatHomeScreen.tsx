@@ -3,6 +3,7 @@ import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/theme';
 import { useChatStore } from '../../store/useChatStore';
+import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { categoryImages, getRandomUserCount } from '../../constants/categoryImages';
 import { t } from '../../localization';
 
@@ -19,6 +20,7 @@ import { JustChatCard } from '../../components/molecules/JustChatCard';
 export const ChatHomeScreen: React.FC = () => {
   const navigation = useNavigation();
   const { setTopic } = useChatStore();
+  const { logEvent } = useAnalyticsStore();
 
   // Verse data is now fetched by the VerseOfTheDayCard component
 
@@ -28,6 +30,7 @@ export const ChatHomeScreen: React.FC = () => {
     imageSource: categoryImages[title],
     userCount: getRandomUserCount(),
     onPress: () => {
+      logEvent({ name: 'chat_session_started' });
       setTopic(title);
       navigation.navigate("TopicChatScreen" as never);
     }

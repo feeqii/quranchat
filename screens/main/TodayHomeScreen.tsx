@@ -20,6 +20,7 @@ import { DailyStreakCalendarOrganism } from "../../components/organisms/DailyStr
 import { theme } from "../../constants/theme";
 import { textAlign, alignItems } from "../../utils/rtl";
 import { useTodayStore } from "../../store/useTodayStore";
+import { useAnalyticsStore } from "../../store/useAnalyticsStore";
 import { TodayStackParamList } from "../../navigation/TodayStackNavigator";
 
 type TodayHomeScreenNavigationProp = NativeStackNavigationProp<
@@ -29,6 +30,7 @@ type TodayHomeScreenNavigationProp = NativeStackNavigationProp<
 
 export const TodayHomeScreen: React.FC = () => {
   const navigation = useNavigation<TodayHomeScreenNavigationProp>();
+  const { logEvent } = useAnalyticsStore();
   const {
     journeyCompleted,
     resetForNewDay,
@@ -67,6 +69,9 @@ export const TodayHomeScreen: React.FC = () => {
   const progress = getJourneyProgress();
 
   const handleStartJourney = () => {
+    // Log journey start
+    logEvent({ name: 'today_journey_started' });
+    
     // Navigate to mood check-in screen
     navigation.navigate("MoodCheckinScreen");
   };

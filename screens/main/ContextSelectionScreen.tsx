@@ -10,6 +10,7 @@ import { Icon } from '../../components/atoms/Icon';
 import { ContextSelectionGrid } from '../../components/organisms/ContextSelectionGrid';
 import { theme } from '../../constants/theme';
 import { useTodayStore } from '../../store/useTodayStore';
+import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { TodayStackParamList } from '../../navigation/TodayStackNavigator';
 
 type ContextSelectionScreenNavigationProp = NativeStackNavigationProp<TodayStackParamList, 'ContextSelectionScreen'>;
@@ -17,12 +18,15 @@ type ContextSelectionScreenNavigationProp = NativeStackNavigationProp<TodayStack
 export const ContextSelectionScreen: React.FC = () => {
   const navigation = useNavigation<ContextSelectionScreenNavigationProp>();
   const { selectedContexts, addContext, removeContext } = useTodayStore();
+  const { logEvent } = useAnalyticsStore();
   
   const handleContextToggle = (contextId: string) => {
     if (selectedContexts.includes(contextId)) {
       removeContext(contextId);
     } else {
       addContext(contextId);
+      // Log context selection
+      logEvent({ name: 'context_selected', context: contextId });
     }
   };
   

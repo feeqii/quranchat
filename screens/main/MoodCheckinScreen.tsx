@@ -10,6 +10,7 @@ import { Icon } from '../../components/atoms/Icon';
 import { MoodSelectorMolecule } from '../../components/molecules/MoodSelectorMolecule';
 import { theme } from '../../constants/theme';
 import { useTodayStore } from '../../store/useTodayStore';
+import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { TodayStackParamList } from '../../navigation/TodayStackNavigator';
 
 type MoodCheckinScreenNavigationProp = NativeStackNavigationProp<TodayStackParamList, 'MoodCheckinScreen'>;
@@ -30,6 +31,7 @@ const getMoodDescription = (level: number): string => {
 export const MoodCheckinScreen: React.FC = () => {
   const navigation = useNavigation<MoodCheckinScreenNavigationProp>();
   const { moodLevel, moodDescription, setMood } = useTodayStore();
+  const { logEvent } = useAnalyticsStore();
   
   // Local state for real-time slider updates
   const [currentMoodLevel, setCurrentMoodLevel] = useState(moodLevel || 5);
@@ -66,6 +68,13 @@ export const MoodCheckinScreen: React.FC = () => {
     // Ensure mood is saved before navigating
     const description = getMoodDescription(currentMoodLevel);
     setMood(currentMoodLevel, description);
+    
+    // Log mood selection
+    logEvent({ 
+      name: 'mood_checkin', 
+      mood: description, 
+      context: 'daily_checkin' 
+    });
     
     // Navigate to context selection screen
     navigation.navigate('ContextSelectionScreen');

@@ -10,6 +10,7 @@ import { SecondaryButton } from '../../components/atoms/SecondaryButton';
 import { Icon } from '../../components/atoms/Icon';
 import { theme } from '../../constants/theme';
 import { useTodayStore } from '../../store/useTodayStore';
+import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { TodayStackParamList } from '../../navigation/TodayStackNavigator';
 import { useChatStore } from '../../store/useChatStore';
 
@@ -17,6 +18,7 @@ type GeneratedReflectionScreenNavigationProp = NativeStackNavigationProp<TodaySt
 
 export const GeneratedReflectionScreen: React.FC = () => {
   const navigation = useNavigation<GeneratedReflectionScreenNavigationProp>();
+  const { logEvent } = useAnalyticsStore();
   const { 
     generatedReflection,
     selectedVerse,
@@ -31,6 +33,13 @@ export const GeneratedReflectionScreen: React.FC = () => {
   
   const [actionScale] = useState(new Animated.Value(1));
   const [completeScale] = useState(new Animated.Value(1));
+
+  // Log reflection generation when component mounts
+  React.useEffect(() => {
+    if (generatedReflection) {
+      logEvent({ name: 'reflection_generated' });
+    }
+  }, [generatedReflection, logEvent]);
 
   const handleBack = () => {
     navigation.goBack();
