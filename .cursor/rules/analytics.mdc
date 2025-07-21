@@ -1,0 +1,107 @@
+---
+description: This ruleset defines standards and best practices for integrating Amplitude analytics into the Quran Chat React Native app. It covers SDK setup, event naming conventions, state management, and privacy considerations to ensure consistent, scalable, and compliant data collection.
+alwaysApply: false
+---
+
+📦 Folder & File Structure  
+- **store/useAnalyticsStore.ts**  
+  - Central Zustand slice for logging events.  
+  - Exports a single `logEvent(event: AnalyticsEvent)` method.  
+- **App.tsx**  
+  - Import and initialize Amplitude once at app startup.  
+- **navigation/**  
+  - Instrument `screen_view` in your root navigator.  
+- **Components & Screens**  
+  - Call `logEvent` within `useEffect` or event handlers.
+
+🔧 SDK Installation  
+- Must install `@amplitude/react-native`.  
+- In `App.tsx` (or equivalent entry), call:
+  ```ts
+  import { Amplitude } from '@amplitude/react-native';
+  Amplitude.getInstance().init('<AMPLITUDE_API_KEY>');
+No multiple initializations—only once, at top of the app.
+
+📈 Event Taxonomy & Naming
+
+Screen Views: screen_view
+
+Props: { screenName: string }
+
+Onboarding:
+
+onboarding_start (no props)
+
+onboarding_complete_step { step: number }
+
+onboarding_finish
+
+Paywall:
+
+paywall_view
+
+paywall_subscribe_tap
+
+paywall_purchase_success
+
+paywall_purchase_failure { error: string }
+
+paywall_restore_tap
+
+Subscription:
+
+subscription_entitlement_granted
+
+subscription_entitlement_restored
+
+subscription_entitlement_expired
+
+Core Features:
+
+verse_lookup { surah: string; verse: number }
+
+reflection_generated
+
+mood_checkin { mood: string; context: string }
+
+context_selected { context: string }
+
+language_switch { from: string; to: string }
+
+Naming Rules:
+
+All event names are snake_case.
+
+Use clear, action-oriented verbs.
+
+Include contextual props for filtering and funnels.
+
+🔗 State Management
+
+All analytics calls must go through useAnalyticsStore.
+
+Do not scatter direct Amplitude.getInstance().logEvent(...) calls outside the store.
+
+The store’s logEvent should unpack an event union type and forward to Amplitude.
+
+🌍 Privacy & Compliance
+
+Anonymous Tracking Only: Do not attach or collect PII.
+
+No user emails/usernames: All events logged without user or device IDs beyond Amplitude’s default anonymized IDs.
+
+GDPR/CCPA: Ensure opt-out mechanism is in place (e.g., respect doNotTrack).
+
+🧪 Testing & Validation
+
+Dev Mode: Enable Amplitude.getInstance().setUseDeviceMode() if needed.
+
+Verify: After integration, exercise each flow and confirm events appear in Amplitude’s Live View.
+
+QA: Track all event names exactly as defined—missing or mis-typed names should fail build-time TS checks on the AnalyticsEvent union.
+
+
+description:
+globs:
+alwaysApply: false
+---
