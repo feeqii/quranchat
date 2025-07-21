@@ -23,14 +23,10 @@ export default function App() {
   const { initialize } = usePurchasesStore();
 
   useEffect(() => {
-    // Initialize Amplitude analytics (won't work in Expo Go but won't crash)
-    try {
-      Amplitude.getInstance().init('ecf945ffbe155459b50f6ab33aa1eb26');
-    } catch (error) {
-      console.log('Amplitude not available in Expo Go');
-    }
+    // Initialize Amplitude analytics
+    Amplitude.getInstance().init('ecf945ffbe155459b50f6ab33aa1eb26');
     
-    // Initialize RevenueCat (will run in preview mode in Expo Go)
+    // Initialize RevenueCat early
     initialize();
   }, [initialize]);
 
