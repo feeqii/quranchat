@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { theme } from '../../constants/theme';
 import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQuestionBlock';
 import { YesNoBlock } from '../../components/organisms/YesNoBlock';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
+import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { t } from '../../localization';
 
 export const OnboardingStep10: React.FC = () => {
   const { setField, completeOnboarding } = useOnboardingStore();
+  const { logEvent } = useAnalyticsStore();
+
+  useEffect(() => {
+    logEvent({ name: 'onboarding_complete_step', step: 10 });
+  }, [logEvent]);
   
   // Local state for tracking answers
   const [isLikelyToFinish, setIsLikelyToFinish] = useState<boolean | null>(null);
@@ -27,6 +33,9 @@ export const OnboardingStep10: React.FC = () => {
       setField('isLikelyToFinish', isLikelyToFinish);
       setField('wantsDailyReminder', wantsDailyReminder);
       setField('wantsInstantAccess', wantsInstantAccess);
+      
+      // Log onboarding completion
+      logEvent({ name: 'onboarding_finish' });
       
       // Complete onboarding
       completeOnboarding();

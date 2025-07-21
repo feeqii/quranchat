@@ -129,6 +129,7 @@ export const Icon = {
   Check: (props: IconProps) => <Check {...defaultProps} {...props} />,
   Close: (props: IconProps) => <X {...defaultProps} {...props} />,
   Add: (props: IconProps) => <Plus {...defaultProps} {...props} />,
+  Heart: (props: IconProps) => <Heart {...defaultProps} {...props} />,
 
   // People
   Users: (props: IconProps) => <Users {...defaultProps} {...props} />,

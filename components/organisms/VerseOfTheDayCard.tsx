@@ -3,6 +3,7 @@ import { TouchableOpacity, View, StyleSheet, ViewStyle, Alert, Animated } from '
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { theme } from '../../constants/theme';
+import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { Typography } from '../atoms/Typography';
 import { Icon } from '../atoms/Icon';
 
@@ -33,6 +34,7 @@ export const VerseOfTheDayCard: React.FC<VerseOfTheDayCardProps> = ({
   style,
 }) => {
   const navigation = useNavigation();
+  const { logEvent } = useAnalyticsStore();
   const [verseData, setVerseData] = useState<VerseData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const scaleValue = new Animated.Value(1);
@@ -150,6 +152,13 @@ export const VerseOfTheDayCard: React.FC<VerseOfTheDayCardProps> = ({
   useEffect(() => {
     fetchVerseOfTheDay();
   }, []);
+
+  // Log verse of the day viewed when component mounts with data
+  useEffect(() => {
+    if (verseData && !isLoading) {
+      logEvent({ name: 'verse_of_day_viewed' });
+    }
+  }, [verseData, isLoading, logEvent]);
 
   const handlePress = () => {
     if (!verseData) return;

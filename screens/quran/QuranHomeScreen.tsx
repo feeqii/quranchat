@@ -18,6 +18,7 @@ import { Spacer } from "../../components/atoms/Spacer";
 import { theme } from "../../constants/theme";
 import { useQuranStore, HighlightColor } from "../../store/useQuranStore";
 import { useChatStore } from "../../store/useChatStore";
+import { useAnalyticsStore } from "../../store/useAnalyticsStore";
 import { surahList } from "../../constants/surahList";
 import { translations } from "../../lib/api/quranApi";
 import { t } from "../../localization";
@@ -29,6 +30,7 @@ type QuranHomeScreenNavigationProp = NativeStackNavigationProp<
 
 export const QuranHomeScreen: React.FC = () => {
   const navigation = useNavigation<QuranHomeScreenNavigationProp>();
+  const { logEvent } = useAnalyticsStore();
   const {
     currentSurah,
     currentTranslation,
@@ -55,11 +57,21 @@ export const QuranHomeScreen: React.FC = () => {
   // Fetch verses when surah or translation changes
   useEffect(() => {
     if (currentSurah) {
+      // Log verse lookup
+      const surahInfo = surahList.find((s) => s.number === currentSurah);
+      if (surahInfo) {
+        logEvent({ 
+          name: 'verse_lookup', 
+          surah: surahInfo.name, 
+          verse: 1 // Default to first verse when opening surah
+        });
+      }
+      
       fetchVerses().catch((error) => {
         Alert.alert(t("error"), t("failedToLoadVersesPleaseTryAgain"));
       });
     }
-  }, [currentSurah, currentTranslation]);
+  }, [currentSurah, currentTranslation, logEvent]);
 
   // Clear selection when surah changes
   useEffect(() => {

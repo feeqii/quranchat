@@ -10,14 +10,38 @@ import {
 } from "@expo-google-fonts/merriweather";
 import { AppNavigator } from "./navigation/AppNavigator";
 import { LocalizationProvider } from "./localization/LocalizationContext";
+import { usePurchasesStore } from "./store/usePurchasesStore";
+import { Amplitude } from '@amplitude/react-native';
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
+  // Load fonts with error handling for both Expo Go and development builds
+  const [fontsLoaded, fontError] = useFonts({
     Merriweather_400Regular,
     Merriweather_700Bold,
   });
 
-  if (!fontsLoaded) {
+  const { initialize } = usePurchasesStore();
+
+  useEffect(() => {
+    // Initialize Amplitude analytics (won't work in Expo Go but won't crash)
+    try {
+      Amplitude.getInstance().init('ecf945ffbe155459b50f6ab33aa1eb26');
+    } catch (error) {
+      console.log('Amplitude not available in Expo Go');
+    }
+    
+    // Initialize RevenueCat (will run in preview mode in Expo Go)
+    initialize();
+  }, [initialize]);
+
+  // Handle font loading errors gracefully
+  if (fontError) {
+    console.warn('Font loading error (probably Expo Go):', fontError);
+    // Continue without custom fonts - use system fonts instead
+  }
+
+  // Only show loading if fonts are actually loading (not if there's an error)
+  if (!fontsLoaded && !fontError) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="#3C8C7E" />

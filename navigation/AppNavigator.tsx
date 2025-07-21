@@ -1,10 +1,12 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 import { useOnboardingStore } from '../store/useOnboardingStore';
+import { usePurchasesStore } from '../store/usePurchasesStore';
+import { useAnalyticsStore } from '../store/useAnalyticsStore';
 
 // Screen imports
 import { OnboardingWelcomeScreen } from '../screens/onboarding/OnboardingWelcomeScreen';
@@ -27,6 +29,7 @@ import { TopicChatScreen } from '../screens/main/TopicChatScreen';
 import { HistoryScreen } from '../screens/main/HistoryScreen';
 import { SurahSelectionModal } from '../screens/quran/SurahSelectionModal';
 import { TranslationSelectionModal } from '../screens/quran/TranslationSelectionModal';
+import { PaywallScreen } from '../screens/onboarding/PaywallScreen';
 
 // Type definitions for navigation
 export type OnboardingStackParamList = {
@@ -44,7 +47,7 @@ export type OnboardingStackParamList = {
   OnboardingFinalQuestion1: undefined;
   OnboardingFinalQuestion2: undefined;
   OnboardingFinalQuestion3: undefined;
-  AuthScreen: undefined; // Placeholder for auth
+  PaywallScreen: undefined;
 };
 
 export type MainAppStackParamList = {
@@ -129,6 +132,10 @@ const OnboardingStackNavigator: React.FC = () => {
         name="OnboardingFinalQuestion3"
         component={OnboardingFinalQuestion3}
       />
+      <OnboardingStack.Screen
+        name="PaywallScreen"
+        component={PaywallScreen}
+      />
       {/* Additional onboarding screens will be added here */}
     </OnboardingStack.Navigator>
   );
@@ -188,6 +195,7 @@ const MainAppStackNavigator: React.FC = () => {
 // Root Navigator
 const RootNavigator: React.FC = () => {
   const { onboardingCompleted } = useOnboardingStore();
+  const { isEntitled } = usePurchasesStore();
 
   return (
     <RootStack.Navigator
@@ -195,15 +203,20 @@ const RootNavigator: React.FC = () => {
         headerShown: false,
       }}
     >
-      {onboardingCompleted ? (
-        <RootStack.Screen
-          name="MainApp"
-          component={MainAppStackNavigator}
-        />
-      ) : (
+      {!onboardingCompleted ? (
         <RootStack.Screen
           name="Onboarding"
           component={OnboardingStackNavigator}
+        />
+      ) : !isEntitled ? (
+        <RootStack.Screen
+          name="Paywall"
+          component={PaywallScreen}
+        />
+      ) : (
+        <RootStack.Screen
+          name="MainApp"
+          component={MainAppStackNavigator}
         />
       )}
     </RootStack.Navigator>
@@ -212,8 +225,21 @@ const RootNavigator: React.FC = () => {
 
 // Main App Navigator Component
 export const AppNavigator: React.FC = () => {
+  const navigationRef = useNavigationContainerRef();
+  const { logEvent } = useAnalyticsStore();
+
+  useEffect(() => {
+    const unsubscribe = navigationRef.addListener('state', () => {
+      const route = navigationRef.getCurrentRoute();
+      if (route) {
+        logEvent({ name: 'screen_view', screenName: route.name });
+      }
+    });
+    return unsubscribe;
+  }, [navigationRef, logEvent]);
+
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <RootNavigator />
     </NavigationContainer>
   );
