@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setLocale, getLocale, initLocalization } from '../localization';
 import { detectAndApplyDeviceLanguage, enableRTL, disableRTL } from '../utils/localizationHelpers';
+import { useAnalyticsStore } from './useAnalyticsStore';
 
 type LocalizationState = {
   // Current language code
@@ -57,8 +58,16 @@ export const useLocalizationStore = create<LocalizationState>()(
       // Set a specific language
       setLanguage: async (language: string) => {
         try {
+          const currentLanguage = get().language;
+          
           // Change the language in the localization system
           setLocale(language);
+          
+          // Log language switch
+          if (currentLanguage !== language) {
+            const { logEvent } = useAnalyticsStore.getState();
+            logEvent({ name: 'language_switch', from: currentLanguage, to: language });
+          }
           
           // Update the store state
           set({
