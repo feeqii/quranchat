@@ -17,6 +17,7 @@ import { Spacer } from '../../components/atoms/Spacer';
 import { usePurchasesStore } from '../../store/usePurchasesStore';
 import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { useNavigation } from '@react-navigation/native';
+import { isExpoGo, devLog } from '../../utils/developmentUtils';
 
 const PREMIUM_FEATURES = [
   'unlimitedVerses',
@@ -39,11 +40,26 @@ export const PaywallScreen: React.FC = () => {
   const { logEvent } = useAnalyticsStore();
 
   useEffect(() => {
+    if (isExpoGo()) {
+      devLog('💰 Paywall: Expo Go detected - skipping RevenueCat initialization');
+      logEvent({ name: 'paywall_view' });
+      return;
+    }
+    
     initialize();
     logEvent({ name: 'paywall_view' });
   }, [initialize, logEvent]);
 
   useEffect(() => {
+    if (isExpoGo()) {
+      // In Expo Go, assume user has access for testing
+      devLog('💰 Paywall: Expo Go detected - auto-granting access for testing');
+      setTimeout(() => {
+        navigation.replace('MainApp' as never);
+      }, 2000); // Small delay to see the paywall screen
+      return;
+    }
+    
     if (isEntitled) {
       // Navigate to main app if user is entitled
       navigation.replace('MainApp' as never);
@@ -92,6 +108,15 @@ export const PaywallScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Development Banner for Expo Go */}
+      {isExpoGo() && (
+        <View style={styles.devBanner}>
+          <Typography variant="caption" color={theme.colors.surface} align="center">
+            🔧 EXPO GO MODE - Auto-granting access in 2 seconds for testing
+          </Typography>
+        </View>
+      )}
+      
       {/* Charity Banner */}
       <View style={styles.charityBanner}>
         <Icon.Heart size={20} color={theme.colors.surface} />
@@ -230,6 +255,13 @@ const styles = StyleSheet.create({
   },
   bannerText: {
     marginLeft: theme.spacing.sm,
+  },
+  devBanner: {
+    backgroundColor: '#FF6B35', // Orange for development
+    paddingVertical: theme.spacing.xs,
+    paddingHorizontal: theme.spacing.md,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   scrollView: {
     flex: 1,

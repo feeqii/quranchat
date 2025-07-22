@@ -8,7 +8,10 @@ interface PrimaryButtonProps {
   onPress: () => void;
   disabled?: boolean;
   style?: ViewStyle;
-  variant?: 'default' | 'hero'; // Add hero variant for larger buttons
+  variant?: 'default' | 'hero' | 'large' | 'success' | 'accent';
+  size?: 'small' | 'medium' | 'large';
+  fullWidth?: boolean;
+  loading?: boolean;
 }
 
 export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
@@ -17,6 +20,9 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   disabled = false,
   style,
   variant = 'default',
+  size = 'medium',
+  fullWidth = true,
+  loading = false,
 }) => {
   const scaleValue = useRef(new Animated.Value(1)).current;
 
@@ -43,15 +49,58 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   const getButtonStyle = () => {
     const baseStyle = [styles.button];
     
-    if (variant === 'hero') {
-      baseStyle.push(styles.heroButton);
+    // Size variants
+    switch (size) {
+      case 'small':
+        baseStyle.push(styles.small);
+        break;
+      case 'large':
+        baseStyle.push(styles.large);
+        break;
+      default:
+        baseStyle.push(styles.medium);
     }
     
-    if (disabled) {
+    // Color variants
+    switch (variant) {
+      case 'hero':
+        baseStyle.push(styles.heroButton);
+        break;
+      case 'success':
+        baseStyle.push(styles.successButton);
+        break;
+      case 'accent':
+        baseStyle.push(styles.accentButton);
+        break;
+      default:
+        baseStyle.push(styles.defaultButton);
+    }
+    
+    // Width
+    if (!fullWidth) {
+      baseStyle.push(styles.notFullWidth);
+    }
+    
+    // States
+    if (disabled || loading) {
       baseStyle.push(styles.disabled);
     }
     
     return baseStyle;
+  };
+
+  const getTextColor = () => {
+    if (disabled || loading) {
+      return { color: theme.colors.textMuted };
+    }
+    
+    switch (variant) {
+      case 'hero':
+      case 'success':
+      case 'accent':
+      default:
+        return { color: theme.colors.textOnPrimary };
+    }
   };
 
   return (
@@ -73,10 +122,12 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
         ]}
       >
         <Typography
-          variant="body"
+          variant={size === 'small' ? 'caption' : size === 'large' ? 'title' : 'body'}
+          weight="medium"
           style={styles.label}
+          color={getTextColor().color}
         >
-          {label}
+          {loading ? 'Loading...' : label}
         </Typography>
       </Animated.View>
     </Pressable>
@@ -85,19 +136,51 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: theme.spacing.lg,
-    paddingHorizontal: theme.spacing.xl,
     borderRadius: theme.radii.lg,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
     ...theme.shadows.sm,
   },
-  heroButton: {
+  
+  // Size variants
+  small: {
+    paddingVertical: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.lg,
+    borderRadius: theme.radii.md,
+  },
+  medium: {
+    paddingVertical: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.xl,
+  },
+  large: {
     paddingVertical: theme.spacing.xl,
+    paddingHorizontal: theme.spacing.xxl,
+    borderRadius: theme.radii.xl,
+  },
+  
+  // Color variants
+  defaultButton: {
+    backgroundColor: theme.colors.primary,
+  },
+  heroButton: {
+    backgroundColor: theme.colors.primary,
     ...theme.shadows.md,
   },
+  successButton: {
+    backgroundColor: theme.colors.success,
+  },
+  accentButton: {
+    backgroundColor: theme.colors.accent,
+  },
+  
+  // Width variants
+  notFullWidth: {
+    width: 'auto',
+    minWidth: 120,
+  },
+  
+  // Content and states
   buttonContent: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -105,10 +188,11 @@ const styles = StyleSheet.create({
     minHeight: 24,
   },
   disabled: {
-    opacity: 0.5,
+    backgroundColor: theme.colors.border,
+    opacity: 0.6,
+    ...theme.shadows.none,
   },
   label: {
-    color: theme.colors.surface,
     textAlign: 'center',
     flexShrink: 0,
     width: '100%',

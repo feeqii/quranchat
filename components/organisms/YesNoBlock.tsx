@@ -4,12 +4,16 @@ import { theme } from '../../constants/theme';
 import { Typography } from '../atoms/Typography';
 import { PrimaryButton } from '../atoms/PrimaryButton';
 import { SecondaryButton } from '../atoms/SecondaryButton';
+import { Icon } from '../atoms/Icon';
 
 interface YesNoBlockProps {
   question: string;
   onYes: () => void;
   onNo: () => void;
   style?: ViewStyle;
+  yesLabel?: string;
+  noLabel?: string;
+  questionVariant?: 'body' | 'subtitle' | 'h3';
 }
 
 export const YesNoBlock: React.FC<YesNoBlockProps> = ({
@@ -17,27 +21,39 @@ export const YesNoBlock: React.FC<YesNoBlockProps> = ({
   onYes,
   onNo,
   style,
+  yesLabel = "Yes",
+  noLabel = "No", 
+  questionVariant = "subtitle",
 }) => {
   return (
     <View style={[styles.container, style]}>
-      <Typography 
-        variant="body" 
-        align="center"
-        style={styles.question}
-      >
-        {question}
-      </Typography>
+      {/* Enhanced question with better typography */}
+      <View style={styles.questionContainer}>
+        <Typography 
+          variant={questionVariant}
+          weight="medium"
+          align="center"
+          color={theme.colors.textPrimary}
+          style={styles.question}
+        >
+          {question}
+        </Typography>
+      </View>
       
+      {/* Enhanced button layout with icons */}
       <View style={styles.buttonContainer}>
         <PrimaryButton
-          label="Yes"
+          label={yesLabel}
           onPress={onYes}
-          style={styles.button}
+          variant="default"
+          size="large"
+          style={styles.yesButton}
         />
+        
         <SecondaryButton
-          label="No"
+          label={noLabel}
           onPress={onNo}
-          style={styles.button}
+          style={styles.noButton}
         />
       </View>
     </View>
@@ -47,14 +63,29 @@ export const YesNoBlock: React.FC<YesNoBlockProps> = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
+    alignItems: 'center',
+  },
+  questionContainer: {
+    width: '100%',
+    marginBottom: theme.spacing.xxl,
+    paddingHorizontal: theme.spacing.md,
   },
   question: {
-    marginBottom: theme.spacing.xl,
+    lineHeight: 28, // Enhanced line height for readability
+    letterSpacing: 0.2,
   },
   buttonContainer: {
     width: '100%',
+    gap: theme.spacing.lg,
   },
-  button: {
-    marginBottom: theme.spacing.md,
+  yesButton: {
+    // Enhanced Yes button styling
+    ...theme.shadows.sm,
+  },
+  noButton: {
+    // Enhanced No button styling
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    backgroundColor: theme.colors.surface,
   },
 }); 

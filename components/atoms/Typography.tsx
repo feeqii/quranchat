@@ -14,6 +14,10 @@ interface TypographyProps {
   color?: string;
   align?: LogicalTextAlign;
   rtlAware?: boolean; // Enable automatic RTL text alignment
+  weight?: 'regular' | 'medium' | 'bold';
+  italic?: boolean;
+  underline?: boolean;
+  opacity?: number;
 }
 
 export const Typography: React.FC<TypographyProps> = ({
@@ -24,6 +28,10 @@ export const Typography: React.FC<TypographyProps> = ({
   color = theme.colors.textPrimary,
   align = 'start',
   rtlAware = true,
+  weight,
+  italic = false,
+  underline = false,
+  opacity = 1,
 }) => {
   
   const getTextAlignment = (alignment: LogicalTextAlign): 'left' | 'center' | 'right' => {
@@ -47,6 +55,39 @@ export const Typography: React.FC<TypographyProps> = ({
     }
   };
 
+  const getFontFamily = (variant: TypographyVariant): string => {
+    switch (variant) {
+      case 'hero':
+      case 'display':
+      case 'h1':
+      case 'h2':
+      case 'h3':
+      case 'title':
+      case 'sectionTitle':
+        return theme.fonts.heading;
+      default:
+        return theme.fonts.body;
+    }
+  };
+
+  const getFontWeight = (variant: TypographyVariant, customWeight?: string): TextStyle['fontWeight'] => {
+    if (customWeight) {
+      switch (customWeight) {
+        case 'medium': return '500';
+        case 'bold': return '700';
+        default: return '400';
+      }
+    }
+    
+    // Use variant-specific weight from theme
+    const variantStyles = theme.typography[variant];
+    if (typeof variantStyles === 'object' && variantStyles.fontWeight) {
+      return variantStyles.fontWeight as TextStyle['fontWeight'];
+    }
+    
+    return '400';
+  };
+
   const getVariantStyles = (variant: TypographyVariant): TextStyle => {
     const variantStyles = theme.typography[variant];
     
@@ -56,6 +97,9 @@ export const Typography: React.FC<TypographyProps> = ({
         color,
         textAlign: getTextAlignment(align),
         fontFamily: variantStyles,
+        opacity,
+        fontStyle: italic ? 'italic' : 'normal',
+        textDecorationLine: underline ? 'underline' : 'none',
       };
     }
     
@@ -63,28 +107,14 @@ export const Typography: React.FC<TypographyProps> = ({
       ...variantStyles,
       color,
       textAlign: getTextAlignment(align),
+      fontFamily: getFontFamily(variant),
+      fontWeight: getFontWeight(variant, weight),
+      opacity,
+      fontStyle: italic ? ('italic' as const) : ('normal' as const),
+      textDecorationLine: underline ? ('underline' as const) : ('none' as const),
     };
 
-    switch (variant) {
-      case 'h1':
-      case 'h2':
-      case 'h3':
-      case 'title':
-      case 'sectionTitle':
-        return {
-          ...baseStyles,
-          fontFamily: theme.fonts.heading,
-        };
-      case 'subtitle':
-      case 'body':
-      case 'small':
-      case 'caption':
-      default:
-        return {
-          ...baseStyles,
-          fontFamily: theme.fonts.body,
-        };
-    }
+    return baseStyles;
   };
 
   return (

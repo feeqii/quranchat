@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView } from 'react-native';
+import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/theme';
 import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQuestionBlock';
-import { OptionGroup } from '../../components/molecules/OptionGroup';
+import { OptionCard } from '../../components/molecules/OptionCard';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
 import { t } from '../../localization';
@@ -36,13 +36,23 @@ export const OnboardingStep4: React.FC = () => {
         progress={40}
       >
         <View style={styles.content}>
-          <View style={styles.optionsContainer}>
-            <OptionGroup
-              options={heardFromOptions}
-              selected={selectedOption}
-              onSelect={setSelectedOption}
-            />
-          </View>
+          <ScrollView 
+            style={styles.scrollContainer}
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={styles.optionsContainer}>
+              {heardFromOptions.map((option, index) => (
+                <OptionCard
+                  key={index}
+                  label={option}
+                  selected={selectedOption === option}
+                  onPress={() => setSelectedOption(option)}
+                  style={styles.optionCard}
+                />
+              ))}
+            </View>
+          </ScrollView>
           
           <View style={styles.buttonContainer}>
             <PrimaryButton
@@ -66,11 +76,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
-  optionsContainer: {
+  scrollContainer: {
     flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: theme.spacing.lg,
+  },
+  optionsContainer: {
+    paddingTop: theme.spacing.lg,
+  },
+  optionCard: {
+    marginBottom: theme.spacing.lg, // Increased from md to lg for better spacing
   },
   buttonContainer: {
     paddingTop: theme.spacing.xl,
     paddingBottom: theme.spacing.lg,
+    backgroundColor: 'transparent', // Completely transparent
   },
 }); 

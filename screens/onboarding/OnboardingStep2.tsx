@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/theme';
@@ -6,12 +6,18 @@ import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQu
 import { OptionCard } from '../../components/molecules/OptionCard';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
+import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { t } from '../../localization';
 
 export const OnboardingStep2: React.FC = () => {
   const navigation = useNavigation();
   const { setField } = useOnboardingStore();
+  const { logEvent } = useAnalyticsStore();
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  useEffect(() => {
+    logEvent({ name: 'screen_view', screenName: 'OnboardingStep2' });
+  }, [logEvent]);
 
   const supportOptions = [
     t('justStudyTheQuran'),
@@ -25,6 +31,7 @@ export const OnboardingStep2: React.FC = () => {
   const handleContinue = () => {
     if (selectedOption) {
       setField('supportType', selectedOption);
+      logEvent({ name: 'onboarding_complete_step', step: 2 });
       navigation.navigate('OnboardingStep3' as never);
     }
   };

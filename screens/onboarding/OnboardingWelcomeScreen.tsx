@@ -1,29 +1,29 @@
 import React, { useEffect } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   SafeAreaView,
   StatusBar,
-  useWindowDimensions,
+  ImageBackground,
+  Image,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/theme';
-import { SectionTitle } from '../../components/atoms/SectionTitle';
+import { Typography } from '../../components/atoms/Typography';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
+import { AppLogo } from '../../components/atoms/AppLogo';
 import { SocialProofBadge } from '../../components/molecules/SocialProofBadge';
-import { HeroCard } from '../../components/organisms/HeroCard';
 import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { t } from '../../localization';
 
-// Import the background image
+// Import the background and logo images
 const verseStoryBg = require('../../assets/images/verse-story-bg.jpg');
+const welcomeLogo = require('../../assets/images/welcomescreenlogo.png');
 
 export const OnboardingWelcomeScreen: React.FC = () => {
   const navigation = useNavigation();
   const { logEvent } = useAnalyticsStore();
-  const { width: screenWidth } = useWindowDimensions();
-
   useEffect(() => {
     logEvent({ name: 'onboarding_start' });
   }, [logEvent]);
@@ -33,52 +33,78 @@ export const OnboardingWelcomeScreen: React.FC = () => {
     navigation.navigate('OnboardingStep1' as never);
   };
 
-  // Responsive logo size
-  const isSmallScreen = screenWidth < 360;
-  const logoSize = isSmallScreen ? 100 : 120;
-
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.primarySoft} />
+      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.background} />
       
-      <View style={styles.container}>
-        <HeroCard 
-          heightPercentage={0.6}
-          backgroundImage={verseStoryBg}
-          overlay={true}
-          overlayOpacity={0.4}
-        >
-          {/* Card Content */}
-          <View style={styles.cardContent}>
-            {/* App Logo */}
-            <View style={[
-              styles.logoContainer,
-              { width: logoSize, height: logoSize }
-            ]}>
-              <Text style={styles.logoText}>{t('appName')}</Text>
+      <ImageBackground 
+        source={verseStoryBg}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        {/* Gradient overlay for better text readability */}
+        <LinearGradient
+          colors={[
+            'rgba(248, 250, 249, 0.95)',
+            'rgba(232, 244, 241, 0.90)',
+            'rgba(217, 237, 231, 0.85)',
+            'rgba(248, 250, 249, 0.98)'
+          ]}
+          locations={[0, 0.3, 0.7, 1]}
+          style={styles.gradientOverlay}
+        />
+        
+        <View style={styles.container}>
+          {/* Header area with logo */}
+          <View style={styles.headerSection}>
+            <View style={styles.logoContainer}>
+              <Image 
+                source={welcomeLogo}
+                style={styles.logoImage}
+                resizeMode="contain"
+              />
             </View>
-
-            {/* Hero Title and Subtitle */}
-            <SectionTitle
-              title={t('welcomeTitle')}
-              subtitle={t('welcomeSubtitle')}
-              variant="hero"
-              align="center"
-              responsive={true}
-            />
-
-            {/* Social Proof Badge */}
-            <SocialProofBadge />
           </View>
 
-          {/* Continue Button */}
-          <PrimaryButton
-            label={t('continue')}
-            onPress={handleContinueAsGuest}
-            variant="hero"
-          />
-        </HeroCard>
-      </View>
+          {/* Main content */}
+          <View style={styles.contentSection}>
+            <View style={styles.titleContainer}>
+              <Typography 
+                variant="hero" 
+                align="center"
+                color={theme.colors.textPrimary}
+                style={styles.mainTitle}
+              >
+                {t('welcomeTitle')}
+              </Typography>
+              
+              <Typography 
+                variant="subtitle" 
+                align="center"
+                color={theme.colors.textSecondary}
+                style={styles.subtitle}
+              >
+                {t('welcomeSubtitle')}
+              </Typography>
+            </View>
+
+            {/* Social proof */}
+            <View style={styles.socialProofContainer}>
+              <SocialProofBadge />
+            </View>
+          </View>
+
+          {/* Action section */}
+          <View style={styles.actionSection}>
+            <PrimaryButton
+              label={t('continue')}
+              onPress={handleContinueAsGuest}
+              variant="hero"
+              size="large"
+            />
+          </View>
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -86,31 +112,72 @@ export const OnboardingWelcomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: theme.colors.primarySoft,
+    backgroundColor: theme.colors.background,
+  },
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  gradientOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1,
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: theme.spacing.xl,
+    paddingVertical: theme.spacing.lg,
+    zIndex: 2,
   },
-  cardContent: {
-    flex: 1,
+  headerSection: {
+    flex: 0.25,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
+    paddingTop: theme.spacing.xl,
   },
   logoContainer: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radii.lg,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: theme.spacing.xl,
-    ...theme.shadows.sm,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: theme.radii.xl,
+    padding: theme.spacing.md, // Reduced padding for better fit
+    ...theme.shadows.md,
+    borderWidth: 1,
+    borderColor: theme.colors.borderSoft,
   },
-  logoText: {
-    fontSize: theme.fontSizes.h3,
-    fontFamily: theme.fonts.heading,
-    color: theme.colors.primary,
+  logoImage: {
+    width: 140,
+    height: 137, // Proportional to 762x748 ratio, larger size
+  },
+  contentSection: {
+    flex: 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: theme.spacing.xxl,
+  },
+  titleContainer: {
+    alignItems: 'center',
+    marginBottom: theme.spacing.xxl,
+  },
+  mainTitle: {
+    marginBottom: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.md,
     textAlign: 'center',
+  },
+  subtitle: {
+    paddingHorizontal: theme.spacing.lg,
+    textAlign: 'center',
+    lineHeight: 24,
+  },
+  socialProofContainer: {
+    alignItems: 'center',
+    marginTop: theme.spacing.lg,
+  },
+  actionSection: {
+    flex: 0.25,
+    justifyContent: 'flex-end',
+    paddingBottom: theme.spacing.xl,
   },
 }); 

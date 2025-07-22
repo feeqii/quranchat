@@ -73,7 +73,8 @@ const OnboardingStackNavigator: React.FC = () => {
     <OnboardingStack.Navigator
       screenOptions={{
         headerShown: false,
-        animation: 'slide_from_right',
+        animation: 'fade', // Back to fade - perfect for spiritual experience
+        animationDuration: 400, // Faster, more responsive transition
       }}
     >
       <OnboardingStack.Screen

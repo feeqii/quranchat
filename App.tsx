@@ -12,6 +12,7 @@ import { AppNavigator } from "./navigation/AppNavigator";
 import { LocalizationProvider } from "./localization/LocalizationContext";
 import { usePurchasesStore } from "./store/usePurchasesStore";
 import { useAnalyticsStore } from "./store/useAnalyticsStore";
+import { isExpoGo, devLog, areNativeModulesAvailable } from "./utils/developmentUtils";
 
 export default function App() {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -30,32 +31,44 @@ export default function App() {
   useEffect(() => {
     const initializeApp = async () => {
       try {
-        console.log('🚀 Starting app initialization...');
+        devLog('🚀 Starting app initialization...');
+        devLog(`📱 Running in: ${isExpoGo() ? 'Expo Go' : 'Development Build'}`);
+        
+        // Skip native module initialization in Expo Go
+        if (isExpoGo()) {
+          devLog('⚠️ Expo Go detected - skipping native modules (RevenueCat, Amplitude)');
+          setIsInitialized(true);
+          return;
+        }
         
         // Wait a bit to ensure native modules are ready
         await new Promise(resolve => setTimeout(resolve, 300));
         
         // Initialize Amplitude analytics with robust error handling
-        console.log('📊 Initializing Analytics...');
-        const analyticsSuccess = await initializeAmplitude('ecf945ffbe155459b50f6ab33aa1eb26');
-        if (analyticsSuccess) {
-          console.log('✅ Analytics initialized successfully');
-        } else {
-          console.log('⚠️ Analytics initialization failed, continuing without analytics');
+        if (areNativeModulesAvailable()) {
+          devLog('📊 Initializing Analytics...');
+          const analyticsSuccess = await initializeAmplitude('ecf945ffbe155459b50f6ab33aa1eb26');
+          if (analyticsSuccess) {
+            devLog('✅ Analytics initialized successfully');
+          } else {
+            devLog('⚠️ Analytics initialization failed, continuing without analytics');
+          }
         }
         
         // Initialize RevenueCat
-        try {
-          console.log('💰 Initializing RevenueCat...');
-          await initialize();
-          console.log('✅ RevenueCat initialized successfully');
-        } catch (revenueError) {
-          console.warn('⚠️ RevenueCat initialization failed:', revenueError);
-          // Continue without purchases rather than crashing
+        if (areNativeModulesAvailable()) {
+          try {
+            devLog('💰 Initializing RevenueCat...');
+            await initialize();
+            devLog('✅ RevenueCat initialized successfully');
+          } catch (revenueError) {
+            devLog('⚠️ RevenueCat initialization failed:', revenueError);
+            // Continue without purchases rather than crashing
+          }
         }
         
         setIsInitialized(true);
-        console.log('🎉 App initialization completed successfully');
+        devLog('🎉 App initialization completed successfully');
         
       } catch (error) {
         console.error('❌ App initialization error:', error);

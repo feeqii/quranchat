@@ -471,7 +471,7 @@ import { t } from '../localization';
 
 ## 📚 **docs/** - Project Documentation
 
-**5 Files** | **Comprehensive project documentation**
+**6 Files** | **Comprehensive project documentation**
 
 | File | Purpose |
 |------|---------|
@@ -479,6 +479,7 @@ import { t } from '../localization';
 | `DESIGN_SYSTEM.md` | Visual design principles and patterns |
 | `API.md` | API integrations and data flow documentation |
 | `DEPLOYMENT.md` | Build and release process guide |
+| `ONBOARDING_GUIDE.md` | Comprehensive onboarding flow documentation |
 | `PROJECT_STRUCTURE.md` | This file - complete project structure |
 
 ---
