@@ -40,17 +40,74 @@ export type AnalyticsEvent =
   | { name: 'verse_of_day_viewed' };
 
 interface AnalyticsState {
-  logEvent: (event: AnalyticsEvent) => void;
   isInitialized: boolean;
+  initializationAttempts: number;
+  maxRetries: number;
   setInitialized: (initialized: boolean) => void;
+  initializeAmplitude: (apiKey: string) => Promise<boolean>;
+  logEvent: (event: AnalyticsEvent) => void;
 }
 
 export const useAnalyticsStore = create<AnalyticsState>((set, get) => ({
   isInitialized: false,
+  initializationAttempts: 0,
+  maxRetries: 3,
   
   setInitialized: (initialized: boolean) => set({ isInitialized: initialized }),
   
+  initializeAmplitude: async (apiKey: string): Promise<boolean> => {
+    const state = get();
+    
+    if (state.isInitialized) {
+      return true; // Already initialized
+    }
+    
+    if (state.initializationAttempts >= state.maxRetries) {
+      console.warn('⚠️ Analytics: Max initialization attempts reached, continuing without analytics');
+      return false;
+    }
+    
+    try {
+      set({ initializationAttempts: state.initializationAttempts + 1 });
+      
+      console.log(`📊 Analytics: Initialization attempt ${state.initializationAttempts + 1}/${state.maxRetries}`);
+      
+      // Add a small delay to ensure native modules are ready
+      await new Promise(resolve => setTimeout(resolve, 200));
+      
+      // Check if Amplitude instance is available
+      const amplitudeInstance = Amplitude.getInstance();
+      if (!amplitudeInstance) {
+        throw new Error('Amplitude instance not available');
+      }
+      
+      // Initialize with error handling
+      await amplitudeInstance.init(apiKey);
+      
+      console.log('✅ Analytics: Amplitude initialized successfully');
+      set({ isInitialized: true });
+      return true;
+      
+    } catch (error) {
+      console.warn(`❌ Analytics: Initialization attempt ${state.initializationAttempts + 1} failed:`, error);
+      
+      // If we haven't exceeded max retries, try again after a delay
+      if (state.initializationAttempts < state.maxRetries) {
+        console.log(`🔄 Analytics: Retrying in 1 second...`);
+        setTimeout(() => {
+          get().initializeAmplitude(apiKey);
+        }, 1000);
+      } else {
+        console.warn('⚠️ Analytics: All initialization attempts failed, continuing without analytics');
+      }
+      
+      return false;
+    }
+  },
+  
   logEvent: (event: AnalyticsEvent) => {
+    const state = get();
+    
     try {
       const { name, ...props } = event;
       
@@ -59,12 +116,26 @@ export const useAnalyticsStore = create<AnalyticsState>((set, get) => ({
         console.log('📊 Analytics Event:', name, props);
       }
       
-      // Send to Amplitude
-      Amplitude.getInstance().logEvent(name, props);
+      // Only send to Amplitude if properly initialized
+      if (state.isInitialized) {
+        const amplitudeInstance = Amplitude.getInstance();
+        if (amplitudeInstance) {
+          amplitudeInstance.logEvent(name, props);
+        } else {
+          if (__DEV__) {
+            console.warn('⚠️ Analytics: Amplitude instance not available for event:', name);
+          }
+        }
+      } else {
+        if (__DEV__) {
+          console.log('📊 Analytics (not initialized):', name, props);
+        }
+      }
     } catch (error) {
       if (__DEV__) {
         console.error('❌ Analytics Error:', error);
       }
+      // Don't throw - continue silently if analytics fails
     }
   },
 })); 

@@ -1,46 +1,70 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { PrimaryButton } from '../atoms/PrimaryButton';
 import { theme } from '../../constants/theme';
 
-interface ErrorBoundaryState {
-  hasError: boolean;
-  error: Error | null;
-}
-
-interface ErrorBoundaryProps {
+interface Props {
   children: React.ReactNode;
-  fallback?: React.ReactNode;
-  title?: string;
 }
 
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  constructor(props: ErrorBoundaryProps) {
+interface State {
+  hasError: boolean;
+  error?: Error;
+  errorInfo?: React.ErrorInfo;
+}
+
+export class ErrorBoundary extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+  static getDerivedStateFromError(error: Error): State {
+    // Update state so the next render will show the fallback UI
     return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.warn('ErrorBoundary caught an error:', error, errorInfo);
+    // Log the error for debugging
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    
+    // Update state with error details
+    this.setState({
+      error,
+      errorInfo,
+    });
   }
+
+  handleReset = () => {
+    this.setState({ hasError: false, error: undefined, errorInfo: undefined });
+  };
 
   render() {
     if (this.state.hasError) {
-      if (this.props.fallback) {
-        return this.props.fallback;
-      }
-
       return (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorTitle}>
-            ⚠️ {this.props.title || 'Error'}
-          </Text>
-          <Text style={styles.errorMessage}>
-            {this.state.error?.message || 'Something went wrong in this section'}
-          </Text>
+        <View style={styles.container}>
+          <View style={styles.content}>
+            <Text style={styles.title}>Something went wrong</Text>
+            <Text style={styles.message}>
+              We encountered an unexpected error. Please try restarting the app.
+            </Text>
+            
+            {__DEV__ && this.state.error && (
+              <View style={styles.errorDetails}>
+                <Text style={styles.errorTitle}>Error Details (Development Mode):</Text>
+                <Text style={styles.errorText}>{this.state.error.toString()}</Text>
+                {this.state.errorInfo && (
+                  <Text style={styles.errorText}>{this.state.errorInfo.componentStack}</Text>
+                )}
+              </View>
+            )}
+            
+            <PrimaryButton
+              label="Try Again"
+              onPress={this.handleReset}
+              variant="default"
+            />
+          </View>
         </View>
       );
     }
@@ -50,22 +74,51 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 }
 
 const styles = StyleSheet.create({
-  errorContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: theme.spacing.xl,
+  },
+  content: {
+    alignItems: 'center',
+    maxWidth: 300,
+  },
+  title: {
+    fontSize: theme.fontSizes.h2,
+    fontFamily: theme.fonts.heading,
+    color: theme.colors.textPrimary,
+    textAlign: 'center',
+    marginBottom: theme.spacing.md,
+  },
+  message: {
+    fontSize: theme.fontSizes.body,
+    fontFamily: theme.fonts.body,
+    color: theme.colors.textSecondary,
+    textAlign: 'center',
+    marginBottom: theme.spacing.xl,
+    lineHeight: 24,
+  },
+  errorDetails: {
+    backgroundColor: theme.colors.surface,
     padding: theme.spacing.md,
-    backgroundColor: theme.colors.danger + '20',
     borderRadius: theme.radii.md,
+    marginBottom: theme.spacing.xl,
+    maxWidth: 280,
     borderWidth: 1,
     borderColor: theme.colors.danger,
-    marginVertical: theme.spacing.sm,
   },
   errorTitle: {
-    fontSize: theme.fontSizes.h3,
-    fontWeight: 'bold',
-    color: theme.colors.danger,
+    fontSize: theme.fontSizes.caption,
+    fontFamily: theme.fonts.heading,
+    color: theme.colors.textPrimary,
     marginBottom: theme.spacing.sm,
   },
-  errorMessage: {
-    fontSize: theme.fontSizes.body,
+  errorText: {
+    fontSize: 10,
+    fontFamily: theme.fonts.mono,
     color: theme.colors.textSecondary,
+    marginBottom: theme.spacing.xs,
   },
 }); 
