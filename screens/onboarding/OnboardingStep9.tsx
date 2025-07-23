@@ -36,7 +36,7 @@ const testimonials = [
 ];
 
   const handleContinue = () => {
-    navigation.navigate('OnboardingFoundersNote' as never);
+    navigation.navigate('OnboardingFinalQuestion1' as never);
   };
 
   return (

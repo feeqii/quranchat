@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/theme';
 import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQuestionBlock';
 import { YesNoBlock } from '../../components/organisms/YesNoBlock';
@@ -9,6 +10,7 @@ import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { t } from '../../localization';
 
 export const OnboardingStep10: React.FC = () => {
+  const navigation = useNavigation();
   const { setField, completeOnboarding } = useOnboardingStore();
   const { logEvent } = useAnalyticsStore();
 
@@ -37,8 +39,8 @@ export const OnboardingStep10: React.FC = () => {
       // Log onboarding completion
       logEvent({ name: 'onboarding_finish' });
       
-      // Complete onboarding
-      completeOnboarding();
+      // Navigate to Final Questions instead of completing onboarding
+      navigation.navigate('OnboardingFinalQuestion1' as never);
     }
   };
 
