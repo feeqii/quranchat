@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/theme';
 import { WidgetProgressLayout } from '../../components/organisms/WidgetProgressLayout';
 import { Typography } from '../../components/atoms/Typography';
@@ -8,16 +9,17 @@ import { useOnboardingStore } from '../../store/useOnboardingStore';
 import { t } from '../../localization';
 
 export const OnboardingFinalQuestion3: React.FC = () => {
-  const { setField, completeOnboarding } = useOnboardingStore();
+  const navigation = useNavigation();
+  const { setField } = useOnboardingStore();
 
   const handleYes = () => {
     setField('wantsInstantAccess', true);
-    completeOnboarding();
+    navigation.navigate('OnboardingFoundersNote' as never);
   };
 
   const handleNo = () => {
     setField('wantsInstantAccess', false);
-    completeOnboarding();
+    navigation.navigate('OnboardingFoundersNote' as never);
   };
 
   return (

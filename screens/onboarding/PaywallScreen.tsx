@@ -18,6 +18,7 @@ import { PrimaryButton } from '../../components/atoms/PrimaryButton';
 import { Icon } from '../../components/atoms/Icon';
 import { usePurchasesStore } from '../../store/usePurchasesStore';
 import { useAnalyticsStore } from '../../store/useAnalyticsStore';
+import { useOnboardingStore } from '../../store/useOnboardingStore';
 import { useNavigation } from '@react-navigation/native';
 import { isExpoGo, devLog } from '../../utils/developmentUtils';
 
@@ -168,8 +169,12 @@ export const PaywallScreen: React.FC = () => {
       // Set entitled state after a delay to simulate the paywall experience
       setTimeout(() => {
         const { setIsEntitled } = usePurchasesStore.getState();
+        const { completeOnboarding } = useOnboardingStore.getState();
+        
+        // Complete onboarding first, then grant access
+        completeOnboarding();
         setIsEntitled(true);
-        devLog('💰 Expo Go: Auto-granted access - navigation will happen automatically');
+        devLog('💰 Expo Go: Completed onboarding and auto-granted access - navigation will happen automatically');
       }, 2000);
       return;
     }
@@ -214,6 +219,11 @@ export const PaywallScreen: React.FC = () => {
     try {
       logEvent({ name: 'paywall_subscribe_tap' });
       await purchaseWeekly();
+      
+      // Complete onboarding when purchase is successful
+      const { completeOnboarding } = useOnboardingStore.getState();
+      completeOnboarding();
+      
       logEvent({ name: 'paywall_purchase_success' });
     } catch (error) {
       logEvent({ name: 'paywall_purchase_failure', error: error?.toString() || 'Unknown error' });
