@@ -23,7 +23,10 @@ export const areNativeModulesAvailable = (): boolean => {
   // Temporarily force enable for testing (comment out for Expo Go)
   // return true;
   
-  return !isExpoGo() || Constants.appOwnership === 'standalone';
+  // Native modules are available when NOT in Expo Go
+  // Expo Go has appOwnership === 'expo'
+  // Development builds and standalone have different ownership values
+  return Constants.appOwnership !== 'expo';
 };
 
 /**
