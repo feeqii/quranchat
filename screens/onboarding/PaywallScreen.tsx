@@ -165,16 +165,17 @@ export const PaywallScreen: React.FC = () => {
     if (isExpoGo()) {
       // In Expo Go, assume user has access for testing
       devLog('💰 Paywall: Expo Go detected - auto-granting access for testing');
+      // Set entitled state after a delay to simulate the paywall experience
       setTimeout(() => {
-        navigation.replace('MainApp' as never);
+        const { setIsEntitled } = usePurchasesStore.getState();
+        setIsEntitled(true);
+        devLog('💰 Expo Go: Auto-granted access - navigation will happen automatically');
       }, 2000);
       return;
     }
     
-    if (isEntitled) {
-      navigation.replace('MainApp' as never);
-    }
-  }, [isEntitled, navigation]);
+    // Don't navigate manually - the AppNavigator handles routing based on isEntitled state
+  }, [navigation]);
 
   useEffect(() => {
     // Entrance animation

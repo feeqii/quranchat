@@ -15,6 +15,7 @@ interface PurchasesState {
   restorePurchases: () => Promise<void>;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
+  setIsEntitled: (isEntitled: boolean) => void;
 }
 
 export const usePurchasesStore = create<PurchasesState>()(
@@ -124,6 +125,7 @@ export const usePurchasesStore = create<PurchasesState>()(
 
       setLoading: (loading) => set({ loading }),
       setError: (error) => set({ error }),
+      setIsEntitled: (isEntitled) => set({ isEntitled }),
     }),
     {
       name: '@purchases_store',
