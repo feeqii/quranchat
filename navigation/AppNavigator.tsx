@@ -23,6 +23,8 @@ import { OnboardingStep10 } from '../screens/onboarding/OnboardingStep10';
 import { OnboardingFinalQuestion1 } from '../screens/onboarding/OnboardingFinalQuestion1';
 import { OnboardingFinalQuestion2 } from '../screens/onboarding/OnboardingFinalQuestion2';
 import { OnboardingFinalQuestion3 } from '../screens/onboarding/OnboardingFinalQuestion3';
+import { OnboardingFoundersNote } from '../screens/onboarding/OnboardingFoundersNote';
+import { OnboardingWhyNotFree } from '../screens/onboarding/OnboardingWhyNotFree';
 import { MainTabNavigator } from './MainTabNavigator';
 import { VerseStoryScreen } from '../screens/main/VerseStoryScreen';
 import { TopicChatScreen } from '../screens/main/TopicChatScreen';
@@ -47,6 +49,8 @@ export type OnboardingStackParamList = {
   OnboardingFinalQuestion1: undefined;
   OnboardingFinalQuestion2: undefined;
   OnboardingFinalQuestion3: undefined;
+  OnboardingFoundersNote: undefined;
+  OnboardingWhyNotFree: undefined;
   PaywallScreen: undefined;
 };
 
@@ -132,6 +136,14 @@ const OnboardingStackNavigator: React.FC = () => {
       <OnboardingStack.Screen
         name="OnboardingFinalQuestion3"
         component={OnboardingFinalQuestion3}
+      />
+      <OnboardingStack.Screen
+        name="OnboardingFoundersNote"
+        component={OnboardingFoundersNote}
+      />
+      <OnboardingStack.Screen
+        name="OnboardingWhyNotFree"
+        component={OnboardingWhyNotFree}
       />
       <OnboardingStack.Screen
         name="PaywallScreen"

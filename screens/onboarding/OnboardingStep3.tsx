@@ -131,9 +131,9 @@ export const OnboardingStep3: React.FC = () => {
         <View style={styles.content}>
           {/* Beautiful Animated Chart */}
           <Animated.View 
-            style={[
+                    style={[
               styles.chartContainer,
-              {
+                      {
                 opacity: fadeAnim,
                 transform: [
                   { translateY: slideAnim },
@@ -178,7 +178,7 @@ export const OnboardingStep3: React.FC = () => {
                   strokeLinejoin="round"
                   opacity="0.8"
                 />
-                
+
                 {/* Simple start and end circles */}
                 <Circle
                   cx="0"
@@ -236,13 +236,13 @@ export const OnboardingStep3: React.FC = () => {
               >
                 Beginning
               </Typography>
-              <Typography
-                variant="small"
-                color={theme.colors.textMuted}
+                <Typography
+                  variant="small"
+                  color={theme.colors.textMuted}
                 style={styles.endLabel}
-              >
+                >
                 Your Journey
-              </Typography>
+                </Typography>
             </View>
 
             {/* Inspirational subtitle */}

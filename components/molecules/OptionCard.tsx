@@ -74,8 +74,8 @@ export const OptionCard: React.FC<OptionCardProps> = ({
         >
           <View style={styles.contentContainer}>
             <Text style={[styles.label, styles.unselectedText]}>
-              {label}
-            </Text>
+        {label}
+      </Text>
           </View>
         </Pressable>
       )}

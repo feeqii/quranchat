@@ -53,8 +53,8 @@ export const OnboardingWelcomeScreen: React.FC = () => {
           locations={[0, 0.3, 0.7, 1]}
           style={styles.gradientOverlay}
         />
-        
-        <View style={styles.container}>
+      
+      <View style={styles.container}>
           {/* Header area with logo */}
           <View style={styles.headerSection}>
             <View style={styles.logoContainer}>
@@ -64,14 +64,14 @@ export const OnboardingWelcomeScreen: React.FC = () => {
                 resizeMode="contain"
               />
             </View>
-          </View>
+            </View>
 
           {/* Main content */}
           <View style={styles.contentSection}>
             <View style={styles.titleContainer}>
               <Typography 
-                variant="hero" 
-                align="center"
+              variant="hero"
+              align="center"
                 color={theme.colors.textPrimary}
                 style={styles.mainTitle}
               >
@@ -90,20 +90,20 @@ export const OnboardingWelcomeScreen: React.FC = () => {
 
             {/* Social proof */}
             <View style={styles.socialProofContainer}>
-              <SocialProofBadge />
+            <SocialProofBadge />
             </View>
           </View>
 
           {/* Action section */}
           <View style={styles.actionSection}>
-            <PrimaryButton
-              label={t('continue')}
-              onPress={handleContinueAsGuest}
-              variant="hero"
+          <PrimaryButton
+            label={t('continue')}
+            onPress={handleContinueAsGuest}
+            variant="hero"
               size="large"
-            />
+          />
           </View>
-        </View>
+      </View>
       </ImageBackground>
     </SafeAreaView>
   );

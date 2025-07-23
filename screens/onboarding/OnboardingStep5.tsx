@@ -41,8 +41,9 @@ export const OnboardingStep5: React.FC = () => {
             style={styles.scrollContainer}
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
+            fadingEdgeLength={100}
           >
-            <View style={styles.optionsContainer}>
+          <View style={styles.optionsContainer}>
               {ageGroupOptions.map((option, index) => (
                 <OptionCard
                   key={index}
@@ -50,9 +51,9 @@ export const OnboardingStep5: React.FC = () => {
                   selected={selectedOption === option}
                   onPress={() => setSelectedOption(option)}
                   style={styles.optionCard}
-                />
+            />
               ))}
-            </View>
+          </View>
           </ScrollView>
           
           <View style={styles.buttonContainer}>
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: theme.spacing.lg,
+    paddingBottom: theme.spacing.xxl + theme.spacing.xl, // Extra space so last item fades nicely
   },
   optionsContainer: {
     paddingTop: theme.spacing.lg,
@@ -92,6 +93,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     paddingTop: theme.spacing.xl,
     paddingBottom: theme.spacing.lg,
-    backgroundColor: 'transparent', // Completely transparent
+    backgroundColor: 'transparent',
   },
 }); 

@@ -19,7 +19,6 @@ export const OnboardingStep6: React.FC = () => {
     <SafeAreaView style={styles.safeArea}>
       <OnboardingQuestionBlock
         title={t('makeYourHomeScreenAPlaceOfFaith')}
-        subtitle=""
         progress={60}
       >
         <View style={styles.content}>
@@ -55,21 +54,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   instructionContainer: {
-    paddingTop: theme.spacing.lg,
-    paddingHorizontal: theme.spacing.md,
+    marginTop: -theme.spacing.lg, // Pull instruction closer to title
+    paddingTop: 0, // Remove top padding
+    paddingBottom: theme.spacing.lg, // Keep bottom padding
+    paddingHorizontal: theme.spacing.lg, // Keep horizontal padding
   },
   instructionText: {
     textAlign: 'center',
     color: theme.colors.textSecondary,
-    lineHeight: 24,
+    lineHeight: 26, // Slightly increased for better readability
   },
   illustrationContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: theme.spacing.lg, // Added horizontal padding
+    paddingVertical: theme.spacing.xl, // Added vertical padding for balance
   },
   buttonContainer: {
     paddingTop: theme.spacing.xl,
     paddingBottom: theme.spacing.lg,
+    backgroundColor: 'transparent', // Match other screens
   },
 }); 

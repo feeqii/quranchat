@@ -29,15 +29,15 @@ export const YesNoBlock: React.FC<YesNoBlockProps> = ({
     <View style={[styles.container, style]}>
       {/* Enhanced question with better typography */}
       <View style={styles.questionContainer}>
-        <Typography 
+      <Typography 
           variant={questionVariant}
           weight="medium"
-          align="center"
+        align="center"
           color={theme.colors.textPrimary}
-          style={styles.question}
-        >
-          {question}
-        </Typography>
+        style={styles.question}
+      >
+        {question}
+      </Typography>
       </View>
       
       {/* Enhanced button layout with icons */}

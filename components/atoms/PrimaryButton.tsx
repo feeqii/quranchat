@@ -64,7 +64,7 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
     // Color variants
     switch (variant) {
       case 'hero':
-        baseStyle.push(styles.heroButton);
+      baseStyle.push(styles.heroButton);
         break;
       case 'success':
         baseStyle.push(styles.successButton);

@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/theme';
 import { OnboardingQuestionBlock } from '../../components/organisms/OnboardingQuestionBlock';
 import { TestimonialCard } from '../../components/molecules/TestimonialCard';
 import { PrimaryButton } from '../../components/atoms/PrimaryButton';
+import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { t } from '../../localization';
 
 export const OnboardingStep9: React.FC = () => {
   const navigation = useNavigation();
+  const { logEvent } = useAnalyticsStore();
+
+  useEffect(() => {
+    logEvent({ name: 'screen_view', screenName: 'OnboardingStep9' });
+    logEvent({ name: 'onboarding_complete_step', step: 9 });
+  }, [logEvent]);
 
 const testimonials = [
   {
@@ -29,7 +36,7 @@ const testimonials = [
 ];
 
   const handleContinue = () => {
-    navigation.navigate('OnboardingFinalQuestion1' as never);
+    navigation.navigate('OnboardingFoundersNote' as never);
   };
 
   return (

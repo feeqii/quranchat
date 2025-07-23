@@ -9,6 +9,10 @@ export type AnalyticsEvent =
   | { name: 'onboarding_start' }
   | { name: 'onboarding_complete_step'; step: number }
   | { name: 'onboarding_finish' }
+  | { name: 'onboarding_founders_note_viewed' }
+  | { name: 'onboarding_founders_note_continue' }
+  | { name: 'onboarding_why_not_free_viewed' }
+  | { name: 'onboarding_why_not_free_continue' }
   
   // Paywall Events
   | { name: 'paywall_view' }

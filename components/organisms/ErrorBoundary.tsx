@@ -47,7 +47,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
             <Text style={styles.title}>Something went wrong</Text>
             <Text style={styles.message}>
               We encountered an unexpected error. Please try restarting the app.
-            </Text>
+          </Text>
             
             {__DEV__ && this.state.error && (
               <View style={styles.errorDetails}>

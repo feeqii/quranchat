@@ -84,19 +84,19 @@ export const OnboardingQuestionBlock: React.FC<OnboardingQuestionBlockProps> = (
         ]}
       >
         {/* Progress Section */}
-        {progress !== undefined && (
+      {progress !== undefined && (
           <Animated.View 
             style={[
               styles.progressSection,
               { opacity: progressFadeAnim }
             ]}
           >
-            <ProgressBar
-              progress={progress}
-              style={styles.progressBar}
-            />
+        <ProgressBar
+          progress={progress}
+          style={styles.progressBar}
+        />
           </Animated.View>
-        )}
+      )}
         
         {/* Title Section */}
         <Animated.View 
@@ -105,11 +105,11 @@ export const OnboardingQuestionBlock: React.FC<OnboardingQuestionBlockProps> = (
             { opacity: titleFadeAnim }
           ]}
         >
-          <SectionTitle
-            title={title}
-            subtitle={subtitle}
-            style={styles.title}
-          />
+      <SectionTitle
+        title={title}
+        subtitle={subtitle}
+        style={styles.title}
+      />
         </Animated.View>
         
         {/* Content Section */}
@@ -119,7 +119,7 @@ export const OnboardingQuestionBlock: React.FC<OnboardingQuestionBlockProps> = (
             { opacity: contentFadeAnim }
           ]}
         >
-          {children}
+        {children}
         </Animated.View>
       </Animated.View>
     </LinearGradient>

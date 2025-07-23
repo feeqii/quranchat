@@ -54,7 +54,7 @@ export default function App() {
             devLog('⚠️ Analytics initialization failed, continuing without analytics');
           }
         }
-        
+    
         // Initialize RevenueCat
         if (areNativeModulesAvailable()) {
           try {
