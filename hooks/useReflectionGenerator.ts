@@ -16,7 +16,7 @@ interface OpenAIResponse {
   }[];
 }
 
-const OPENAI_API_KEY = process.env.EXPO_PUBLIC_OPENAI_API_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const REFLECTION_CACHE_PREFIX = '@reflection:';
 
 export const useReflectionGenerator = (

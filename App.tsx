@@ -47,7 +47,8 @@ export default function App() {
         // Initialize Amplitude analytics with robust error handling
         if (areNativeModulesAvailable()) {
           devLog('📊 Initializing Analytics...');
-          const analyticsSuccess = await initializeAmplitude('ecf945ffbe155459b50f6ab33aa1eb26');
+          const amplitudeKey = process.env.AMPLITUDE_API_KEY || 'ecf945ffbe155459b50f6ab33aa1eb26';
+          const analyticsSuccess = await initializeAmplitude(amplitudeKey);
           if (analyticsSuccess) {
             devLog('✅ Analytics initialized successfully');
           } else {

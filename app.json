@@ -17,15 +17,23 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.quranchat.app",
+      "buildNumber": "1",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSUserTrackingUsageDescription": "This app uses analytics to improve your spiritual journey experience.",
+        "CFBundleDisplayName": "Quran Chat"
       }
     },
     "android": {
+      "package": "com.quranchat.app",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#D9EDE7"
-      }
+      },
+      "permissions": [
+        "android.permission.INTERNET"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -38,6 +46,8 @@
       "eas": {
         "projectId": "75f13bb2-62ac-4087-ae65-e31f472f7f04"
       }
-    }
+    },
+    "privacy": "https://quranchat.app/privacy",
+    "termsOfService": "https://quranchat.app/terms"
   }
 }

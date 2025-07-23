@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { 
   View, 
   ScrollView, 
@@ -7,7 +7,8 @@ import {
   StyleSheet,
   SafeAreaView,
   Animated,
-  Dimensions
+  Dimensions,
+  FlatList
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { t } from '../../localization';
@@ -53,30 +54,81 @@ const FeatureItem: React.FC<FeatureItemProps> = ({ icon, title, description, pre
   </View>
 );
 
+const ReviewCard: React.FC<{ review: typeof REVIEWS_DATA[0] }> = ({ review }) => (
+  <View style={styles.reviewCardContainer}>
+    <View style={styles.reviewCard}>
+      <View style={styles.starsRow}>
+        {[...Array(review.stars)].map((_, i) => (
+          <Icon.Star key={i} size={18} color="#FFB000" />
+        ))}
+      </View>
+      <Typography variant="body" style={styles.reviewText}>
+        "{review.text}"
+      </Typography>
+      <Typography variant="caption" style={styles.reviewAuthor}>
+        {review.author}
+      </Typography>
+    </View>
+  </View>
+);
+
 const PREMIUM_FEATURES = [
   {
-    icon: <Icon.MessageCircle size={24} color={theme.colors.primary} />,
+    icon: <Icon.Infinity size={24} color={theme.colors.primary} />,
     title: t('unlimitedConversations'),
     description: t('unlimitedConversationsDesc'),
     premium: true
   },
   {
-    icon: <Icon.Heart size={24} color={theme.colors.accent} />,
+    icon: <Icon.BookOpen size={24} color={theme.colors.accent} />,
     title: t('dailyReflections'),
     description: t('dailyReflectionsDesc'),
     premium: true
   },
   {
-    icon: <Icon.Sparkles size={24} color={theme.colors.success} />,
+    icon: <Icon.Zap size={24} color={theme.colors.success} />,
     title: t('premiumInsights'),
     description: t('premiumInsightsDesc'),
     premium: true
   },
   {
-    icon: <Icon.Shield size={24} color={theme.colors.info} />,
-    title: t('prioritySupport'),
-    description: t('prioritySupportDesc'),
+    icon: <Icon.Gift size={24} color="#e74c3c" />,
+    title: t('charityImpact'),
+    description: t('charityImpactDesc'),
     premium: true
+  }
+];
+
+const REVIEWS_DATA = [
+  {
+    id: 1,
+    text: "This app has transformed my daily connection with Allah",
+    author: "Join 10,000+ Muslims on their spiritual journey",
+    stars: 5
+  },
+  {
+    id: 2,
+    text: "Finally, an app that understands the depth of Quranic wisdom",
+    author: "Islamic scholar and app user",
+    stars: 5
+  },
+  {
+    id: 3,
+    text: "The AI guidance feels like having a wise companion",
+    author: "Daily user from Malaysia",
+    stars: 5
+  },
+  {
+    id: 4,
+    text: "Perfect for busy Muslims seeking spiritual growth",
+    author: "Working mother of three",
+    stars: 5
+  },
+  {
+    id: 5,
+    text: "Beautiful integration of technology and faith",
+    author: "University student",
+    stars: 5
   }
 ];
 
@@ -95,6 +147,8 @@ export const PaywallScreen: React.FC = () => {
   
   const [fadeAnim] = useState(new Animated.Value(0));
   const [slideAnim] = useState(new Animated.Value(30));
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
+  const reviewsRef = useRef<FlatList>(null);
 
   useEffect(() => {
     if (isExpoGo()) {
@@ -139,9 +193,21 @@ export const PaywallScreen: React.FC = () => {
     ]).start();
   }, [fadeAnim, slideAnim]);
 
-  const handleCharityLink = () => {
-    Linking.openURL('https://www.unrwa.org/');
-  };
+  // Auto-scroll reviews
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentReviewIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % REVIEWS_DATA.length;
+        reviewsRef.current?.scrollToIndex({ 
+          index: nextIndex, 
+          animated: true 
+        });
+        return nextIndex;
+      });
+    }, 4000); // Change review every 4 seconds
+
+    return () => clearInterval(timer);
+  }, []);
 
   const handlePurchase = async () => {
     try {
@@ -196,13 +262,7 @@ export const PaywallScreen: React.FC = () => {
             }
           ]}
         >
-      {/* Charity Banner */}
-          <TouchableOpacity style={styles.charityBanner} onPress={handleCharityLink}>
-            <Icon.Heart size={16} color={theme.colors.surface} />
-            <Typography variant="caption" color={theme.colors.surface} style={styles.charityText}>
-          {t('charityBanner', { charity: 'UNRWA' })}
-        </Typography>
-          </TouchableOpacity>
+
 
       <ScrollView 
         style={styles.scrollView}
@@ -213,9 +273,7 @@ export const PaywallScreen: React.FC = () => {
             <View style={styles.heroSection}>
               <View style={styles.logoContainer}>
                 <View style={styles.logoBackground}>
-                  <Typography variant="h1" style={styles.logoEmoji}>
-                    🕌
-                  </Typography>
+                  <Icon.Building size={40} color={theme.colors.primary} />
                 </View>
               </View>
 
@@ -247,7 +305,7 @@ export const PaywallScreen: React.FC = () => {
 
                 <View style={styles.priceRow}>
                   <Typography variant="display" style={styles.price}>
-                    {weeklyPackage?.localizedPrice || '$1.99'}
+                    {weeklyPackage?.localizedPrice || '$3.99'}
                   </Typography>
                   <Typography variant="body" style={styles.pricePeriod}>
                     /{t('paywall_week')}
@@ -287,22 +345,45 @@ export const PaywallScreen: React.FC = () => {
               </View>
             </View>
 
-            {/* Social Proof */}
-            <View style={styles.socialProofSection}>
-              <View style={styles.socialProofCard}>
-                <View style={styles.starsRow}>
-                  {[...Array(5)].map((_, i) => (
-                    <Icon.Star key={i} size={20} color="#FFB000" />
-                  ))}
-                </View>
-                <Typography variant="body" style={styles.socialProofText}>
-                  {t('paywall_social_proof')}
-                </Typography>
-                <Typography variant="caption" style={styles.socialProofCaption}>
-                  {t('paywall_social_proof_caption')}
-                </Typography>
+            {/* Reviews Carousel */}
+            <View style={styles.reviewsSection}>
+              <FlatList
+                ref={reviewsRef}
+                data={REVIEWS_DATA}
+                renderItem={({ item }) => <ReviewCard review={item} />}
+                keyExtractor={(item) => item.id.toString()}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                scrollEventThrottle={16}
+                onMomentumScrollEnd={(event) => {
+                  const newIndex = Math.round(event.nativeEvent.contentOffset.x / width);
+                  setCurrentReviewIndex(newIndex);
+                }}
+                style={styles.reviewsList}
+                snapToInterval={width}
+                snapToAlignment="start"
+                decelerationRate="fast"
+                bounces={false}
+                getItemLayout={(data, index) => ({
+                  length: width,
+                  offset: width * index,
+                  index,
+                })}
+              />
+              
+              {/* Pagination dots */}
+              <View style={styles.paginationDots}>
+                {REVIEWS_DATA.map((_, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.paginationDot,
+                      index === currentReviewIndex && styles.activePaginationDot
+                    ]}
+                  />
+                ))}
               </View>
-        </View>
+            </View>
 
             {/* Guarantee */}
             <View style={styles.guaranteeSection}>
@@ -370,18 +451,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  charityBanner: {
-    backgroundColor: theme.colors.primary,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: theme.spacing.sm,
-    paddingHorizontal: theme.spacing.md,
-  },
-  charityText: {
-    marginLeft: theme.spacing.xs,
-    fontWeight: '500',
-  },
+
   scrollView: {
     flex: 1,
   },
@@ -533,30 +603,61 @@ const styles = StyleSheet.create({
     color: theme.colors.textMuted,
     lineHeight: 18,
   },
-  socialProofSection: {
+  reviewsSection: {
     marginBottom: theme.spacing.xl,
   },
-  socialProofCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+  reviewsList: {
+    marginBottom: theme.spacing.md,
+  },
+  reviewCardContainer: {
+    width: width,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: theme.spacing.xl,
+  },
+  reviewCard: {
+    flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
     padding: theme.spacing.lg,
     borderRadius: theme.radii.lg,
     alignItems: 'center',
     borderWidth: 1,
     borderColor: theme.colors.borderSoft,
+    ...theme.shadows.sm,
   },
   starsRow: {
     flexDirection: 'row',
     marginBottom: theme.spacing.sm,
   },
-  socialProofText: {
+  reviewText: {
     textAlign: 'center',
     color: theme.colors.textPrimary,
-    marginBottom: theme.spacing.xs,
+    marginBottom: theme.spacing.sm,
     fontWeight: '500',
+    lineHeight: 22,
   },
-  socialProofCaption: {
+  reviewAuthor: {
     textAlign: 'center',
     color: theme.colors.textMuted,
+    fontStyle: 'italic',
+  },
+  paginationDots: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: theme.colors.border,
+    marginHorizontal: 4,
+  },
+  activePaginationDot: {
+    backgroundColor: theme.colors.primary,
+    width: 12,
+    height: 8,
+    borderRadius: 4,
   },
   guaranteeSection: {
     marginBottom: theme.spacing.lg,

@@ -20,6 +20,9 @@ export const isDevelopment = (): boolean => {
  * Some modules don't work in Expo Go
  */
 export const areNativeModulesAvailable = (): boolean => {
+  // Temporarily force enable for testing (comment out for Expo Go)
+  // return true;
+  
   return !isExpoGo() || Constants.appOwnership === 'standalone';
 };
 

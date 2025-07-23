@@ -57,7 +57,7 @@ export async function generateReflection(
   contexts: string[],
   userInput: string
 ): Promise<string> {
-  const apiKey = process.env.EXPO_PUBLIC_OPENAI_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY;
   
   if (!apiKey) {
     console.warn('OpenAI API key not configured, returning fallback reflection');
@@ -136,7 +136,7 @@ export async function fetchRelevantVerse(
   mood: string,
   contexts: string[]
 ): Promise<{ text: string; reference: string }> {
-  const apiKey = process.env.EXPO_PUBLIC_OPENAI_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY;
   
   if (!apiKey) {
     console.warn('OpenAI API key not configured, returning fallback verse');

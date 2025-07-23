@@ -41,6 +41,17 @@ import {
   LogOut,
   Brain,
   Smartphone,
+  Zap,
+  Globe,
+  Target,
+  Users2,
+  Infinity,
+  TrendingUp,
+  Award,
+  Lightbulb,
+  DollarSign,
+  Building,
+  Compass,
 } from "lucide-react-native";
 import { theme } from "../../constants/theme";
 import { iconDirection } from "../../utils/rtl";
@@ -145,4 +156,17 @@ export const Icon = {
   LogOut: (props: IconProps) => <LogOut {...defaultProps} {...props} />,
   Brain: (props: IconProps) => <Brain {...defaultProps} {...props} />,
   Widget: (props: IconProps) => <Smartphone {...defaultProps} {...props} />,
+  Zap: (props: IconProps) => <Zap {...defaultProps} {...props} />,
+  Globe: (props: IconProps) => <Globe {...defaultProps} {...props} />,
+  Target: (props: IconProps) => <Target {...defaultProps} {...props} />,
+  Users2: (props: IconProps) => <Users2 {...defaultProps} {...props} />,
+  Infinity: (props: IconProps) => <Infinity {...defaultProps} {...props} />,
+  
+  // Premium spiritual and interface icons
+  TrendingUp: (props: IconProps) => <TrendingUp {...defaultProps} {...props} />,
+  Award: (props: IconProps) => <Award {...defaultProps} {...props} />,
+  Lightbulb: (props: IconProps) => <Lightbulb {...defaultProps} {...props} />,
+  DollarSign: (props: IconProps) => <DollarSign {...defaultProps} {...props} />,
+  Building: (props: IconProps) => <Building {...defaultProps} {...props} />,
+  Compass: (props: IconProps) => <Compass {...defaultProps} {...props} />,
 };

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, SafeAreaView, ScrollView, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/theme';
@@ -38,6 +38,7 @@ const CostItem: React.FC<CostItemProps> = ({ icon, title, description, cost }) =
 export const OnboardingWhyNotFree: React.FC = () => {
   const navigation = useNavigation();
   const { logEvent } = useAnalyticsStore();
+  const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
 
   useEffect(() => {
     logEvent({ name: 'screen_view', screenName: 'OnboardingWhyNotFree' });
@@ -45,8 +46,19 @@ export const OnboardingWhyNotFree: React.FC = () => {
   }, [logEvent]);
 
   const handleContinue = () => {
+    if (!hasScrolledToBottom) return;
     logEvent({ name: 'onboarding_why_not_free_continue' });
     navigation.navigate('PaywallScreen' as never);
+  };
+
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+    const isScrolledToBottom = layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
+    
+    if (isScrolledToBottom && !hasScrolledToBottom) {
+      setHasScrolledToBottom(true);
+      logEvent({ name: 'onboarding_why_not_free_scrolled_to_bottom' });
+    }
   };
 
   const costItems = [
@@ -63,7 +75,7 @@ export const OnboardingWhyNotFree: React.FC = () => {
       cost: "$8k/mo"
     },
     {
-      icon: <Icon.Users size={24} color={theme.colors.success} />,
+      icon: <Icon.Globe size={24} color={theme.colors.success} />,
       title: t('whyNotFreeMarketingTitle'),
       description: t('whyNotFreeMarketingDesc'), 
       cost: "$12k/mo"
@@ -73,6 +85,12 @@ export const OnboardingWhyNotFree: React.FC = () => {
       title: t('whyNotFreeInfrastructureTitle'),
       description: t('whyNotFreeInfrastructureDesc'),
       cost: "$3k/mo"
+    },
+    {
+      icon: <Icon.DollarSign size={24} color={theme.colors.warning} />,
+      title: t('whyNotFreeAppleTitle'),
+      description: t('whyNotFreeAppleDesc'),
+      cost: "30%"
     }
   ];
 
@@ -92,11 +110,13 @@ export const OnboardingWhyNotFree: React.FC = () => {
           style={styles.scrollContainer}
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
         >
           {/* Header */}
           <View style={styles.headerSection}>
             <View style={styles.iconContainer}>
-              <Typography variant="h2" style={styles.questionIcon}>🤔</Typography>
+              <Icon.Lightbulb size={48} color={theme.colors.primary} />
             </View>
             <Typography variant="h2" align="center" style={styles.title}>
               {t('whyNotFreeTitle')}
@@ -137,9 +157,9 @@ export const OnboardingWhyNotFree: React.FC = () => {
             </Typography>
             
             <View style={styles.valueItem}>
-              <View style={styles.valueIconContainer}>
-                <Typography variant="h3" style={styles.valueEmoji}>🤲</Typography>
-              </View>
+                          <View style={styles.valueIconContainer}>
+              <Icon.Award size={32} color={theme.colors.accent} />
+            </View>
               <Typography variant="body" style={styles.valueText}>
                 {t('whyNotFreeCharityValue')}
               </Typography>
@@ -147,7 +167,7 @@ export const OnboardingWhyNotFree: React.FC = () => {
 
             <View style={styles.valueItem}>
               <View style={styles.valueIconContainer}>
-                <Typography variant="h3" style={styles.valueEmoji}>🔄</Typography>
+                <Icon.TrendingUp size={32} color={theme.colors.success} />
               </View>
               <Typography variant="body" style={styles.valueText}>
                 {t('whyNotFreeSustainabilityValue')}
@@ -156,7 +176,7 @@ export const OnboardingWhyNotFree: React.FC = () => {
 
             <View style={styles.valueItem}>
               <View style={styles.valueIconContainer}>
-                <Typography variant="h3" style={styles.valueEmoji}>🌱</Typography>
+                <Icon.Users2 size={32} color={theme.colors.info} />
               </View>
               <Typography variant="body" style={styles.valueText}>
                 {t('whyNotFreeGrowthValue')}
@@ -185,8 +205,9 @@ export const OnboardingWhyNotFree: React.FC = () => {
         {/* Continue Button */}
         <View style={styles.buttonContainer}>
           <PrimaryButton
-            label={t('whyNotFreeContinue')}
+            label={hasScrolledToBottom ? t('whyNotFreeContinue') : t('scrollToReadMore')}
             onPress={handleContinue}
+            disabled={!hasScrolledToBottom}
           />
         </View>
       </LinearGradient>

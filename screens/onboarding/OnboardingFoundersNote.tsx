@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, SafeAreaView, ScrollView, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../constants/theme';
@@ -12,6 +12,7 @@ import { t } from '../../localization';
 export const OnboardingFoundersNote: React.FC = () => {
   const navigation = useNavigation();
   const { logEvent } = useAnalyticsStore();
+  const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
 
   useEffect(() => {
     logEvent({ name: 'screen_view', screenName: 'OnboardingFoundersNote' });
@@ -19,8 +20,19 @@ export const OnboardingFoundersNote: React.FC = () => {
   }, [logEvent]);
 
   const handleContinue = () => {
+    if (!hasScrolledToBottom) return;
     logEvent({ name: 'onboarding_founders_note_continue' });
     navigation.navigate('OnboardingWhyNotFree' as never);
+  };
+
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+    const isScrolledToBottom = layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
+    
+    if (isScrolledToBottom && !hasScrolledToBottom) {
+      setHasScrolledToBottom(true);
+      logEvent({ name: 'onboarding_founders_note_scrolled_to_bottom' });
+    }
   };
 
   return (
@@ -39,6 +51,8 @@ export const OnboardingFoundersNote: React.FC = () => {
           style={styles.scrollContainer}
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
         >
           {/* Header */}
           <View style={styles.headerSection}>
@@ -71,7 +85,7 @@ export const OnboardingFoundersNote: React.FC = () => {
             {/* Charity Highlight */}
             <View style={styles.charityHighlight}>
               <View style={styles.charityIconContainer}>
-                <Typography variant="h3" style={styles.charityIcon}>🤲</Typography>
+                <Icon.Heart size={32} color={theme.colors.primary} />
               </View>
               <Typography variant="body" style={styles.charityText}>
                 {t('foundersNoteCharityCommitment')}
@@ -120,8 +134,9 @@ export const OnboardingFoundersNote: React.FC = () => {
         {/* Continue Button */}
         <View style={styles.buttonContainer}>
           <PrimaryButton
-            label={t('continue')}
+            label={hasScrolledToBottom ? t('continue') : t('scrollToReadMore')}
             onPress={handleContinue}
+            disabled={!hasScrolledToBottom}
           />
         </View>
       </LinearGradient>

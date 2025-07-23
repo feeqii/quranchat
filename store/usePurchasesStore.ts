@@ -29,7 +29,8 @@ export const usePurchasesStore = create<PurchasesState>()(
           set({ loading: true, error: null });
           
           // 1) Configure with your public SDK key
-          await Purchases.configure({ apiKey: 'appl_oUhTbIgXkHgruNDqkfdAgmlZVbI' });
+          const revenueKey = process.env.REVENUECAT_API_KEY || 'appl_oUhTbIgXkHgruNDqkfdAgmlZVbI';
+          await Purchases.configure({ apiKey: revenueKey });
           
           // 2) Fetch offerings and select your weekly plan
           const offerings = await Purchases.getOfferings();

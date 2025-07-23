@@ -32,7 +32,7 @@ export async function askQuran(
   topic: string
 ): Promise<string> {
   // Development fallback if no API key is configured
-  const apiKey = process.env.EXPO_PUBLIC_OPENAI_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     return "That's a thoughtful question. Let us reflect together on what the Qur'an offers us in moments like this.";
   }

@@ -7,6 +7,7 @@ import { theme } from "../../constants/theme";
 import { OnboardingQuestionBlock } from "../../components/organisms/OnboardingQuestionBlock";
 import { PrimaryButton } from "../../components/atoms/PrimaryButton";
 import { Typography } from "../../components/atoms/Typography";
+import { Icon } from "../../components/atoms/Icon";
 import { t } from "../../localization";
 import { position, flexDirection, textAlign } from "../../utils/rtl";
 
@@ -246,14 +247,16 @@ export const OnboardingStep3: React.FC = () => {
             </View>
 
             {/* Inspirational subtitle */}
-            <Typography
-              variant="caption"
-              color={theme.colors.textMuted}
-              align="center"
-              style={styles.chartSubtitle}
-            >
-              GROWTH THROUGH CONSISTENCY
-            </Typography>
+            <View style={styles.chartSubtitleContainer}>
+              <Typography
+                variant="caption"
+                color={theme.colors.textMuted}
+                align="center"
+                style={styles.chartSubtitle}
+              >
+                GROWTH THROUGH CONSISTENCY
+              </Typography>
+            </View>
           </Animated.View>
 
           {/* Inspirational Message */}
@@ -284,7 +287,8 @@ const styles = StyleSheet.create({
   },
   chartContainer: {
     flex: 1,
-    paddingVertical: theme.spacing.xl,
+    paddingTop: theme.spacing.md,
+    paddingBottom: theme.spacing.lg,
     alignItems: "center",
   },
   chartArea: {
@@ -329,14 +333,21 @@ const styles = StyleSheet.create({
   endLabel: {
     textAlign: "right",
   },
+  chartSubtitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: theme.spacing.sm,
+    marginTop: theme.spacing.sm,
+  },
   chartSubtitle: {
     letterSpacing: 1.5,
-    marginBottom: theme.spacing.lg,
+    marginBottom: theme.spacing.sm,
     fontWeight: '600',
   },
   messageContainer: {
     paddingHorizontal: theme.spacing.md,
-    marginBottom: theme.spacing.xl,
+    marginBottom: theme.spacing.lg,
   },
   message: {
     lineHeight: 24,
