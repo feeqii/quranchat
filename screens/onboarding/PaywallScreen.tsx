@@ -20,7 +20,7 @@ import { usePurchasesStore } from '../../store/usePurchasesStore';
 import { useAnalyticsStore } from '../../store/useAnalyticsStore';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
 import { useNavigation } from '@react-navigation/native';
-import { isExpoGo, devLog } from '../../utils/developmentUtils';
+import { isExpoGo, devLog, areNativeModulesAvailable } from '../../utils/developmentUtils';
 
 const { width } = Dimensions.get('window');
 
@@ -152,7 +152,7 @@ export const PaywallScreen: React.FC = () => {
   const reviewsRef = useRef<FlatList>(null);
 
   useEffect(() => {
-    if (isExpoGo()) {
+    if (!areNativeModulesAvailable()) {
       devLog('💰 Paywall: Expo Go detected - skipping RevenueCat initialization');
       logEvent({ name: 'paywall_view' });
       return;
@@ -163,9 +163,9 @@ export const PaywallScreen: React.FC = () => {
   }, [initialize, logEvent]);
 
   useEffect(() => {
-    if (isExpoGo()) {
-      // In Expo Go, assume user has access for testing
-      devLog('💰 Paywall: Expo Go detected - auto-granting access for testing');
+    if (isExpoGo() && !areNativeModulesAvailable()) {
+      // ONLY in Expo Go (not development builds), auto-grant access for convenience
+      devLog('💰 Paywall: Expo Go detected - auto-granting access for testing convenience');
       // Set entitled state after a delay to simulate the paywall experience
       setTimeout(() => {
         const { setIsEntitled } = usePurchasesStore.getState();
@@ -179,6 +179,7 @@ export const PaywallScreen: React.FC = () => {
       return;
     }
     
+    // In development builds and production, show the actual paywall for RevenueCat testing
     // Don't navigate manually - the AppNavigator handles routing based on isEntitled state
   }, [navigation]);
 
@@ -256,7 +257,7 @@ export const PaywallScreen: React.FC = () => {
         style={styles.gradientContainer}
       >
         {/* Development Banner for Expo Go */}
-        {isExpoGo() && (
+        {isExpoGo() && !areNativeModulesAvailable() && (
           <View style={styles.devBanner}>
             <Typography variant="caption" color={theme.colors.surface} align="center">
               🔧 EXPO GO MODE - Auto-granting access in 2 seconds for testing
