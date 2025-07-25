@@ -41,9 +41,11 @@ export const PastReflectionPreviewCard: React.FC<PastReflectionPreviewCardProps>
 
   // Get a snippet of the user's reflection
   const getReflectionSnippet = () => {
-    if (reflection.userInput) {
-      const words = reflection.userInput.split(' ').slice(0, 15);
-      return words.length < reflection.userInput.split(' ').length 
+    // Check both userReflection and userInput for backward compatibility
+    const reflectionText = reflection.userReflection || reflection.userInput;
+    if (reflectionText && reflectionText.trim()) {
+      const words = reflectionText.split(' ').slice(0, 15);
+      return words.length < reflectionText.split(' ').length 
         ? words.join(' ') + '...'
         : words.join(' ');
     }
@@ -146,14 +148,14 @@ export const PastReflectionPreviewCard: React.FC<PastReflectionPreviewCardProps>
               </Typography>
             </View>
           )}
-          {reflection.selectedVerse && (
-            <View style={styles.indicator}>
-              <Icon.BookOpen size={14} color={theme.colors.primary} />
-              <Typography variant="caption" style={styles.indicatorText}>
-                Quranic Verse
-              </Typography>
-            </View>
-          )}
+                     {reflection.selectedVerse && (
+             <View style={styles.indicator}>
+               <Icon.BookOpen size={14} color={theme.colors.primary} />
+               <Typography variant="caption" style={styles.indicatorText}>
+                 Reflecting On
+               </Typography>
+             </View>
+           )}
         </View>
 
         {/* Action Button */}
@@ -268,7 +270,6 @@ const styles = StyleSheet.create({
   reflectionSnippet: {
     color: theme.colors.textPrimary,
     lineHeight: 20,
-    fontStyle: reflection => reflection.userInput ? 'normal' : 'italic',
   },
   contentIndicators: {
     flexDirection: 'row',

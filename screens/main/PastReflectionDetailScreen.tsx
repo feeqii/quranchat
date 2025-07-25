@@ -13,6 +13,7 @@ import { Icon } from '../../components/atoms/Icon';
 import { Spacer } from '../../components/atoms/Spacer';
 import { theme } from '../../constants/theme';
 import { TodayStackParamList } from '../../navigation/TodayStackNavigator';
+import { t } from '../../localization';
 
 type PastReflectionDetailScreenRouteProp = RouteProp<
   TodayStackParamList,
@@ -23,6 +24,15 @@ export const PastReflectionDetailScreen: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute<PastReflectionDetailScreenRouteProp>();
   const { date, reflection } = route.params;
+
+  // Debug: Log the reflection data to see what's available
+  console.log('📊 Past Reflection Data:', {
+    userInput: reflection.userInput,
+    userReflection: reflection.userReflection,
+    generatedReflection: !!reflection.generatedReflection,
+    selectedVerse: !!reflection.selectedVerse,
+    selectedVerse_text: reflection.selectedVerse?.text?.substring(0, 50),
+  });
 
   // Format the date for display
   const formatDate = (dateString: string) => {
@@ -132,7 +142,7 @@ export const PastReflectionDetailScreen: React.FC = () => {
         )}
 
         {/* User Reflection Section */}
-        {reflection.userInput && (
+        {(reflection.userReflection || reflection.userInput) && (
           <>
             <View style={styles.section}>
               <Typography variant="caption" style={styles.sectionLabel}>
@@ -140,7 +150,7 @@ export const PastReflectionDetailScreen: React.FC = () => {
               </Typography>
               <View style={styles.contentCard}>
                 <Typography variant="body" style={styles.userInput}>
-                  {reflection.userInput}
+                  {reflection.userReflection || reflection.userInput}
                 </Typography>
               </View>
             </View>
@@ -173,10 +183,10 @@ export const PastReflectionDetailScreen: React.FC = () => {
           <>
             <View style={styles.section}>
               <Typography variant="caption" style={styles.sectionLabel}>
-                QURANIC WISDOM
+                {t('reflectingOn')}
               </Typography>
               <LinearGradient
-                colors={['#F8F6E8', '#F5F1E8', '#FFFFFF']}
+                colors={['#F0F9FF', '#EFF6FF', '#FFFFFF']} // Same colors as current day
                 style={styles.verseCard}
               >
                 <Typography variant="body" style={styles.verseText}>
