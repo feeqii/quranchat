@@ -130,7 +130,7 @@ export const ReflectionInputScreen: React.FC = () => {
               color={theme.colors.textMuted}
               style={styles.footerHelperText}
             >
-              {t('pleaseWriteAtLeast')}
+              {t('pleaseWriteAtLeast10CharactersToContinue')}
             </Typography>
           )}
           

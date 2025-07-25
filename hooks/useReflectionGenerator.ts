@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface ReflectionHookResult {
@@ -9,14 +9,16 @@ interface ReflectionHookResult {
 }
 
 interface OpenAIResponse {
-  choices: {
+  choices: Array<{
     message: {
       content: string;
     };
-  }[];
+  }>;
 }
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+// Check both environment variables - OPENAI_API_KEY for production (EAS secrets) 
+// and EXPO_PUBLIC_OPENAI_API_KEY for local development
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY || process.env.EXPO_PUBLIC_OPENAI_API_KEY;
 const REFLECTION_CACHE_PREFIX = '@reflection:';
 
 export const useReflectionGenerator = (
@@ -47,7 +49,7 @@ export const useReflectionGenerator = (
 
       // Validate API key
       if (!OPENAI_API_KEY) {
-        throw new Error('OpenAI API key not configured');
+        throw new Error('⚠️ OpenAI API key not available in either OPENAI_API_KEY or EXPO_PUBLIC_OPENAI_API_KEY');
       }
 
       // Prepare the system prompt

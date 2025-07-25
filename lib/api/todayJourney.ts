@@ -57,10 +57,12 @@ export async function generateReflection(
   contexts: string[],
   userInput: string
 ): Promise<string> {
-  const apiKey = process.env.OPENAI_API_KEY;
+  // Check both environment variables - OPENAI_API_KEY for production (EAS secrets) 
+  // and EXPO_PUBLIC_OPENAI_API_KEY for local development
+  const apiKey = process.env.OPENAI_API_KEY || process.env.EXPO_PUBLIC_OPENAI_API_KEY;
   
   if (!apiKey) {
-    console.warn('OpenAI API key not configured, returning fallback reflection');
+    console.warn('⚠️ OpenAI API key not available in either OPENAI_API_KEY or EXPO_PUBLIC_OPENAI_API_KEY, returning fallback reflection');
     return getFallbackReflection(mood, contexts);
   }
 
@@ -136,10 +138,12 @@ export async function fetchRelevantVerse(
   mood: string,
   contexts: string[]
 ): Promise<{ text: string; reference: string }> {
-  const apiKey = process.env.OPENAI_API_KEY;
+  // Check both environment variables - OPENAI_API_KEY for production (EAS secrets) 
+  // and EXPO_PUBLIC_OPENAI_API_KEY for local development
+  const apiKey = process.env.OPENAI_API_KEY || process.env.EXPO_PUBLIC_OPENAI_API_KEY;
   
   if (!apiKey) {
-    console.warn('OpenAI API key not configured, returning fallback verse');
+    console.warn('⚠️ OpenAI API key not available in either OPENAI_API_KEY or EXPO_PUBLIC_OPENAI_API_KEY, returning fallback verse');
     return getFallbackVerse(mood, contexts);
   }
 

@@ -1,12 +1,14 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Alert, Linking } from 'react-native';
 import { theme } from '../../constants/theme';
 import { Typography } from '../atoms/Typography';
 import { Icon } from '../atoms/Icon';
 import { useProfileStore } from '../../store/useProfileStore';
+import { usePurchasesStore } from '../../store/usePurchasesStore';
 
 export const SubscriptionDetails: React.FC = () => {
   const { subscriptionTier } = useProfileStore();
+  const { weeklyPackage } = usePurchasesStore();
 
   const handleUpgradeToPremium = () => {
     Alert.alert('Premium Upgrade', 'Premium features coming soon!');
@@ -18,6 +20,34 @@ export const SubscriptionDetails: React.FC = () => {
 
   const handleRestorePurchases = () => {
     Alert.alert('Restore Purchases', 'Checking for previous purchases...');
+  };
+
+  const handleTermsPress = async () => {
+    const url = 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/';
+    try {
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert('Error', 'Unable to open Terms of Use. Please try again later.');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Unable to open Terms of Use. Please try again later.');
+    }
+  };
+
+  const handlePrivacyPress = async () => {
+    const url = 'https://www.privacypolicies.com/live/0e3e48ea-08aa-48b5-8cfe-e7fbe96752eb';
+    try {
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert('Error', 'Unable to open Privacy Policy. Please try again later.');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Unable to open Privacy Policy. Please try again later.');
+    }
   };
 
   const renderSubscriptionItem = (
@@ -102,6 +132,61 @@ export const SubscriptionDetails: React.FC = () => {
           handleRestorePurchases
         )}
       </View>
+
+      {/* Subscription Information - Required by Apple */}
+      <View style={styles.subscriptionInfoSection}>
+        <Typography variant="body" style={styles.subscriptionInfoTitle}>
+          Auto-Renewable Subscription Details
+        </Typography>
+        
+        <View style={styles.subscriptionInfoContainer}>
+          <View style={styles.infoRow}>
+            <Typography variant="caption" style={styles.infoLabel}>Title:</Typography>
+            <Typography variant="caption" style={styles.infoValue}>
+              Quran Chat Premium Weekly
+            </Typography>
+          </View>
+          
+          <View style={styles.infoRow}>
+            <Typography variant="caption" style={styles.infoLabel}>Duration:</Typography>
+            <Typography variant="caption" style={styles.infoValue}>
+              1 Week
+            </Typography>
+          </View>
+          
+          <View style={styles.infoRow}>
+            <Typography variant="caption" style={styles.infoLabel}>Price:</Typography>
+            <Typography variant="caption" style={styles.infoValue}>
+              {weeklyPackage?.localizedPrice || '$3.99'} per week
+            </Typography>
+          </View>
+          
+          <Typography variant="caption" style={styles.renewalNote}>
+            Subscription automatically renews unless auto-renew is turned off at least 24 hours before the end of the current period.
+          </Typography>
+        </View>
+      </View>
+
+      {/* Legal Links */}
+      <View style={styles.legalSection}>
+        <Typography variant="caption" style={styles.legalTitle}>
+          Legal Information
+        </Typography>
+        <View style={styles.legalLinksContainer}>
+          <TouchableOpacity onPress={handleTermsPress} style={styles.legalLink}>
+            <Icon.FileText size={16} color={theme.colors.primary} />
+            <Typography variant="caption" style={styles.legalLinkText}>
+              Terms of Use
+            </Typography>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handlePrivacyPress} style={styles.legalLink}>
+            <Icon.Shield size={16} color={theme.colors.primary} />
+            <Typography variant="caption" style={styles.legalLinkText}>
+              Privacy Policy
+            </Typography>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
@@ -173,5 +258,76 @@ const styles = StyleSheet.create({
   },
   itemSubtitle: {
     lineHeight: 18,
+  },
+  subscriptionInfoSection: {
+    marginTop: theme.spacing.lg,
+    padding: theme.spacing.md,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.radii.md,
+    borderWidth: 1,
+    borderColor: theme.colors.primarySoft,
+  },
+  subscriptionInfoTitle: {
+    fontWeight: '600',
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.sm,
+  },
+  subscriptionInfoContainer: {
+    gap: theme.spacing.xs,
+  },
+  infoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: theme.spacing.xs,
+  },
+  infoLabel: {
+    fontWeight: '500',
+    color: theme.colors.textSecondary,
+    flex: 1,
+  },
+  infoValue: {
+    fontWeight: '500',
+    color: theme.colors.textPrimary,
+    flex: 2,
+    textAlign: 'right',
+  },
+  renewalNote: {
+    fontStyle: 'italic',
+    color: theme.colors.textMuted,
+    marginTop: theme.spacing.sm,
+    paddingTop: theme.spacing.sm,
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.primarySoft,
+    lineHeight: 16,
+  },
+  legalSection: {
+    marginTop: theme.spacing.lg,
+    padding: theme.spacing.md,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.radii.md,
+    borderWidth: 1,
+    borderColor: theme.colors.primarySoft,
+  },
+  legalTitle: {
+    fontWeight: '600',
+    color: theme.colors.textSecondary,
+    marginBottom: theme.spacing.sm,
+  },
+  legalLinksContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  legalLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: theme.spacing.sm,
+    borderRadius: theme.radii.sm,
+    backgroundColor: theme.colors.primarySoft,
+  },
+  legalLinkText: {
+    marginLeft: theme.spacing.xs,
+    color: theme.colors.primary,
+    fontWeight: '500',
   },
 }); 

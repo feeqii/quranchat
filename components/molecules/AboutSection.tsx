@@ -21,12 +21,32 @@ export const AboutSection: React.FC = () => {
     Alert.alert('Contact Support', 'Need help? Our support team will be available soon.');
   };
 
-  const handleTermsOfUse = () => {
-    Alert.alert('Terms of Use', 'Terms of Use will be available soon.');
+  const handleTermsOfUse = async () => {
+    const url = 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/';
+    try {
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert('Error', 'Unable to open Terms of Use. Please try again later.');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Unable to open Terms of Use. Please try again later.');
+    }
   };
 
-  const handlePrivacyPolicy = () => {
-    Alert.alert('Privacy Policy', 'Privacy Policy will be available soon.');
+  const handlePrivacyPolicy = async () => {
+    const url = 'https://www.privacypolicies.com/live/0e3e48ea-08aa-48b5-8cfe-e7fbe96752eb';
+    try {
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert('Error', 'Unable to open Privacy Policy. Please try again later.');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Unable to open Privacy Policy. Please try again later.');
+    }
   };
 
   const renderAboutItem = (

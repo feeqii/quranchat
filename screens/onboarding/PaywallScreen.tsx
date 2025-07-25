@@ -240,6 +240,30 @@ export const PaywallScreen: React.FC = () => {
     }
   };
 
+  const handleTermsPress = async () => {
+    const url = 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/';
+    try {
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      }
+    } catch (error) {
+      console.error('Failed to open Terms of Use:', error);
+    }
+  };
+
+  const handlePrivacyPress = async () => {
+    const url = 'https://www.privacypolicies.com/live/0e3e48ea-08aa-48b5-8cfe-e7fbe96752eb';
+    try {
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      }
+    } catch (error) {
+      console.error('Failed to open Privacy Policy:', error);
+    }
+  };
+
   if (isEntitled) {
     return null; // Will navigate away
   }
@@ -436,9 +460,28 @@ export const PaywallScreen: React.FC = () => {
           </Typography>
         </TouchableOpacity>
 
-              <Typography variant="caption" style={styles.termsText}>
-                {t('paywall_terms_text')}
-              </Typography>
+              {/* Legal Links */}
+              <View style={styles.legalLinksContainer}>
+                <Typography variant="caption" style={styles.termsText}>
+                  By subscribing, you agree to our{' '}
+                </Typography>
+                <TouchableOpacity onPress={handleTermsPress} style={styles.linkButton}>
+                  <Typography variant="caption" style={styles.linkText}>
+                    Terms of Use
+                  </Typography>
+                </TouchableOpacity>
+                <Typography variant="caption" style={styles.termsText}>
+                  {' '}and{' '}
+                </Typography>
+                <TouchableOpacity onPress={handlePrivacyPress} style={styles.linkButton}>
+                  <Typography variant="caption" style={styles.linkText}>
+                    Privacy Policy
+                  </Typography>
+                </TouchableOpacity>
+                <Typography variant="caption" style={styles.termsText}>
+                  . Subscription automatically renews unless canceled.
+                </Typography>
+              </View>
             </View>
         </View>
         </Animated.View>
@@ -710,9 +753,23 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     fontWeight: '500',
   },
+  legalLinksContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   termsText: {
     textAlign: 'center',
     color: theme.colors.textMuted,
     lineHeight: 16,
+  },
+  linkButton: {
+    paddingVertical: 2,
+  },
+  linkText: {
+    color: theme.colors.primary,
+    textDecorationLine: 'underline',
+    fontWeight: '500',
   },
 }); 

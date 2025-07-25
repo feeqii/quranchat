@@ -20,7 +20,6 @@
       "buildNumber": "1",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "NSUserTrackingUsageDescription": "This app uses analytics to improve your spiritual journey experience.",
         "CFBundleDisplayName": "Quran Chat"
       }
     },
@@ -47,7 +46,7 @@
         "projectId": "75f13bb2-62ac-4087-ae65-e31f472f7f04"
       }
     },
-    "privacy": "https://quranchat.app/privacy",
-    "termsOfService": "https://quranchat.app/terms"
+    "privacy": "https://www.privacypolicies.com/live/0e3e48ea-08aa-48b5-8cfe-e7fbe96752eb",
+    "termsOfService": "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
   }
 }
