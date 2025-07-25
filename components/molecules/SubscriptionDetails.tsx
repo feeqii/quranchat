@@ -10,8 +10,12 @@ export const SubscriptionDetails: React.FC = () => {
   const { subscriptionTier } = useProfileStore();
   const { weeklyPackage } = usePurchasesStore();
 
-  const handleUpgradeToPremium = () => {
-    Alert.alert('Premium Upgrade', 'Premium features coming soon!');
+  const handlePremiumInfo = () => {
+    Alert.alert(
+      '🌟 Premium Member Benefits',
+      'Thank you for being a Premium subscriber! 🎉\n\n✨ Your subscription includes:\n\n• Unlimited AI conversations with Quranic wisdom\n• Daily personalized reflections\n• Priority support & new features\n• Ad-free spiritual experience\n\n💛 CHARITABLE IMPACT:\nYour subscription directly supports:\n• Islamic education initiatives\n• Community development projects\n• Accessibility for underserved communities\n\nYou\'re not just getting premium features - you\'re making a meaningful difference in the world! 🤲',
+      [{ text: 'Amazing!', style: 'default' }]
+    );
   };
 
   const handleRedeemCode = () => {
@@ -85,39 +89,43 @@ export const SubscriptionDetails: React.FC = () => {
         Subscription
       </Typography>
 
-      {/* Current Subscription Status */}
-      <View style={styles.currentSubscription}>
-        <View style={styles.subscriptionBadge}>
-          <Icon.Crown 
-            size={20} 
-            color={subscriptionTier === 'premium' ? '#FFD700' : theme.colors.textMuted} 
-          />
+      {/* Premium Subscription Status */}
+      <TouchableOpacity style={styles.premiumSubscription} onPress={handlePremiumInfo}>
+        <View style={styles.premiumBadge}>
+          <Icon.Crown size={24} color="#FFD700" />
           <Typography 
-            variant="body" 
-            color={theme.colors.textPrimary}
-            style={styles.subscriptionText}
+            variant="h3" 
+            color="#B8860B"
+            style={styles.premiumText}
           >
-            {subscriptionTier === 'premium' ? 'Premium Member' : 'Free Member'}
+            Premium Member
+          </Typography>
+          <View style={styles.sparkleContainer}>
+            <Typography style={styles.sparkle}>✨</Typography>
+          </View>
+        </View>
+        
+        <Typography variant="body" style={styles.premiumSubtext}>
+          🤲 Supporting charity • Unlimited access • Premium features
+        </Typography>
+        
+        <View style={styles.charityHighlight}>
+          <Icon.Heart size={16} color="#FFD700" />
+          <Typography variant="caption" style={styles.charityText}>
+            Your subscription makes a difference in the world
           </Typography>
         </View>
         
-        {subscriptionTier === 'free' && (
-          <Typography variant="small" color={theme.colors.textMuted} style={styles.subscriptionSubtext}>
-            Upgrade to unlock advanced features and unlimited access
+        <View style={styles.tapHint}>
+          <Typography variant="caption" style={styles.tapHintText}>
+            Tap to see your impact & benefits
           </Typography>
-        )}
-      </View>
+          <Icon.ChevronRight size={16} color="#B8860B" />
+        </View>
+      </TouchableOpacity>
 
       {/* Subscription Actions */}
       <View style={styles.actionsContainer}>
-        {subscriptionTier === 'free' && renderSubscriptionItem(
-          <Icon.Star size={20} color={theme.colors.primary} />,
-          'Upgrade to Premium',
-          'Unlock unlimited conversations and premium features',
-          handleUpgradeToPremium,
-          true
-        )}
-
         {renderSubscriptionItem(
           <Icon.Gift size={20} color={theme.colors.textSecondary} />,
           'Redeem Promotional Code',
@@ -200,25 +208,71 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: theme.spacing.md,
   },
-  currentSubscription: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.radii.md,
-    padding: theme.spacing.lg,
+  premiumSubscription: {
+    backgroundColor: '#FFFBF0',
+    borderRadius: theme.radii.lg,
+    padding: theme.spacing.xl,
     marginBottom: theme.spacing.md,
-    borderWidth: 1,
-    borderColor: theme.colors.primarySoft,
+    borderWidth: 2,
+    borderColor: '#FFD700',
+    shadowColor: '#FFD700',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 8,
   },
-  subscriptionBadge: {
+  premiumBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: theme.spacing.xs,
+    marginBottom: theme.spacing.sm,
   },
-  subscriptionText: {
+  premiumText: {
     marginStart: theme.spacing.sm,
-    fontWeight: '600',
+    fontWeight: '700',
+    color: '#B8860B',
   },
-  subscriptionSubtext: {
-    lineHeight: 18,
+  sparkleContainer: {
+    marginStart: theme.spacing.xs,
+  },
+  sparkle: {
+    fontSize: 16,
+  },
+  premiumSubtext: {
+    lineHeight: 20,
+    fontWeight: '500',
+    color: '#8B4513',
+    marginBottom: theme.spacing.sm,
+  },
+  charityHighlight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 215, 0, 0.1)',
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.sm,
+    borderRadius: theme.radii.md,
+    marginBottom: theme.spacing.sm,
+  },
+  charityText: {
+    marginStart: theme.spacing.xs,
+    color: '#B8860B',
+    fontWeight: '500',
+    fontStyle: 'italic',
+  },
+  tapHint: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: theme.spacing.sm,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 215, 0, 0.3)',
+  },
+  tapHintText: {
+    color: '#B8860B',
+    fontWeight: '500',
+    marginEnd: theme.spacing.xs,
   },
   actionsContainer: {
     backgroundColor: theme.colors.surface,

@@ -22,6 +22,7 @@ import { textAlign, alignItems } from "../../utils/rtl";
 import { useTodayStore } from "../../store/useTodayStore";
 import { useAnalyticsStore } from "../../store/useAnalyticsStore";
 import { TodayStackParamList } from "../../navigation/TodayStackNavigator";
+import { PastReflectionPreviewCard } from "../../components/molecules/PastReflectionPreviewCard";
 
 type TodayHomeScreenNavigationProp = NativeStackNavigationProp<
   TodayStackParamList,
@@ -150,147 +151,12 @@ export const TodayHomeScreen: React.FC = () => {
 
   const selectedDateData = getSelectedDateData();
 
-  // Simple card for past reflection
-  const renderPastReflectionCard = (reflection: any, dateFormatted: string) => {
-    return (
-      <View
-        style={[
-          styles.journeyCard,
-          { backgroundColor: "rgba(60, 140, 126, 0.05)", alignItems: alignItems(true) },
-        ]}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: 20,
-          }}
-        >
-          <Typography
-            variant="h3"
-            color={theme.colors.textPrimary}
-            style={{ fontWeight: "700" }}
-          >
-            {t("dateReflection", { date: dateFormatted })}
-          </Typography>
-          <TouchableOpacity
-            onPress={() => setSelectedDate(null)}
-            style={{ padding: 4 }}
-          >
-            <Typography variant="body" color={theme.colors.textMuted}>
-              ✕
-            </Typography>
-          </TouchableOpacity>
-        </View>
-
-        <Typography
-          variant="body"
-          color={theme.colors.textSecondary}
-          style={{ marginBottom: 8, fontSize: 12, fontWeight: "600" }}
-        >
-          {t("mood").toUpperCase()}
-        </Typography>
-        <Typography
-          variant="body"
-          color={theme.colors.textPrimary}
-          style={{ marginBottom: 16 }}
-        >
-          {reflection.moodDescription} ({reflection.moodLevel}/10)
-        </Typography>
-
-        {reflection.selectedContexts.length > 0 && (
-          <>
-            <Typography
-              variant="body"
-              color={theme.colors.textSecondary}
-              style={{ marginBottom: 8, fontSize: 12, fontWeight: "600" }}
-            >
-              {t("lifeAreas").toUpperCase()}
-            </Typography>
-            <Typography
-              variant="body"
-              color={theme.colors.textPrimary}
-              style={{ marginBottom: 16 }}
-            >
-              {reflection.selectedContexts.join(", ")}
-            </Typography>
-          </>
-        )}
-
-        {reflection.userInput && (
-          <>
-            <Typography
-              variant="body"
-              color={theme.colors.textSecondary}
-              style={{ marginBottom: 8, fontSize: 12, fontWeight: "600" }}
-            >
-              {t("yourReflection").toUpperCase()}
-            </Typography>
-            <Typography
-              variant="body"
-              color={theme.colors.textPrimary}
-              style={{ marginBottom: 16, lineHeight: 22 }}
-            >
-              {reflection.userInput}
-            </Typography>
-          </>
-        )}
-
-        {reflection.generatedReflection && (
-          <>
-            <Typography
-              variant="body"
-              color={theme.colors.textSecondary}
-              style={{ marginBottom: 8, fontSize: 12, fontWeight: "600" }}
-            >
-              {t("aiGuidance").toUpperCase()}
-            </Typography>
-            <Typography
-              variant="body"
-              color={theme.colors.textPrimary}
-              style={{ marginBottom: 16, lineHeight: 22, fontStyle: "italic" }}
-            >
-              {reflection.generatedReflection}
-            </Typography>
-          </>
-        )}
-
-        {reflection.selectedVerse && (
-          <View
-            style={{
-              backgroundColor: theme.colors.primarySoft,
-              padding: 16,
-              borderRadius: 12,
-              marginBottom: 16,
-            }}
-          >
-            <Typography
-              variant="body"
-              color={theme.colors.textPrimary}
-              style={{ fontStyle: "italic", lineHeight: 22 }}
-            >
-              "{reflection.selectedVerse.text}"
-            </Typography>
-            <Typography
-              variant="caption"
-              color={theme.colors.textMuted}
-              style={{ marginTop: 8, textAlign: textAlign() }}
-            >
-              — {reflection.selectedVerse.reference}
-            </Typography>
-          </View>
-        )}
-
-        <Typography
-          variant="caption"
-          color={theme.colors.primary}
-          style={{ textAlign: "center", fontWeight: "600" }}
-        >
-          ✅ {t("completed")}
-        </Typography>
-      </View>
-    );
+  // Navigate to past reflection detail
+  const handleViewPastReflection = (reflection: any, date: string) => {
+    navigation.navigate("PastReflectionDetailScreen", {
+      date,
+      reflection,
+    });
   };
 
   // Simple card for no reflection
@@ -350,9 +216,13 @@ export const TodayHomeScreen: React.FC = () => {
     // If viewing a past date
     if (!selectedDateData.isToday) {
       if (selectedDateData.reflection) {
-        return renderPastReflectionCard(
-          selectedDateData.reflection,
-          selectedDateData.dateFormatted,
+        return (
+          <PastReflectionPreviewCard
+            reflection={selectedDateData.reflection}
+            dateFormatted={selectedDateData.dateFormatted}
+            onPress={() => handleViewPastReflection(selectedDateData.reflection, selectedDate!)}
+            onClose={() => setSelectedDate(null)}
+          />
         );
       } else {
         return renderNoReflectionCard(selectedDateData.dateFormatted);

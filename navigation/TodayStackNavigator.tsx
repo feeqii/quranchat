@@ -8,6 +8,20 @@ import { ContextSelectionScreen } from '../screens/main/ContextSelectionScreen';
 import { ReflectionInputScreen } from '../screens/main/ReflectionInputScreen';
 import { ContentGenerationLoadingScreen } from '../screens/main/ContentGenerationLoadingScreen';
 import { GeneratedReflectionScreen } from '../screens/main/GeneratedReflectionScreen';
+import { PastReflectionDetailScreen } from '../screens/main/PastReflectionDetailScreen';
+
+// Type for reflection history entry
+type ReflectionHistoryEntry = {
+  date: string;
+  moodLevel: number;
+  moodDescription: string;
+  selectedContexts: string[];
+  userInput: string | null;
+  userReflection: string;
+  generatedReflection: string | null;
+  selectedVerse: { text: string; reference: string } | null;
+  completedAt: string;
+};
 
 // Type definitions for navigation
 export type TodayStackParamList = {
@@ -19,6 +33,10 @@ export type TodayStackParamList = {
   ContentGenerationLoadingScreen: undefined;
   GeneratedContentScreen: undefined;
   GeneratedReflectionScreen: undefined;
+  PastReflectionDetailScreen: {
+    date: string;
+    reflection: ReflectionHistoryEntry;
+  };
 };
 
 const TodayStack = createNativeStackNavigator<TodayStackParamList>();
@@ -54,6 +72,10 @@ export const TodayStackNavigator: React.FC = () => {
       <TodayStack.Screen
         name="GeneratedReflectionScreen"
         component={GeneratedReflectionScreen}
+      />
+      <TodayStack.Screen
+        name="PastReflectionDetailScreen"
+        component={PastReflectionDetailScreen}
       />
       {/* Additional screens will be added here as we build them */}
     </TodayStack.Navigator>
